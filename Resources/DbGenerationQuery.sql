@@ -20,7 +20,14 @@ CREATE TABLE Portfolios (
 	UserId INT NOT NULL FOREIGN KEY REFERENCES Users (Id),
 	StockSymbol NVARCHAR(99) NOT NULL,
 	StockMarket NVARCHAR(99) NOT NULL,
+	Quantity INT NOT NULL,
 	FOREIGN KEY (StockSymbol, StockMarket) REFERENCES Stocks (Symbol, Market)
+)
+
+CREATE TABLE Groups (
+	Id INT PRIMARY KEY IDENTITY,
+	Name NVARCHAR(99) NOT NULL,
+	OwnerId INT NOT NULL FOREIGN KEY REFERENCES Users (Id)
 )
 
 CREATE TABLE Posts (
@@ -32,10 +39,6 @@ CREATE TABLE Posts (
 	StockSymbol NVARCHAR(99),
 	StockMarket NVARCHAR(99),
 	FOREIGN KEY (StockSymbol, StockMarket) REFERENCES Stocks (Symbol, Market)
-)
-
-CREATE TABLE Groups (
-	Id INT PRIMARY KEY IDENTITY
 )
 
 CREATE TABLE GroupMembers (
