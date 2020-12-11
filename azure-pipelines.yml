@@ -31,8 +31,8 @@ steps:
 #     SonarCloud: 'sonarCloud'
 #     organization: '2011-nov02-net'
 #     scannerMode: 'MSBuild'
-#     projectKey: '2011-nov02-net_mattm-project1'
-#     projectName: 'mattm-project1'
+#     projectKey: '2011-nov02-net_mmp-project2'
+#     projectName: 'mmp-project2'
 #     extraProperties: 'sonar.exclusions=**/lib/**'
 
 - task: UseDotNet@2
@@ -42,9 +42,9 @@ steps:
     version: '5.x'
     includePreviewVersions: true
 
-- script: dotnet build --configuration $(buildConfiguration)
-  displayName: 'dotnet build $(buildConfiguration)'
-  workingDirectory: AcmeWebStore/AcmeWebStore
+# - script: dotnet build --configuration $(buildConfiguration)
+#   displayName: 'dotnet build $(buildConfiguration)'
+#   workingDirectory: AcmeWebStore/AcmeWebStore
 
 
 # - task: SonarCloudAnalyze@1
@@ -54,17 +54,17 @@ steps:
 #   inputs:
 #     pollingTimeoutSec: '300'
 
-- task: DotNetCoreCLI@2
-  displayName: dotnet test
-  inputs:
-    command: 'test'
-    arguments: '--configuration $(buildConfiguration)'
-    publishTestResults: true
-    workingDirectory: AcmeWebStore/AcmeWebStore
+# - task: DotNetCoreCLI@2
+#   displayName: dotnet test
+#   inputs:
+#     command: 'test'
+#     arguments: '--configuration $(buildConfiguration)'
+#     publishTestResults: true
+#     workingDirectory: AcmeWebStore/AcmeWebStore
 
-- script: dotnet publish --configuration $(buildConfiguration) --output publish
-  displayName: 'dotnet publish $(buildConfiguration)'
-  workingDirectory: AcmeWebStore/AcmeWebStore
+# - script: dotnet publish --configuration $(buildConfiguration) --output publish
+#   displayName: 'dotnet publish $(buildConfiguration)'
+#   workingDirectory: AcmeWebStore/AcmeWebStore
 
 - task: AzureRmWebAppDeployment@4
   inputs:
