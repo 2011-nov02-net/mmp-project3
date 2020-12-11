@@ -67,12 +67,3 @@ steps:
 
 
 
-- task: AzureRmWebAppDeployment@4
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
-  inputs:
-    ConnectionType: 'AzureRM'
-    azureSubscription: 'Azure subscription 1 (a7c7be2b-dec9-4b29-b6aa-d73e6d6ad223)'
-    appType: 'webApp'
-    WebAppName: 'AnotherTestWebApp'
-    packageForLinux: 'AcmeWebStore/AcmeWebStore/publish'
-
