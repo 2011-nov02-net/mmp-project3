@@ -17,10 +17,22 @@ CREATE TABLE Stocks (
 )
 
 CREATE TABLE Portfolios (
+	UserId INT FOREIGN KEY REFERENCES Users (Id),
+	StockSymbol NVARCHAR(99),
+	StockMarket NVARCHAR(99),
+	Quantity INT NOT NULL,
+	FOREIGN KEY (StockSymbol, StockMarket) REFERENCES Stocks (Symbol, Market),
+	PRIMARY KEY (UserId, StockSymbol, StockMarket)
+)
+
+CREATE TABLE Trades (
+	Id INT PRIMARY KEY IDENTITY,
 	UserId INT NOT NULL FOREIGN KEY REFERENCES Users (Id),
 	StockSymbol NVARCHAR(99) NOT NULL,
 	StockMarket NVARCHAR(99) NOT NULL,
 	Quantity INT NOT NULL,
+	Price MONEY NOT NULL,
+	TimeTraded DATETIME NOT NULL,
 	FOREIGN KEY (StockSymbol, StockMarket) REFERENCES Stocks (Symbol, Market)
 )
 
