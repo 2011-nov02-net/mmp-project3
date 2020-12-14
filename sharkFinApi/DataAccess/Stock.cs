@@ -9,7 +9,7 @@ namespace DataAccess
     {
         public Stock()
         {
-            Portfolios = new HashSet<Portfolio>();
+            PortfolioEntries = new HashSet<PortfolioEntry>();
             Trades = new HashSet<Trade>();
         }
 
@@ -18,7 +18,7 @@ namespace DataAccess
         public string Name { get; set; }
         public string Logo { get; set; }
 
-        public virtual ICollection<Portfolio> Portfolios { get; set; }
+        public virtual ICollection<PortfolioEntry> PortfolioEntries { get; set; }
         public virtual ICollection<Trade> Trades { get; set; }
     }
 }
