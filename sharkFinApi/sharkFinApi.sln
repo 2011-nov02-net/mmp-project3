@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30711.63
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sharkFinApi", "sharkFinApi\sharkFinApi.csproj", "{C8CDBAB4-B9EE-40C8-B36E-3A66C9667ECC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sharkFinApi", "sharkFinApi\sharkFinApi.csproj", "{C8CDBAB4-B9EE-40C8-B36E-3A66C9667ECC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{EE9979C9-F580-450E-A96F-6053086EB6BA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{C8CDBAB4-B9EE-40C8-B36E-3A66C9667ECC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8CDBAB4-B9EE-40C8-B36E-3A66C9667ECC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8CDBAB4-B9EE-40C8-B36E-3A66C9667ECC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE9979C9-F580-450E-A96F-6053086EB6BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE9979C9-F580-450E-A96F-6053086EB6BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE9979C9-F580-450E-A96F-6053086EB6BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE9979C9-F580-450E-A96F-6053086EB6BA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

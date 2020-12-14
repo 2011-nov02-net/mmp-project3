@@ -586,25 +586,20 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\mgm21\\.nuget\\packages\\": {},
-    "C:\\Microsoft\\Xamarin\\NuGet\\": {}
+    "C:\\Users\\mgood\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\mgm21\\Desktop\\revature\\mmp-project3\\sharkFinApi\\sharkFinApi\\sharkFinApi.csproj",
+      "projectUniqueName": "C:\\revature\\mmp-project2\\sharkFinApi\\sharkFinApi\\sharkFinApi.csproj",
       "projectName": "sharkFinApi",
-      "projectPath": "C:\\Users\\mgm21\\Desktop\\revature\\mmp-project3\\sharkFinApi\\sharkFinApi\\sharkFinApi.csproj",
-      "packagesPath": "C:\\Users\\mgm21\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\mgm21\\Desktop\\revature\\mmp-project3\\sharkFinApi\\sharkFinApi\\obj\\",
+      "projectPath": "C:\\revature\\mmp-project2\\sharkFinApi\\sharkFinApi\\sharkFinApi.csproj",
+      "packagesPath": "C:\\Users\\mgood\\.nuget\\packages\\",
+      "outputPath": "C:\\revature\\mmp-project2\\sharkFinApi\\sharkFinApi\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Microsoft\\Xamarin\\NuGet\\"
-      ],
       "configFilePaths": [
-        "C:\\Users\\mgm21\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        "C:\\Users\\mgood\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net5.0"
@@ -666,7 +661,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
       }
     }
   }
