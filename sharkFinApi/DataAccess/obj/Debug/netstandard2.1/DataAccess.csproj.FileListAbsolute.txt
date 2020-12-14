@@ -1,0 +1,9 @@
+C:\revature\mmp-project2\sharkFinApi\DataAccess\bin\Debug\netstandard2.1\DataAccess.deps.json
+C:\revature\mmp-project2\sharkFinApi\DataAccess\bin\Debug\netstandard2.1\DataAccess.dll
+C:\revature\mmp-project2\sharkFinApi\DataAccess\bin\Debug\netstandard2.1\DataAccess.pdb
+C:\revature\mmp-project2\sharkFinApi\DataAccess\obj\Debug\netstandard2.1\DataAccess.csprojAssemblyReference.cache
+C:\revature\mmp-project2\sharkFinApi\DataAccess\obj\Debug\netstandard2.1\DataAccess.AssemblyInfoInputs.cache
+C:\revature\mmp-project2\sharkFinApi\DataAccess\obj\Debug\netstandard2.1\DataAccess.AssemblyInfo.cs
+C:\revature\mmp-project2\sharkFinApi\DataAccess\obj\Debug\netstandard2.1\DataAccess.csproj.CoreCompileInputs.cache
+C:\revature\mmp-project2\sharkFinApi\DataAccess\obj\Debug\netstandard2.1\DataAccess.dll
+C:\revature\mmp-project2\sharkFinApi\DataAccess\obj\Debug\netstandard2.1\DataAccess.pdb
