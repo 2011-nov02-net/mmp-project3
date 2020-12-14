@@ -4,7 +4,8 @@ using System.Text;
 
 namespace BusinessLogic.Interfaces
 {
-    interface IUser
+    public interface IUser
     {
+
     }
 }

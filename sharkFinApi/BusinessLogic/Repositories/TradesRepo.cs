@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BusinessLogic.Repositories
 {
-    class TradesRepo
+    public class TradesRepo
     {
     }
 }

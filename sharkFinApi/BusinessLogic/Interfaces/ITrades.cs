@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BusinessLogic.Interfaces
 {
-    interface ITrades
+    public interface ITrades
     {
     }
 }
