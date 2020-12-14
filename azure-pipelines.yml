@@ -18,48 +18,48 @@ variables:
 
 steps:
 
-- task: UseDotNet@2
-  displayName: 'Use .NET Core sdk 2.x'
-  inputs:
-    packageType: 'sdk'
-    version: '2.x'
-    includePreviewVersions: true
+# - task: UseDotNet@2
+#   displayName: 'Use .NET Core sdk 2.x'
+#   inputs:
+#     packageType: 'sdk'
+#     version: '2.x'
+#     includePreviewVersions: true
 
-- task: SonarCloudPrepare@1
-  displayName: SonarCloudPrep
-  inputs:
-    SonarCloud: 'sonarCloud'
-    organization: '2011-nov02-net'
-    scannerMode: 'MSBuild'
-    projectKey: '2011-nov02-net_mattm-project1'
-    projectName: 'mattm-project1'
-    extraProperties: 'sonar.exclusions=**/lib/**'
+# - task: SonarCloudPrepare@1
+#   displayName: SonarCloudPrep
+#   inputs:
+#     SonarCloud: 'sonarCloud'
+#     organization: '2011-nov02-net'
+#     scannerMode: 'MSBuild'
+#     projectKey: '2011-nov02-net_mattm-project1'
+#     projectName: 'mattm-project1'
+#     extraProperties: 'sonar.exclusions=**/lib/**'
 
-- task: UseDotNet@2
-  displayName: 'Use .NET Core sdk 5.x'
-  inputs:
-    packageType: 'sdk'
-    version: '5.x'
-    includePreviewVersions: true
+# - task: UseDotNet@2
+#   displayName: 'Use .NET Core sdk 5.x'
+#   inputs:
+#     packageType: 'sdk'
+#     version: '5.x'
+#     includePreviewVersions: true
 
-- script: dotnet build --configuration $(buildConfiguration)
-  displayName: 'dotnet build $(buildConfiguration)'
-  workingDirectory: AcmeWebStore/AcmeWebStore
+# - script: dotnet build --configuration $(buildConfiguration)
+#   displayName: 'dotnet build $(buildConfiguration)'
+#   workingDirectory: AcmeWebStore/AcmeWebStore
 
-- task: SonarCloudAnalyze@1
+# - task: SonarCloudAnalyze@1
 
 
-- task: SonarCloudPublish@1
-  inputs:
-    pollingTimeoutSec: '300'
+# - task: SonarCloudPublish@1
+#   inputs:
+#     pollingTimeoutSec: '300'
 
-- task: DotNetCoreCLI@2
-  displayName: dotnet test
-  inputs:
-    command: 'test'
-    arguments: '--configuration $(buildConfiguration)'
-    publishTestResults: true
-    workingDirectory: AcmeWebStore/AcmeWebStore
+# - task: DotNetCoreCLI@2
+#   displayName: dotnet test
+#   inputs:
+#     command: 'test'
+#     arguments: '--configuration $(buildConfiguration)'
+#     publishTestResults: true
+#     workingDirectory: AcmeWebStore/AcmeWebStore
 
 - script: dotnet publish --configuration $(buildConfiguration) --output publish
   displayName: 'dotnet publish $(buildConfiguration)'
