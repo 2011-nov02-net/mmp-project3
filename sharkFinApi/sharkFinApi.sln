@@ -5,7 +5,15 @@ VisualStudioVersion = 16.0.30711.63
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sharkFinApi", "sharkFinApi\sharkFinApi.csproj", "{C8CDBAB4-B9EE-40C8-B36E-3A66C9667ECC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{EE9979C9-F580-450E-A96F-6053086EB6BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{EE9979C9-F580-450E-A96F-6053086EB6BA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain Classes", "Domain Classes", "{E7752583-9DCB-4A9F-8CBD-9516ADEACEB6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stock Library", "Stock Library\Stock Library.csproj", "{F28A51BD-C7EB-4563-AA1A-C6ABCB23FE3B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{BEDE963C-FBC9-45B2-84F4-FA1B03FFCF89}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogic", "BusinessLogic\BusinessLogic.csproj", "{E5F52DB9-5D8C-49AC-B8A1-25BE8DA72008}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,9 +29,21 @@ Global
 		{EE9979C9-F580-450E-A96F-6053086EB6BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE9979C9-F580-450E-A96F-6053086EB6BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE9979C9-F580-450E-A96F-6053086EB6BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F28A51BD-C7EB-4563-AA1A-C6ABCB23FE3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F28A51BD-C7EB-4563-AA1A-C6ABCB23FE3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F28A51BD-C7EB-4563-AA1A-C6ABCB23FE3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F28A51BD-C7EB-4563-AA1A-C6ABCB23FE3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5F52DB9-5D8C-49AC-B8A1-25BE8DA72008}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5F52DB9-5D8C-49AC-B8A1-25BE8DA72008}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5F52DB9-5D8C-49AC-B8A1-25BE8DA72008}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5F52DB9-5D8C-49AC-B8A1-25BE8DA72008}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F28A51BD-C7EB-4563-AA1A-C6ABCB23FE3B} = {E7752583-9DCB-4A9F-8CBD-9516ADEACEB6}
+		{E5F52DB9-5D8C-49AC-B8A1-25BE8DA72008} = {BEDE963C-FBC9-45B2-84F4-FA1B03FFCF89}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FBA50BC8-BCF9-4820-BA2F-81C8C39AB75E}
