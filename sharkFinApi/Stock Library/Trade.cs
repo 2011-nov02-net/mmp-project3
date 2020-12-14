@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Stock_Library
 {
-    public class Trades
+    public class Trade
     {
         public int Id { get; set; }
         public int PorfolioId { get; set; }

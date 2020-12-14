@@ -4,12 +4,12 @@ using System.Text;
 
 namespace Stock_Library
 {
-    public class Portfolios
+    public class Stock
     {
-        public int Id { get; set; }
+        public string Symbol { get; set; }
+        public string Market { get; set; }
         public string Name { get; set; }
-        public int UserId { get; set; }
-        public decimal Funds { get; set; }
+        public string Logo { get; set; }
 
     }
 }
