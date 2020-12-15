@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
-namespace DataAccess
+namespace DataAccess.Models
 {
     public partial class mmpproject2Context : DbContext
     {
