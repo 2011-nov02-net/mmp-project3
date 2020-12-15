@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.30711.63
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sharkFinApi", "sharkFinApi\sharkFinApi.csproj", "{C8CDBAB4-B9EE-40C8-B36E-3A66C9667ECC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{EE9979C9-F580-450E-A96F-6053086EB6BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{EE9979C9-F580-450E-A96F-6053086EB6BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{581830C9-1119-4C06-8C18-7131CC10BE75}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{EE9979C9-F580-450E-A96F-6053086EB6BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE9979C9-F580-450E-A96F-6053086EB6BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE9979C9-F580-450E-A96F-6053086EB6BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{581830C9-1119-4C06-8C18-7131CC10BE75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{581830C9-1119-4C06-8C18-7131CC10BE75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{581830C9-1119-4C06-8C18-7131CC10BE75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{581830C9-1119-4C06-8C18-7131CC10BE75}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
