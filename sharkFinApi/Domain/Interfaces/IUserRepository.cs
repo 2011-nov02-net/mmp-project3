@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Domain.Models;
 
 namespace Domain.Interfaces {
     public interface IUserRepository {
-        ICollection<User> GetAll();
-        ICollection<User> GetAll(string firstName, string lastName);
-        User Get(int id);
-        User Get(string email);
-        void Add(User user);
-        void Update(User user);
-        void Delete(User user);
+        
+        Task<IEnumerable<User>> GetAll();
+        Task<User> GetUserByName(string firstName, string lastName);
+        Task<User> GetUserById(int id);
+        Task<User> GetUserByEmail(string email);
+        Task Add(User user);
+        Task Update(User user);
+        Task Delete(User user);
     }
 }
