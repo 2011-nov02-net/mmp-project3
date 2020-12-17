@@ -42,9 +42,9 @@ steps:
 #     version: '5.x'
 #     includePreviewVersions: true
 
-# - script: dotnet build --configuration $(buildConfiguration)
-#   displayName: 'dotnet build $(buildConfiguration)'
-#   workingDirectory: AcmeWebStore/AcmeWebStore
+- script: dotnet build --configuration $(buildConfiguration)
+  displayName: 'dotnet build $(buildConfiguration)'
+  workingDirectory: sharkFinApi/sharkFinApi
 
 
 # - task: SonarCloudAnalyze@1
@@ -62,9 +62,9 @@ steps:
 #     publishTestResults: true
 #     workingDirectory: AcmeWebStore/AcmeWebStore
 
-# - script: dotnet publish --configuration $(buildConfiguration) --output publish
-#   displayName: 'dotnet publish $(buildConfiguration)'
-#   workingDirectory: AcmeWebStore/AcmeWebStore
+- script: dotnet publish --configuration $(buildConfiguration) --output publish
+  displayName: 'dotnet publish $(buildConfiguration)'
+  workingDirectory: sharkFinApi/sharkFinApi
 
 # - task: DotNetCoreCLI@2
 #   displayName: dotnet test
@@ -78,13 +78,14 @@ steps:
 #   displayName: 'dotnet publish $(buildConfiguration)'
 #   workingDirectory: AcmeWebStore/AcmeWebStore
 
+
 - task: AzureRmWebAppDeployment@4
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   inputs:
     ConnectionType: 'AzureRM'
     azureSubscription: 'Azure subscription 1(a7c7be2b-dec9-4b29-b6aa-d73e6d6ad223)'
-    appType: 'webApp'
-    WebAppName: 'sharkFin'
+    appType: 'apiApp'
+    WebAppName: 'sharkFinApi'
     packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+
 
 
