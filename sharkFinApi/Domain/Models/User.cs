@@ -14,6 +14,10 @@ namespace Domain.Models {
         public string Email { get; set; }
         public string UserName { get; set; }
 
+        public User()
+        {
+
+        }
         public User(string firstName, string lastName, string email, string username) {
             FirstName = firstName;
             LastName = lastName;

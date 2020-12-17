@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Domain.Models;
 
 namespace Domain.Interfaces {
     public interface IStockRepository {
-        ICollection<Stock> GetAll();
-        ICollection<Stock> GetAllBySymbol(string symbol);
-        ICollection<Stock> GetAllByMarket(string market);
-        Stock Get(string symbol, string market);
-        void Add(Stock stock);
-        void Update(Stock stock);
-        void Delete(Stock stock);
+        
+        Task<IEnumerable<Stock>> GetAll();
+        Task<IEnumerable<Stock>> GetStockBySymbol(string symbol);
+        Task<IEnumerable<Stock>> GetStockByMarket(string market);
+        Task<Stock> GetOneStock(string symbol, string market);
+        Task Add(Stock stock);
+        Task Update(Stock stock);
+        Task Delete(Stock stock);
     }
 }
