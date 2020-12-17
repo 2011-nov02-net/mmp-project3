@@ -1,0 +1,102 @@
+﻿using DataAccess.Models;
+using Domain.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DataAccess.Repositories {
+    public class UserRepository : IUserRepository {
+
+        private readonly DbContextOptions<mmpproject2Context> _contextOptions;
+
+        public UserRepository(DbContextOptions<mmpproject2Context> contextOptions) {
+            _contextOptions = contextOptions;
+        }
+
+        public async Task<IEnumerable<Domain.Models.User>> GetAllAsync() {
+            using var context = new mmpproject2Context(_contextOptions);
+            var users = await context.Users
+                .Include(u => u.Portfolios)
+                    .ThenInclude(p => p.PortfolioEntries)
+                        .ThenInclude(a => a.Stock)
+                .Include(u => u.Portfolios)
+                    .ThenInclude(p => p.Trades)
+                        .ThenInclude(t => t.Stock)
+                .ToListAsync();
+
+            return users.Select(Mapper.MapUser);
+        }
+
+        public async Task<IEnumerable<Domain.Models.User>> GetAllAsync(string firstName, string lastName) {
+            using var context = new mmpproject2Context(_contextOptions);
+            var users = await context.Users
+                .Where(u => u.FirstName == firstName && u.LastName == lastName)
+                .Include(u => u.Portfolios)
+                    .ThenInclude(p => p.PortfolioEntries)
+                .Include(u => u.Portfolios)
+                    .ThenInclude(p => p.Trades)
+                .ToListAsync();
+
+            return users.Select(Mapper.MapUser);
+        }
+
+        public async Task<Domain.Models.User> GetAsync(int id) {
+            using var context = new mmpproject2Context(_contextOptions);
+            var user = await context.Users
+                .Include(u => u.Portfolios)
+                    .ThenInclude(p => p.PortfolioEntries)
+                .Include(u => u.Portfolios)
+                    .ThenInclude(p => p.Trades)
+                .FirstAsync(u => u.Id == id);
+
+            return Mapper.MapUser(user);
+        }
+
+        public async Task<Domain.Models.User> GetAsync(string email) {
+            using var context = new mmpproject2Context(_contextOptions);
+            var user = await context.Users
+                .Include(u => u.Portfolios)
+                    .ThenInclude(p => p.PortfolioEntries)
+                .Include(u => u.Portfolios)
+                    .ThenInclude(p => p.Trades)
+                .FirstAsync(u => u.Email == email);
+
+            return Mapper.MapUser(user);
+        }
+
+        public async Task AddAsync(Domain.Models.User user) {
+            if (user.Id != 0) {
+                throw new ArgumentException("User already exists.");
+            }
+
+            using var context = new mmpproject2Context(_contextOptions);
+            var dbUser = Mapper.MapUser(user);
+
+            await context.Users.AddAsync(dbUser);
+
+            await context.SaveChangesAsync();
+        }
+
+        public async Task UpdateAsync(Domain.Models.User user) {
+            using var context = new mmpproject2Context(_contextOptions);
+            var current = await context.Users.FindAsync(user.Id);
+            var updated = Mapper.MapUser(user);
+
+            context.Entry(current).CurrentValues.SetValues(updated);
+
+            await context.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(int id) {
+            using var context = new mmpproject2Context(_contextOptions);
+            var user = await context.Users.FindAsync(id);
+
+            context.Remove(user);
+
+            await context.SaveChangesAsync();
+        }
+    }
+}

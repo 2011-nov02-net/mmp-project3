@@ -15,11 +15,11 @@ namespace Domain.Models {
         public string Name { get; set; }
         public decimal Funds { get; set; }
 
-        public Portfolio(string name, decimal funds) {
+        public Portfolio(string name, decimal funds, ICollection<Asset> assets, ICollection<Trade> trades) {
             Name = name;
             Funds = funds;
-            _assets = new HashSet<Asset>();
-            _trades = new HashSet<Trade>();
+            _assets = assets ?? new HashSet<Asset>();
+            _trades = trades ?? new HashSet<Trade>();
         }
 
         // TODO:
