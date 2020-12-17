@@ -10,9 +10,9 @@ namespace Domain.Interfaces {
         Task<IEnumerable<User>> GetAll();
         Task<User> GetUserByName(string firstName, string lastName);
         Task<User> GetUserById(int id);
-        Task<User> GetUserByEmail(string email);
-        Task Add(User user);
-        Task Update(User user);
-        Task Delete(User user);
+        Task<DataAccess.Models.User> GetUserByEmail(string email);
+        Task<User> Add(User user);
+        Task<bool> Update(int id, User user);
+        Task<bool> Delete(int id);
     }
 }
