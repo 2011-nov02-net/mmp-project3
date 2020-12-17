@@ -42,9 +42,9 @@ steps:
 #     version: '5.x'
 #     includePreviewVersions: true
 
-- script: dotnet build --configuration $(buildConfiguration)
-  displayName: 'dotnet build $(buildConfiguration)'
-  workingDirectory: sharkFinApi/sharkFinApi
+# - script: dotnet build --configuration $(buildConfiguration)
+#   displayName: 'dotnet build $(buildConfiguration)'
+#   workingDirectory: sharkFinApi/sharkFinApi
 
 
 # - task: SonarCloudAnalyze@1
@@ -64,7 +64,11 @@ steps:
 
 - script: dotnet publish --configuration $(buildConfiguration) --output publish
   displayName: 'dotnet publish $(buildConfiguration)'
-  workingDirectory: sharkFinApi/sharkFinApi
+  workingDirectory: sharkFinApi   
+
+- publish: sharkFinApi/publish
+  artifact: app
+
 
 # - task: DotNetCoreCLI@2
 #   displayName: dotnet test
@@ -79,7 +83,9 @@ steps:
 #   workingDirectory: AcmeWebStore/AcmeWebStore
 
 
-
+- download: current
+  artifact: app
+  displayName: download app
 
 - task: AzureRmWebAppDeployment@4
   inputs:
@@ -87,4 +93,5 @@ steps:
     azureSubscription: 'Azure subscription 1(a7c7be2b-dec9-4b29-b6aa-d73e6d6ad223)'
     appType: 'apiApp'
     WebAppName: 'sharkFinApi'
-    packageForLinux: 'sharkFinApi/publish'
+    packageForLinux: '$(Pipeline.Workspace)/app'
+ 
