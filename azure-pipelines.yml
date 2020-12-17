@@ -87,4 +87,4 @@ steps:
     azureSubscription: 'Azure subscription 1(a7c7be2b-dec9-4b29-b6aa-d73e6d6ad223)'
     appType: 'apiApp'
     WebAppName: 'sharkFinApi'
-    packageForLinux: 'sharkFinApi/sharkfinApi/publish'
+    packageForLinux: 'sharkFinApi/publish'
