@@ -14,16 +14,12 @@ namespace Domain.Models {
         public string Email { get; set; }
         public string UserName { get; set; }
 
-        public User()
-        {
-
-        }
-        public User(string firstName, string lastName, string email, string username) {
+        public User(string firstName, string lastName, string email, string username, ICollection<Portfolio> portfolios) {
             FirstName = firstName;
             LastName = lastName;
             Email = email;
             UserName = username;
-            _portfolios = new HashSet<Portfolio>();
+            _portfolios = portfolios ?? new HashSet<Portfolio>();
         }
 
         // TODO:

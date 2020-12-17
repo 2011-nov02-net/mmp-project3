@@ -7,12 +7,12 @@ using Domain.Models;
 namespace Domain.Interfaces {
     public interface IUserRepository {
         
-        Task<IEnumerable<User>> GetAll();
-        Task<User> GetUserByName(string firstName, string lastName);
-        Task<User> GetUserById(int id);
-        Task<DataAccess.Models.User> GetUserByEmail(string email);
-        Task<User> Add(User user);
-        Task<bool> Update(int id, User user);
-        Task<bool> Delete(int id);
+        Task<IEnumerable<User>> GetAllAsync();
+        Task<IEnumerable<User>> GetAllAsync(string firstName, string lastName);
+        Task<User> GetAsync(int id);
+        Task<User> GetAsync(string email);
+        Task AddAsync(User user);
+        Task UpdateAsync(User user);
+        Task DeleteAsync(int id);
     }
 }

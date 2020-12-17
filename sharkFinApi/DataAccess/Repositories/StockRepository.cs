@@ -1,56 +1,48 @@
 ﻿using DataAccess.Models;
 using Domain.Interfaces;
-using Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using Stock = Domain.Models.Stock;
 
-namespace Domain.Repositories
+namespace DataAccess.Repositories
 {
-    public class StockRepo : IStockRepository
-    {
+    public class StockRepository : IStockRepository {
+
         private readonly DbContextOptions<mmpproject2Context> _contextOptions;
 
-        public StockRepo(DbContextOptions<mmpproject2Context> contextOptions)
-        {
+        public StockRepository(DbContextOptions<mmpproject2Context> contextOptions) {
             _contextOptions = contextOptions;
         }
-        public Task Add(Stock stock)
-        {
+
+        public Task<IEnumerable<Domain.Models.Stock>> GetAll() {
             throw new NotImplementedException();
         }
 
-        public Task Delete(Stock stock)
-        {
+        public Task<IEnumerable<Domain.Models.Stock>> GetAllBySymbol(string symbol) {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Stock>> GetAll()
-        {
+        public Task<IEnumerable<Domain.Models.Stock>> GetAllByMarket(string market) {
             throw new NotImplementedException();
         }
 
-        public Task<Stock> GetOneStock(string symbol, string market)
-        {
+        public Task<Domain.Models.Stock> Get(string symbol, string market) {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Stock>> GetStockByMarket(string market)
-        {
+        public Task Add(Domain.Models.Stock stock) {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Stock>> GetStockBySymbol(string symbol)
-        {
+        public Task Update(Domain.Models.Stock stock) {
             throw new NotImplementedException();
         }
 
-        public Task Update(Stock stock)
-        {
+        public Task Delete(Domain.Models.Stock stock) {
             throw new NotImplementedException();
         }
+                
     }
 }
