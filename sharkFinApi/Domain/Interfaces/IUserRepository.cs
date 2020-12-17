@@ -8,7 +8,7 @@ namespace Domain.Interfaces {
     public interface IUserRepository {
         
         Task<IEnumerable<User>> GetAll();
-        Task<User> GetUserByName(string firstName, string lastName);
+        Task<IEnumerable<User>> GetUserByName(string firstName, string lastName);
         Task<User> GetUserById(int id);
         Task<DataAccess.Models.User> GetUserByEmail(string email);
         Task<User> Add(User user);
