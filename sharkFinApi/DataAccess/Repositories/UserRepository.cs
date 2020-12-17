@@ -36,8 +36,10 @@ namespace DataAccess.Repositories {
                 .Where(u => u.FirstName == firstName && u.LastName == lastName)
                 .Include(u => u.Portfolios)
                     .ThenInclude(p => p.PortfolioEntries)
+                        .ThenInclude(a => a.Stock)
                 .Include(u => u.Portfolios)
                     .ThenInclude(p => p.Trades)
+                        .ThenInclude(t => t.Stock)
                 .ToListAsync();
 
             return users.Select(Mapper.MapUser);
@@ -48,8 +50,10 @@ namespace DataAccess.Repositories {
             var user = await context.Users
                 .Include(u => u.Portfolios)
                     .ThenInclude(p => p.PortfolioEntries)
+                        .ThenInclude(a => a.Stock)
                 .Include(u => u.Portfolios)
                     .ThenInclude(p => p.Trades)
+                        .ThenInclude(t => t.Stock)
                 .FirstAsync(u => u.Id == id);
 
             return Mapper.MapUser(user);
@@ -60,8 +64,10 @@ namespace DataAccess.Repositories {
             var user = await context.Users
                 .Include(u => u.Portfolios)
                     .ThenInclude(p => p.PortfolioEntries)
+                        .ThenInclude(a => a.Stock)
                 .Include(u => u.Portfolios)
                     .ThenInclude(p => p.Trades)
+                        .ThenInclude(t => t.Stock)
                 .FirstAsync(u => u.Email == email);
 
             return Mapper.MapUser(user);
