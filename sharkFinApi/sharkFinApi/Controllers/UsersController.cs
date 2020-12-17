@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Domain.Models;
 
 namespace sharkFinApi.Controllers
 {
@@ -20,18 +21,19 @@ namespace sharkFinApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddUser()
+        public IActionResult CreateUser(User user)
         {
             return StatusCode(201);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetUserByID()
+        public IActionResult GetUserByID(int id)
         {
             return StatusCode(200);
         }
+
         [HttpPut("{id}")]
-        public IActionResult UpdateUser(int id)
+        public IActionResult UpdateUser(User user)
         {
             return StatusCode(200);
         }
@@ -48,7 +50,7 @@ namespace sharkFinApi.Controllers
             return StatusCode(200);
         }
         [HttpPost("{id}/portfolios")]
-        public IActionResult AddPortfolio(int id)
+        public IActionResult CreatePortfolio(int id)
         {
             return StatusCode(201);
         }
@@ -59,7 +61,12 @@ namespace sharkFinApi.Controllers
             return StatusCode(200);
         }
         [HttpPut("{id}/portfolios/{id}")]
-        public IActionResult UpdatePortfolio(int userId, int portId)
+        public IActionResult UpdatePortfolio(int userId, Portfolio portfolio)
+        {
+            return StatusCode(200);
+        }
+        [HttpDelete("{id}/portfolios/{id}")]
+        public IActionResult DeletePortfolio(int userId, int portfolioId)
         {
             return StatusCode(200);
         }
