@@ -11,6 +11,10 @@ namespace Domain.Models {
         public decimal Price { get; set; }
         public DateTime Time { get; set; }
 
+        public Trade()
+        {
+
+        }
         public Trade(Stock stock, int qty, decimal price, DateTime time) {
             Stock = stock;
             Quantity = qty;
