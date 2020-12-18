@@ -5,10 +5,12 @@ using System.Text;
 namespace Domain.Models {
     public class Asset {
 
+        public Portfolio Portfolio { get; set; }
         public Stock Stock { get; set; }
         public int Quantity { get; set; }
 
-        public Asset(Stock stock, int qty) {
+        public Asset(Portfolio portfolio, Stock stock, int qty) {
+            Portfolio = portfolio;
             Stock = stock;
             Quantity = qty;
         }

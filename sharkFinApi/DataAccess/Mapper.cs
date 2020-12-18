@@ -69,6 +69,7 @@ namespace DataAccess {
         /// <returns>The asset business model</returns>
         public static Domain.Models.Asset MapAsset(Models.PortfolioEntry asset) {
             return new Domain.Models.Asset(
+                MapPortfolio(asset.Portfolio),
                 MapStock(asset.Stock),
                 asset.Quantity);
         }
@@ -80,6 +81,7 @@ namespace DataAccess {
         /// <returns>The portfolio entry DataAccess object</returns>
         public static Models.PortfolioEntry MapAsset(Domain.Models.Asset asset) {
             return new Models.PortfolioEntry {
+                Portfolio = MapPortfolio(asset.Portfolio),
                 Stock = MapStock(asset.Stock),
                 Quantity = asset.Quantity
             };
@@ -92,6 +94,7 @@ namespace DataAccess {
         /// <returns>The trade business model</returns>
         public static Domain.Models.Trade MapTrade(Models.Trade trade) {
             return new Domain.Models.Trade(
+                MapPortfolio(trade.Portfolio),
                 MapStock(trade.Stock),
                 trade.Quantity,
                 trade.Price,
@@ -107,6 +110,7 @@ namespace DataAccess {
         /// <returns>The trade DataAccess object</returns>
         public static Models.Trade MapTrade(Domain.Models.Trade trade) {
             return new Models.Trade {
+                Portfolio = MapPortfolio(trade.Portfolio),
                 Stock = MapStock(trade.Stock),
                 Quantity = trade.Quantity,
                 Price = trade.Price,

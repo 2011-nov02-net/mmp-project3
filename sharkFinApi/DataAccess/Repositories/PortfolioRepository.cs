@@ -1,6 +1,5 @@
 ﻿using DataAccess.Models;
 using Domain.Interfaces;
-using Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -62,26 +61,6 @@ namespace DataAccess.Repositories {
             var updated = Mapper.MapPortfolio(portfolio);
 
             context.Entry(current).CurrentValues.SetValues(updated);
-
-            foreach (var asset in portfolio.Assets) {
-                var pe = await context.PortfolioEntries.FirstOrDefaultAsync(a => a.PortfolioId == portfolio.Id && a.StockSymbol == asset.Stock.Symbol && a.StockMarket == asset.Stock.Market);
-                var newPE = Mapper.MapAsset(asset);
-                if (pe is null) {
-                    await context.PortfolioEntries.AddAsync(newPE);
-                } else {
-                    context.Entry(pe).CurrentValues.SetValues(newPE);
-                }
-            }
-
-            foreach (var trade in portfolio.Trades) {
-                var tr = await context.Trades.FirstOrDefaultAsync(t => t.PortfolioId == portfolio.Id && t.StockSymbol == trade.Stock.Symbol && t.StockMarket == trade.Stock.Market);
-                var newTrade = Mapper.MapTrade(trade);
-                if (tr is null) {
-                    await context.Trades.AddAsync(newTrade);
-                } else {
-                    context.Entry(tr).CurrentValues.SetValues(newTrade);
-                }
-            }
 
             await context.SaveChangesAsync();
         }
