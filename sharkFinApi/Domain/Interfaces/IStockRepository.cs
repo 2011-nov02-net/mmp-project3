@@ -7,12 +7,12 @@ using Domain.Models;
 namespace Domain.Interfaces {
     public interface IStockRepository {
         
-        Task<IEnumerable<Stock>> GetAll();
-        Task<IEnumerable<Stock>> GetAllBySymbol(string symbol);
-        Task<IEnumerable<Stock>> GetAllByMarket(string market);
-        Task<Stock> Get(string symbol, string market);
-        Task Add(Stock stock);
-        Task Update(Stock stock);
-        Task Delete(Stock stock);
+        Task<IEnumerable<Stock>> GetAllAsync();
+        Task<IEnumerable<Stock>> GetAllBySymbolAsync(string symbol);
+        Task<IEnumerable<Stock>> GetAllByMarketAsync(string market);
+        Task<Stock> GetAsync(string symbol, string market);
+        Task AddAsync(Stock stock);
+        Task UpdateAsync(Stock stock);
+        Task DeleteAsync(string symbol, string market);
     }
 }

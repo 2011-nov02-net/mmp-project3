@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace DataAccess.Repositories
 {
@@ -16,32 +17,60 @@ namespace DataAccess.Repositories
             _contextOptions = contextOptions;
         }
 
-        public Task<IEnumerable<Domain.Models.Stock>> GetAll() {
-            throw new NotImplementedException();
+        public async Task<IEnumerable<Domain.Models.Stock>> GetAllAsync() {
+            using var context = new mmpproject2Context(_contextOptions);
+            var stocks = await context.Stocks.ToListAsync();
+
+            return stocks.Select(Mapper.MapStock);
         }
 
-        public Task<IEnumerable<Domain.Models.Stock>> GetAllBySymbol(string symbol) {
-            throw new NotImplementedException();
+        public async Task<IEnumerable<Domain.Models.Stock>> GetAllBySymbolAsync(string symbol) {
+            using var context = new mmpproject2Context(_contextOptions);
+            var stocks = await context.Stocks.Where(s => s.Symbol == symbol).ToListAsync();
+
+            return stocks.Select(Mapper.MapStock);
         }
 
-        public Task<IEnumerable<Domain.Models.Stock>> GetAllByMarket(string market) {
-            throw new NotImplementedException();
+        public async Task<IEnumerable<Domain.Models.Stock>> GetAllByMarketAsync(string market) {
+            using var context = new mmpproject2Context(_contextOptions);
+            var stocks = await context.Stocks.Where(s => s.Market == market).ToListAsync();
+
+            return stocks.Select(Mapper.MapStock);
         }
 
-        public Task<Domain.Models.Stock> Get(string symbol, string market) {
-            throw new NotImplementedException();
+        public async Task<Domain.Models.Stock> GetAsync(string symbol, string market) {
+            using var context = new mmpproject2Context(_contextOptions);
+            var stock = await context.Stocks.FirstAsync(s => s.Symbol == symbol && s.Market == market);
+
+            return Mapper.MapStock(stock);
         }
 
-        public Task Add(Domain.Models.Stock stock) {
-            throw new NotImplementedException();
+        public async Task AddAsync(Domain.Models.Stock stock) {
+            using var context = new mmpproject2Context(_contextOptions);
+            var dbStock = Mapper.MapStock(stock);
+
+            await context.Stocks.AddAsync(dbStock);
+
+            await context.SaveChangesAsync();
         }
 
-        public Task Update(Domain.Models.Stock stock) {
-            throw new NotImplementedException();
+        public async Task UpdateAsync(Domain.Models.Stock stock) {
+            using var context = new mmpproject2Context(_contextOptions);
+            var current = await context.Stocks.FirstAsync(s => s.Symbol == stock.Symbol && s.Market == stock.Market);
+            var updated = Mapper.MapStock(stock);
+
+            context.Entry(current).CurrentValues.SetValues(updated);
+
+            await context.SaveChangesAsync();
         }
 
-        public Task Delete(Domain.Models.Stock stock) {
-            throw new NotImplementedException();
+        public async Task DeleteAsync(string symbol, string market) {
+            using var context = new mmpproject2Context(_contextOptions);
+            var dbStock = await context.Stocks.FirstAsync(s => s.Symbol == symbol && s.Market == market);
+
+            context.Remove(dbStock);
+
+            await context.SaveChangesAsync();
         }
                 
     }
