@@ -15,6 +15,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { InputComponent } from './components/input/input.component';
 import { SignupComponent } from './signup/signup.component';
 import { HomeComponent } from './home/home.component';
+import { UserComponent } from './user/user.component';
 const config = {
   issuer: 'https://dev-6569763.okta.com/oauth2/default',
   redirectUri: window.location.origin + '/login/callback',
@@ -32,6 +33,7 @@ const config = {
     InputComponent,
     SignupComponent,
     HomeComponent,
+    UserComponent,
   ],
   imports: [
     BrowserModule,

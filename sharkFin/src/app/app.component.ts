@@ -34,6 +34,5 @@ export class AppComponent implements OnInit {
   async logout() {
     // Terminates the session with Okta and removes current tokens.
     await this.oktaAuth.signOut();
-    this.router.navigateByUrl('/');
   }
 }
