@@ -11,6 +11,8 @@ namespace Domain.Models {
         private readonly ICollection<Trade> _trades;
         public IReadOnlyCollection<Trade> Trades => new HashSet<Trade>(_trades);
 
+        public User User;
+
         public int Id { get; set; }
         public string Name { get; set; }
         public decimal Funds { get; set; }

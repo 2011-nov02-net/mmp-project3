@@ -1,7 +1,11 @@
+using DataAccess.Models;
+using DataAccess.Repositories;
+using Domain.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -26,6 +30,20 @@ namespace sharkFinApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var connectionString = Configuration.GetConnectionString("default");
+            if (connectionString is null) {
+                throw new InvalidOperationException("No connection string 'defualt' found.");
+            }
+
+            services.AddDbContext<mmpproject2Context>(options => options
+                .UseSqlServer(connectionString)
+                .LogTo(Console.WriteLine, LogLevel.Information));
+
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IStockRepository, StockRepository>();
+            services.AddScoped<IPortfolioRepository, PortfolioRepository>();
+            services.AddScoped<IAssetRepository, AssetRepository>();
+            services.AddScoped<ITradeRepository, TradeRepository>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -48,6 +66,7 @@ namespace sharkFinApi
 
             app.UseRouting();
 
+            // app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

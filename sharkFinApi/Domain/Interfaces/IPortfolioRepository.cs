@@ -9,7 +9,7 @@ namespace Domain.Interfaces {
         Task<IEnumerable<Portfolio>> GetAllAsync();
         Task<IEnumerable<Portfolio>> GetAllAsync(User user);
         Task<Portfolio> GetAsync(int id);
-        Task AddAsync(Portfolio portfolio);
+        Task<Portfolio> AddAsync(Portfolio portfolio);
         Task UpdateAsync(Portfolio portfolio);
         Task DeleteAsync(int id);
     }
