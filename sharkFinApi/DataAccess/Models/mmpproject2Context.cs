@@ -8,9 +8,6 @@ namespace DataAccess.Models
 {
     public partial class mmpproject2Context : DbContext
     {
-        public mmpproject2Context()
-        {
-        }
 
         public mmpproject2Context(DbContextOptions<mmpproject2Context> options)
             : base(options)

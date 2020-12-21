@@ -14,5 +14,6 @@ namespace DataAccess.Models
 
         public virtual Portfolio Portfolio { get; set; }
         public virtual Stock Stock { get; set; }
+
     }
 }

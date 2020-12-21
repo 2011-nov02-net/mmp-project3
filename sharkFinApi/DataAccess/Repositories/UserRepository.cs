@@ -11,9 +11,11 @@ namespace DataAccess.Repositories {
     public class UserRepository : IUserRepository {
 
         private readonly DbContextOptions<mmpproject2Context> _contextOptions;
+        
 
         public UserRepository(DbContextOptions<mmpproject2Context> contextOptions) {
             _contextOptions = contextOptions;
+            
         }
 
         public async Task<IEnumerable<Domain.Models.User>> GetAllAsync() {

@@ -13,7 +13,10 @@ namespace Domain.Models {
         public string LastName { get; set; }
         public string Email { get; set; }
         public string UserName { get; set; }
+        public User()
+        {
 
+        }
         public User(string firstName, string lastName, string email, string username, ICollection<Portfolio> portfolios) {
             FirstName = firstName;
             LastName = lastName;
