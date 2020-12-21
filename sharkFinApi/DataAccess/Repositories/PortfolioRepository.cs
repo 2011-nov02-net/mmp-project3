@@ -42,7 +42,7 @@ namespace DataAccess.Repositories {
             return Mapper.MapPortfolio(portfolio);
         }
 
-        public async Task AddAsync(Domain.Models.Portfolio portfolio) {
+        public async Task<Domain.Models.Portfolio> AddAsync(Domain.Models.Portfolio portfolio) {
             if (portfolio.Id != 0) {
                 throw new ArgumentException("Portfolio already exists.");
             }
@@ -53,6 +53,8 @@ namespace DataAccess.Repositories {
             await context.Portfolios.AddAsync(dbPortfolio);
 
             await context.SaveChangesAsync();
+
+            return Mapper.MapPortfolio(dbPortfolio);
         }
 
         public async Task UpdateAsync(Domain.Models.Portfolio portfolio) {
