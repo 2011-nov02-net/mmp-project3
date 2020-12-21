@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { OktaCallbackComponent} from '@okta/okta-angular';
+import { OktaCallbackComponent, OktaAuthGuard} from '@okta/okta-angular';
 import {HomeComponent} from './home/home.component';
+import {UserComponent} from './user/user.component';
 const routes: Routes = [
   {
     path: '',
@@ -10,6 +11,10 @@ const routes: Routes = [
   {
     path: 'login/callback',
     component: OktaCallbackComponent
+  },{
+    path: 'user',
+    canActivate: [OktaAuthGuard],
+    component: UserComponent
   }
 ];
 
