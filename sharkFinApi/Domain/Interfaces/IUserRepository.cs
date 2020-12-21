@@ -11,7 +11,7 @@ namespace Domain.Interfaces {
         Task<IEnumerable<User>> GetAllAsync(string firstName, string lastName);
         Task<User> GetAsync(int id);
         Task<User> GetAsync(string email);
-        Task AddAsync(User user);
+        Task<User> AddAsync(User user);
         Task UpdateAsync(User user);
         Task DeleteAsync(int id);
     }

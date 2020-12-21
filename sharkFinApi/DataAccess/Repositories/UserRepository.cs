@@ -75,7 +75,7 @@ namespace DataAccess.Repositories {
             return Mapper.MapUser(user);
         }
 
-        public async Task AddAsync(Domain.Models.User user) {
+        public async Task<Domain.Models.User> AddAsync(Domain.Models.User user) {
             if (user.Id != 0) {
                 throw new ArgumentException("User already exists.");
             }
@@ -86,6 +86,8 @@ namespace DataAccess.Repositories {
             await context.Users.AddAsync(dbUser);
 
             await context.SaveChangesAsync();
+
+            return Mapper.MapUser(dbUser);
         }
 
         public async Task UpdateAsync(Domain.Models.User user) {
