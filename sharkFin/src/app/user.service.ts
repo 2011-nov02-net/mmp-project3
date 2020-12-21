@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { MessageService } from './message.service';
-import { runInThisContext } from 'vm';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import {User} from './Models/user';
@@ -23,6 +22,13 @@ export class UserService {
       return this.http.get<User>(this.baseUrl + id).pipe(
         tap(_ => this.log(`fetched User id=${id}`)), 
         catchError(this.handleError<User>(`getUser id=${id}`))
+      );
+    }
+
+    getUserByEmail(email: string): Observable<User>{
+      return this.http.get<User>(this.baseUrl + email).pipe(
+        tap(_ => this.log(`fetched User email=${email}`)), 
+        catchError(this.handleError<User>(`getUser email=${email}`))
       );
     }
 
