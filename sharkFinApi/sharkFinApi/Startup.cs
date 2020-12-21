@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace sharkFinApi
 {
@@ -50,6 +51,24 @@ namespace sharkFinApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "sharkFinApi", Version = "v1" });
             });
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:4200",
+                                            "https://sharkfin.azurewebsites.net")
+                            .AllowAnyMethod() // allow PUT & DELETE not just GET & POST
+                            .AllowAnyHeader()
+                            .AllowCredentials();
+                    });
+            });
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+                options.Authority = "https://dev-6569763.okta.com/oauth2/default";
+                options.Audience = "api://default";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,7 +85,11 @@ namespace sharkFinApi
 
             app.UseRouting();
 
-            // app.UseAuthentication();
+            app.UseCors();
+
+            app.UseAuthentication();
+
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
