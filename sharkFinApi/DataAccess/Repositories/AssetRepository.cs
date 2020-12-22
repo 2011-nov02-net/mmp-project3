@@ -18,7 +18,9 @@ namespace DataAccess.Repositories {
 
         public async Task<IEnumerable<Domain.Models.Asset>> GetAllAsync(Domain.Models.Portfolio portfolio) {
             using var context = new mmpproject2Context(_contextOptions);
-            var assets = await context.PortfolioEntries.Where(a => a.PortfolioId == portfolio.Id).ToListAsync();
+            var assets = await context.PortfolioEntries.Where(a => a.PortfolioId == portfolio.Id)
+                .Include(a => a.Stock)
+                .ToListAsync();
             
             return assets.Select(Mapper.MapAsset);
         }
@@ -32,18 +34,22 @@ namespace DataAccess.Repositories {
             return Mapper.MapAsset(asset);
         }
 
-        public async Task AddAsync(Domain.Models.Asset asset) {
+        public async Task AddAsync(Domain.Models.Asset asset, Domain.Models.Portfolio portfolio) {
             using var context = new mmpproject2Context(_contextOptions);
-            var pe = Mapper.MapAsset(asset);
+            var dbPortfolio = await context.Portfolios
+                .Include(p => p.PortfolioEntries)
+                .FirstAsync(p => p.Id == portfolio.Id);
+            var newAsset = Mapper.MapAsset(asset);
 
-            await context.PortfolioEntries.AddAsync(pe);
+            dbPortfolio.PortfolioEntries.Add(newAsset);
+            context.PortfolioEntries.Add(newAsset);
 
             await context.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(Domain.Models.Asset asset) {
+        public async Task UpdateAsync(Domain.Models.Asset asset, Domain.Models.Portfolio portfolio) {
             using var context = new mmpproject2Context(_contextOptions);
-            var current = await context.PortfolioEntries.FirstAsync(a => a.PortfolioId == asset.Portfolio.Id && a.StockSymbol == asset.Stock.Symbol && a.StockMarket == asset.Stock.Market);
+            var current = await context.PortfolioEntries.FirstAsync(a => a.PortfolioId == portfolio.Id && a.StockSymbol == asset.Stock.Symbol && a.StockMarket == asset.Stock.Market);
             var updated = Mapper.MapAsset(asset);
 
             context.Entry(current).CurrentValues.SetValues(updated);
@@ -51,9 +57,9 @@ namespace DataAccess.Repositories {
             await context.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(Domain.Models.Asset asset) {
+        public async Task DeleteAsync(Domain.Models.Asset asset, Domain.Models.Portfolio portfolio) {
             using var context = new mmpproject2Context(_contextOptions);
-            var pe = await context.PortfolioEntries.FirstAsync(a => a.PortfolioId == asset.Portfolio.Id && a.StockSymbol == asset.Stock.Symbol && a.StockMarket == asset.Stock.Market);
+            var pe = await context.PortfolioEntries.FirstAsync(a => a.PortfolioId == portfolio.Id && a.StockSymbol == asset.Stock.Symbol && a.StockMarket == asset.Stock.Market);
 
             context.Remove(pe);
 
