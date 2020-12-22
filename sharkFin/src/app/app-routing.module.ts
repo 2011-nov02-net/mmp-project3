@@ -4,6 +4,7 @@ import { OktaCallbackComponent, OktaAuthGuard} from '@okta/okta-angular';
 import {HomeComponent} from './home/home.component';
 import {UserComponent} from './user/user.component';
 import { LoginComponent } from './login/login.component';
+import { PortfolioComponent } from './portfolio/portfolio.component';
 const routes: Routes = [
   {
     path: '',
@@ -16,6 +17,10 @@ const routes: Routes = [
     path: 'user/:id',
     canActivate: [OktaAuthGuard],
     component: UserComponent
+  },{
+    path: 'portfolio/:id',
+    canActivate: [OktaAuthGuard],
+    component: PortfolioComponent
   },
   {
     path: 'login',

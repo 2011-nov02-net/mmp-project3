@@ -3,7 +3,7 @@
         <a href='#' (click)="login()">Login</a> | <a href="">Sign Up</a>
     </div>
     <div *ngIf="isAuthenticated" class="right-align userDiv">        
-        <a href=# (click)="logout()">Log Out</a> | <a routerLink="/user/{{user.id}}">Details</a>
+        <a href=# (click)="logout()">Log Out</a> | <a routerLink="/user/{{user.id}}" [state]="{user: user, portfolios: portfolios}">Details</a>
     </div>
   
     <div class="nav-wrapper center-align section">
@@ -21,4 +21,6 @@
         </div>
     </div>
 </nav>
-<router-outlet></router-outlet>
+<div class="container">
+    <router-outlet></router-outlet>
+</div>

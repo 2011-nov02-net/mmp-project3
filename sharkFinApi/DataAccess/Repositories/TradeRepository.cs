@@ -18,7 +18,9 @@ namespace DataAccess.Repositories {
 
         public async Task<IEnumerable<Domain.Models.Trade>> GetAllAsync(Domain.Models.Portfolio portfolio) {
             using var context = new mmpproject2Context(_contextOptions);
-            var trades = await context.Trades.Where(t => t.PortfolioId == portfolio.Id).ToListAsync();
+            var trades = await context.Trades.Where(t => t.PortfolioId == portfolio.Id)
+                .Include(t => t.Stock)
+                .ToListAsync();
 
             return trades.Select(Mapper.MapTrade);
         }
@@ -32,18 +34,22 @@ namespace DataAccess.Repositories {
             return Mapper.MapTrade(trade);
         }
 
-        public async Task AddAsync(Domain.Models.Trade trade) {
+        public async Task AddAsync(Domain.Models.Trade trade, Domain.Models.Portfolio portfolio) {
             using var context = new mmpproject2Context(_contextOptions);
-            var tr = Mapper.MapTrade(trade);
+            var dbPortfolio = await context.Portfolios
+                .Include(p => p.PortfolioEntries)
+                .FirstAsync(p => p.Id == portfolio.Id);
+            var newTrade = Mapper.MapTrade(trade);
 
-            await context.Trades.AddAsync(tr);
+            dbPortfolio.Trades.Add(newTrade);
+            context.Trades.Add(newTrade);
 
             await context.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(Domain.Models.Trade trade) {
+        public async Task UpdateAsync(Domain.Models.Trade trade, Domain.Models.Portfolio portfolio) {
             using var context = new mmpproject2Context(_contextOptions);
-            var current = await context.Trades.FirstAsync(t => t.PortfolioId == trade.Portfolio.Id && t.StockSymbol == trade.Stock.Symbol && t.StockMarket == trade.Stock.Market);
+            var current = await context.Trades.FirstAsync(t => t.PortfolioId == portfolio.Id && t.StockSymbol == trade.Stock.Symbol && t.StockMarket == trade.Stock.Market);
             var updated = Mapper.MapTrade(trade);
 
             context.Entry(current).CurrentValues.SetValues(updated);
@@ -51,9 +57,9 @@ namespace DataAccess.Repositories {
             await context.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(Domain.Models.Trade trade) {
+        public async Task DeleteAsync(Domain.Models.Trade trade, Domain.Models.Portfolio portfolio) {
             using var context = new mmpproject2Context(_contextOptions);
-            var tr = await context.Trades.FirstAsync(t => t.PortfolioId == trade.Portfolio.Id && t.StockSymbol == trade.Stock.Symbol && t.StockMarket == trade.Stock.Market);
+            var tr = await context.Trades.FirstAsync(t => t.PortfolioId == portfolio.Id && t.StockSymbol == trade.Stock.Symbol && t.StockMarket == trade.Stock.Market);
 
             context.Remove(tr);
 
