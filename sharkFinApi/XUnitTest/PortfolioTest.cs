@@ -13,11 +13,8 @@ namespace XUnitTest
         Portfolio testPortfolio;
         public PortfolioTest()
         {
-            testPortfolio = new Portfolio
-            {
-                Name = "Apple",
-                Funds = 565.25m,
-            };
+            testPortfolio = new Portfolio();
+
         }
 
         [Fact]

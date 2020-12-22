@@ -17,10 +17,7 @@ namespace Domain.Models {
             Price = price;
             Time = time;
         }
-        public Trade()
-        {
 
-        }
 
     }
 }

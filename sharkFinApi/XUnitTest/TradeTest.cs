@@ -13,11 +13,9 @@ namespace XUnitTest
         Trade testTrade;
         public TradeTest()
         {
-            testTrade = new Trade
-            {
-                Quantity = 5,
-                Price = 565.25m,
-            };
+            var stock = new Stock("APPL", "NASDAQ", "Apple", null);
+            testTrade = new Trade(stock, 5, 565.25m, DateTime.Now);
+
         }
 
         [Fact]

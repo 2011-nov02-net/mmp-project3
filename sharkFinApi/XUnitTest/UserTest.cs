@@ -13,13 +13,8 @@ namespace XUnitTest
         User testUser;
         public UserTest()
         {
-             testUser = new User
-            {
-                FirstName = "Paul",
-                LastName = "Cortez",
-                Email = "pbcortez@revature.net",
-                UserName = "pbcortez"
-            };
+            testUser = new User("Paul", "Cortez", "pbcortez@revature.net", "pbcortez", null);
+
         }
 
         [Fact]

@@ -9,6 +9,9 @@ using Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace sharkFinApi.Controllers {
+
+    
+
     [Route("api/users")]
     [ApiController]
     public class UsersController : ControllerBase {
@@ -19,6 +22,10 @@ namespace sharkFinApi.Controllers {
         public UsersController(IUserRepository userRepository, IPortfolioRepository portfolioRepository) {
             _userRepository = userRepository;
             _portfolioRepository = portfolioRepository;
+        }
+        public UsersController(IUserRepository userRepository)
+        {
+            _userRepository = userRepository;
         }
 
         [HttpGet]

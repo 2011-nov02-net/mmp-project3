@@ -15,16 +15,14 @@ namespace Domain.Models {
         public string Name { get; set; }
         public decimal Funds { get; set; }
 
-        public Portfolio()
-        {
-
         }
-        public Portfolio(string name, decimal funds, ICollection<Asset> assets, ICollection<Trade> trades) {
-            Name = name;
-            Funds = funds;
-            _assets = assets ?? new HashSet<Asset>();
-            _trades = trades ?? new HashSet<Trade>();
-        }
+    public Portfolio(string name, decimal funds, ICollection<Asset> assets, ICollection<Trade> trades)
+    {
+        Name = name;
+        Funds = funds;
+        _assets = assets ?? new HashSet<Asset>();
+        _trades = trades ?? new HashSet<Trade>();
+    }
 
         // TODO:
         //  - Implement portfolio-related methods such as adding/deleting assets and trades
