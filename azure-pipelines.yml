@@ -83,13 +83,13 @@ stages:
     - publish: $(build.artifactstagingdirectory)
       artifact: app
 
-    #- task: AzureRmWebAppDeployment@4
-    #  inputs:
-    #    ConnectionType: 'AzureRM'
-    #    azureSubscription: 'Azure subscription 1(a7c7be2b-dec9-4b29-b6aa-d73e6d6ad223)'
-    #    appType: 'apiApp'
-    #    WebAppName: 'sharkFinApi'
-    #   packageForLinux: '$(Pipeline.Workspace)/app'
+    - task: AzureRmWebAppDeployment@4
+      inputs:
+        ConnectionType: 'AzureRM'
+        azureSubscription: 'Azure subscription 1(a7c7be2b-dec9-4b29-b6aa-d73e6d6ad223)'
+        appType: 'apiApp'
+        WebAppName: 'sharkFinApi'
+        packageForLinux: '$(Pipeline.Workspace)/app'
 
 
 # - task: SonarCloudPrepare@1
