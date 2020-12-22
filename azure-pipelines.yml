@@ -83,6 +83,11 @@ stages:
     - publish: $(build.artifactstagingdirectory)
       artifact: app
 
+      
+    - download: current   
+      artifact: app
+      displayName: download app  
+
     - task: AzureRmWebAppDeployment@4
       inputs:
         ConnectionType: 'AzureRM'
