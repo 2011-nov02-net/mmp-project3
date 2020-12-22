@@ -35,11 +35,20 @@ namespace sharkFinApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<mmpproject2Context>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            var connectionString = Configuration.GetConnectionString("default");
+            if (connectionString is null) {
+                throw new InvalidOperationException("No connection string 'defualt' found.");
+            }
+
+            services.AddDbContext<mmpproject2Context>(options => options
+                .UseSqlServer(connectionString)
+                .LogTo(Console.WriteLine, LogLevel.Information));
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IStockRepository, StockRepository>();
+            services.AddScoped<IPortfolioRepository, PortfolioRepository>();
+            services.AddScoped<IAssetRepository, AssetRepository>();
+            services.AddScoped<ITradeRepository, TradeRepository>();
 
             services.AddHealthChecks();
 
@@ -65,6 +74,7 @@ namespace sharkFinApi
 
             app.UseRouting();
 
+            // app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
