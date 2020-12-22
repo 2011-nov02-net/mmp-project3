@@ -1,8 +1,21 @@
-<div class="container">
+
+    <br>
     <div class="row">
-<p class="center-align">Search goes here</p>
-</div>
-<div class="row">
-<div id="infoDiv col s8 offset-s2">Stock Info will go here</div>
-</div>
-</div>
+        <form class="input-field">
+            <input #stockSearch class="col s10" type="text" name="stockSearch" id="stockSearch" placeholder="Search">
+            <button class="btn col s2" (click)="search(stockSearch.value);event.preventDefault()">Search</button>
+        </form>
+    </div>
+    <div *ngIf="searchRes" class="row">
+        <div id="infoDiv col s8 offset-s2">
+            <img src="{{searchRes.logo}}" />
+            <h4>{{searchRes.name}} - {{searchPrice.c}}</h4>
+            <h6>{{searchRes.exchange}}</h6>
+            <h6>{{searchRes.ticker}} - {{searchRes.finnhubIndustry}}</h6>
+
+            <form class="input-field">
+                <input #stockQuant class="col s1" type="number" name="stockQuant" id="stockQuant" placeholder="Quantity">
+                <button class="btn" (click)="addToPortfolio(searchRes.ticker, stockQuant.value);event.preventDefault()">Add to Portfolio</button> 
+            </form>
+        </div>
+    </div>
