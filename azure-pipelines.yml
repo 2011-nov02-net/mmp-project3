@@ -7,23 +7,90 @@ trigger:
   branches:
    include:
      - master
+  paths:
+    include:
+      - azure-pipelines.yml
+
+stages:
+- stage: build
+  jobs:
+  - job: build
+    
+    pool:
+      vmImage: 'ubuntu-latest'
+    
+    variables:
+      sdkVersion: 5.x
+      buildConfiguration: 'Release'
+
+    steps:
+    - task: UseDotNet@2
+      displayName: 'Use .NET 2'
+      inputs:
+        version: 2.0.x
+        performMultiLevelLookup: true
+    
+    - task: SonarCloudPrepare@1
+      displayName: 'SonarCloud Prepare'
+      inputs:
+        SonarCloud: 'mmp-project2'
+        organization: '2011-nov02-net'
+        scannerMode: 'MSBuild'
+        projectKey: '2011-nov02-net_mmp-project2'
+        projectName: 'mmp-project2'
+        extraProperties: |
+          sonar.exclusions=**/lib/**
+          sonar.cs.opencover.reportsPaths = $(Agent.TempDirectory)/**/coverage.opencover.xml
+          sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)/*.trx
+
+    - task: UseDotNet@2
+      displayName: dotnet sdk $(sdkVersion)
+      inputs:
+        packageType: 'sdk'
+        version: '5.x'
+        performMultiLevelLookup: true
+
+    - task: DotNetCoreCLI@2
+      displayName: 'dotnet build'
+      inputs:
+        command: 'build'
+        projects: '**/*.csproj'
+        workingDirectory: 'sharkFinApi'
+    
+    - task: DotNetCoreCLI@2
+      displayName: dotnet test
+      inputs:
+        command: 'test'
+        arguments: '--configuration $(BuildConfiguration) --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover'
+        testRunTitle: 'Test Run'
+        publishTestResults: true
+        workingDirectory: 'sharkFinApi'
+
+    - task: SonarCloudAnalyze@1
+    
+    - task: SonarCloudPublish@1
+      inputs:
+        pollingTimeoutSec: '300'
+    
+    - task: DotNetCoreCLI@2
+      displayName: 'dotnet publish'
+      inputs:
+        command: 'publish'
+        publishWebProjects: true
+        arguments: '-o $(build.artifactstagingdirectory)'    
 
 
+    - publish: $(build.artifactstagingdirectory)
+      artifact: app
 
-pool:
-  vmImage: 'ubuntu-latest'
+    #- task: AzureRmWebAppDeployment@4
+    #  inputs:
+    #    ConnectionType: 'AzureRM'
+    #    azureSubscription: 'Azure subscription 1(a7c7be2b-dec9-4b29-b6aa-d73e6d6ad223)'
+    #    appType: 'apiApp'
+    #    WebAppName: 'sharkFinApi'
+    #   packageForLinux: '$(Pipeline.Workspace)/app'
 
-variables:
-  buildConfiguration: 'Release'
-
-steps:
-
-# - task: UseDotNet@2
-#   displayName: 'Use .NET Core sdk 2.x'
-#   inputs:
-#     packageType: 'sdk'
-#     version: '2.x'
-#     includePreviewVersions: true
 
 # - task: SonarCloudPrepare@1
 #   displayName: SonarCloudPrep
@@ -62,12 +129,12 @@ steps:
 #     publishTestResults: true
 #     workingDirectory: AcmeWebStore/AcmeWebStore
 
-- script: dotnet publish --configuration $(buildConfiguration) --output publish
-  displayName: 'dotnet publish $(buildConfiguration)'
-  workingDirectory: sharkFinApi   
+#- script: dotnet publish --configuration $(buildConfiguration) --output publish
+#  displayName: 'dotnet publish $(buildConfiguration)'
+#  workingDirectory: sharkFinApi   
 
-- publish: sharkFinApi/publish
-  artifact: app
+#- publish: sharkFinApi/publish
+#  artifact: app
 
 
 # - task: DotNetCoreCLI@2
@@ -83,15 +150,15 @@ steps:
 #   workingDirectory: AcmeWebStore/AcmeWebStore
 
 
-- download: current
-  artifact: app
-  displayName: download app
+#- download: current
+#  artifact: app
+#  displayName: download app
 
-- task: AzureRmWebAppDeployment@4
-  inputs:
-    ConnectionType: 'AzureRM'
-    azureSubscription: 'Azure subscription 1(a7c7be2b-dec9-4b29-b6aa-d73e6d6ad223)'
-    appType: 'apiApp'
-    WebAppName: 'sharkFinApi'
-    packageForLinux: '$(Pipeline.Workspace)/app'
+#- task: AzureRmWebAppDeployment@4
+#  inputs:
+#    ConnectionType: 'AzureRM'
+#    azureSubscription: 'Azure subscription 1(a7c7be2b-dec9-4b29-b6aa-d73e6d6ad223)'
+#    appType: 'apiApp'
+#    WebAppName: 'sharkFinApi'
+#    packageForLinux: '$(Pipeline.Workspace)/app'
  
