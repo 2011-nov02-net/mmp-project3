@@ -8,8 +8,7 @@ using Domain.Models;
 using Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace sharkFinApi.Controllers
-{
+namespace sharkFinApi.Controllers {
     [Route("api/users")]
     [ApiController]
     public class UsersController : ControllerBase {
@@ -86,64 +85,6 @@ namespace sharkFinApi.Controllers
             }
             var portfolios = await _portfolioRepository.GetAllAsync(user);
             return Ok(portfolios);
-        }
-
-        [HttpPost("{id}/portfolios")]
-        public async Task<IActionResult> CreatePortfolioAsync(Portfolio portfolio) {
-            Portfolio created;
-            try {
-                created = await _portfolioRepository.AddAsync(portfolio);
-            } catch (ArgumentException e) {
-                return BadRequest(e.Message);
-            } catch (DbUpdateException) {
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
-
-            return CreatedAtAction(nameof(GetPortfolioByIdAsync), new { id = created.Id }, created);
-        }
-
-        [HttpGet("{id}/portfolios/{id}")]
-        public async Task<IActionResult> GetPortfolioByIdAsync(int id) {
-            Portfolio portfolio;
-            try {
-                portfolio = await _portfolioRepository.GetAsync(id);
-            } catch {
-                return BadRequest();
-            }
-
-            return Ok(portfolio);
-        }
-
-        [HttpPut("{id}/portfolios/{id}")]
-        public async Task<IActionResult> UpdatePortfolioAsync(Portfolio portfolio) {
-            try {
-                await _portfolioRepository.UpdateAsync(portfolio);
-            } catch {
-                return BadRequest();
-            }
-
-            return NoContent();
-        }
-
-        [HttpDelete("{id}/portfolios/{id}")]
-        public async Task<IActionResult> DeletePortfolioAsync(int id)  {
-            try {
-                await _portfolioRepository.DeleteAsync(id);
-            } catch {
-                return BadRequest();
-            }
-
-            return NoContent();
-        }
-
-        [HttpGet("{id}/portfolios/{id}/trades")]
-        public async Task<IActionResult> GetTradesAsync(int id) {
-            throw new NotImplementedException();
-        }
-
-        [HttpGet("{id}/potfolios/{id}/trades/{id}")]
-        public async Task<IActionResult> GetTradeByIdAsync(int id) {
-            throw new NotImplementedException();
         }
     }
 }

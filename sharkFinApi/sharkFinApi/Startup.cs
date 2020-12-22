@@ -89,7 +89,6 @@ namespace sharkFinApi
 
             app.UseAuthentication();
 
-
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
