@@ -33,7 +33,7 @@ stages:
     - task: SonarCloudPrepare@1
       displayName: 'SonarCloud Prepare'
       inputs:
-        SonarCloud: 'mmp-project2'
+        SonarCloud: 'SonarCloud'
         organization: '2011-nov02-net'
         scannerMode: 'MSBuild'
         projectKey: '2011-nov02-net_mmp-project2'
