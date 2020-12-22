@@ -1,19 +1,20 @@
 <p>user works!</p>
 <div class="container">
-    <!-- <div class="center-align">{{user.Name}}</div>
-    <div class="offset sm-4">{{user.email}}</div> -->
+    <div class="center-align">{{user.name}}</div>
+    <div class="offset sm-4">{{user.email}}</div>
     <br>
     <div class="center-align">Portfolios</div>
-    <!-- <div *ngIf="user.Portfolio">
+    <div *ngIf="user.portfolios">
         <ul class="portfolios">
-            <li *ngFor="let port of portfolios">
+            <li> check</li>
+            <!-- <li *ngFor="let portfolio of user.portfolios">
         
-                <a routerLink="/user/{{user.id}}/portfolio/{{port.id}}">
-                    <span>{{port.id}}</span> {{port.name}}
+                <a routerLink="/user/{{user.id}}/portfolio/{{user.portfolios.id}}">
+                    <span>{{portfolio.id}}</span> 
                 </a>
                
-            </li>
-        </ul> -->
-    <!-- </div> -->
+            </li> -->
+        </ul> 
+     </div>
 
 </div>

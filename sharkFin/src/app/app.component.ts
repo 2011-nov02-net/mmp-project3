@@ -12,7 +12,7 @@ import {UserService} from './user.service';
 export class AppComponent implements OnInit {
   title = 'sharkFin';
   isAuthenticated: boolean = false;
-  user: User = {id: 0, name: '', email: ''};
+  user: User = {id: 0, name: 'Test', email: 'Test@test.com', portfolios: []};
 
   constructor(public oktaAuth: OktaAuthService, public router: Router, public userService: UserService) {
     // Subscribe to authentication state changes
@@ -37,6 +37,7 @@ export class AppComponent implements OnInit {
 
   async logout() {
     // Terminates the session with Okta and removes current tokens.
+    this.oktaAuth.tokenManager.clear();
     await this.oktaAuth.signOut();
   }
 }

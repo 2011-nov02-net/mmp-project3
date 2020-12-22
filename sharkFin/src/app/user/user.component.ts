@@ -18,7 +18,8 @@ export class UserComponent implements OnInit {
     private location: Location) { }
 
   ngOnInit(): void {
-    this.getUser();
+    this.user = history.state.user;
+    // this.getUser();
   }
 
   getUser(): void {
