@@ -18,14 +18,25 @@ namespace DataAccess.Repositories {
 
         public async Task<IEnumerable<Domain.Models.Portfolio>> GetAllAsync() {
             using var context = new mmpproject2Context(_contextOptions);
-            var portfolios = await context.Portfolios.ToListAsync();
+            var portfolios = await context.Portfolios
+                .Include(p => p.PortfolioEntries)
+                    .ThenInclude(a => a.Stock)
+                .Include(p => p.Trades)
+                    .ThenInclude(t => t.Stock)
+                .ToListAsync();
 
             return portfolios.Select(Mapper.MapPortfolio);
         }
 
         public async Task<IEnumerable<Domain.Models.Portfolio>> GetAllAsync(Domain.Models.User user) {
             using var context = new mmpproject2Context(_contextOptions);
-            var portfolios = await context.Portfolios.Where(p => p.UserId == user.Id).ToListAsync();
+            var portfolios = await context.Portfolios
+                .Where(p => p.UserId == user.Id)
+                .Include(p => p.PortfolioEntries)
+                    .ThenInclude(a => a.Stock)
+                .Include(p => p.Trades)
+                    .ThenInclude(t => t.Stock)
+                .ToListAsync();
 
             return portfolios.Select(Mapper.MapPortfolio);
         }
