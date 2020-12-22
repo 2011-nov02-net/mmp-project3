@@ -1,6 +1,7 @@
 ﻿using DataAccess.Models;
 using Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +12,19 @@ namespace DataAccess.Repositories {
     public class UserRepository : IUserRepository {
 
         private readonly DbContextOptions<mmpproject2Context> _contextOptions;
-        
 
-        public UserRepository(DbContextOptions<mmpproject2Context> contextOptions) {
+        public mmpproject2Context Context { get; }
+        public NullLogger<UserRepository> NullLogger { get; }
+
+        public UserRepository(mmpproject2Context context, DbContextOptions<mmpproject2Context> contextOptions) {
             _contextOptions = contextOptions;
             
+        }
+
+        public UserRepository(mmpproject2Context context, NullLogger<UserRepository> nullLogger)
+        {
+            Context = context;
+            NullLogger = nullLogger;
         }
 
         public async Task<IEnumerable<Domain.Models.User>> GetAllAsync() {
