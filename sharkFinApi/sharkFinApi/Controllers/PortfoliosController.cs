@@ -15,27 +15,23 @@ namespace sharkFinApi.Controllers {
     public class PortfoliosController : ControllerBase {
 
         private readonly IPortfolioRepository _portfolioRepository;
+        private readonly IAssetRepository _assetRepository;
+        private readonly ITradeRepository _tradeRepository;
 
-        public PortfoliosController(IPortfolioRepository portfolioRepository) {
+        public PortfoliosController(IPortfolioRepository portfolioRepository, IAssetRepository assetRepository, ITradeRepository tradeRepository) {
             _portfolioRepository = portfolioRepository;
+            _assetRepository = assetRepository;
+            _tradeRepository = tradeRepository;
         }
 
-        [HttpPost()]
-        public async Task<IActionResult> CreatePortfolioAsync(Portfolio portfolio) {
-            Portfolio created;
-            try {
-                created = await _portfolioRepository.AddAsync(portfolio);
-            } catch (ArgumentException e) {
-                return BadRequest(e.Message);
-            } catch (DbUpdateException) {
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
-
-            return CreatedAtAction(nameof(GetPortfolioByIdAsync), new { id = created.Id }, created);
+        [HttpGet()]
+        public async Task<IActionResult> GetAsync() {
+            var portfolios = await _portfolioRepository.GetAllAsync();
+            return Ok(portfolios);
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetPortfolioByIdAsync(int id) {
+        public async Task<IActionResult> GetByIdAsync(int id) {
             Portfolio portfolio;
             try {
                 portfolio = await _portfolioRepository.GetAsync(id);
@@ -47,7 +43,7 @@ namespace sharkFinApi.Controllers {
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdatePortfolioAsync(Portfolio portfolio) {
+        public async Task<IActionResult> PutAsync(Portfolio portfolio) {
             try {
                 await _portfolioRepository.UpdateAsync(portfolio);
             } catch {
@@ -58,7 +54,7 @@ namespace sharkFinApi.Controllers {
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePortfolioAsync(int id) {
+        public async Task<IActionResult> DeleteAsync(int id) {
             try {
                 await _portfolioRepository.DeleteAsync(id);
             } catch {
@@ -66,6 +62,64 @@ namespace sharkFinApi.Controllers {
             }
 
             return NoContent();
+        }
+
+        [HttpGet("{id}/assets")]
+        public async Task<IActionResult> GetPortfolioAssetsAsync(int id) {
+            Portfolio portfolio;
+            IEnumerable<Asset> assets;
+            try {
+                portfolio = await _portfolioRepository.GetAsync(id);
+                assets = await _assetRepository.GetAllAsync(portfolio);
+            } catch {
+                return NotFound();
+            }
+
+            return Ok(assets);
+        }
+
+        [HttpPost("{id}/assets")]
+        public async Task<IActionResult> PostAssetAsync([FromBody] Asset asset, [FromRoute] int id) {
+            Asset created;
+            try {
+                var portfolio = await _portfolioRepository.GetAsync(id);
+                created = await _assetRepository.AddAsync(asset, portfolio);
+            } catch (ArgumentException e) {
+                return BadRequest(e.Message);
+            } catch (DbUpdateException) {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+
+            return CreatedAtAction(nameof(AssetsController.GetByIdAsync), new { id = created.Id }, created);
+        }
+
+        [HttpGet("{id}/trades")]
+        public async Task<IActionResult> GetPortfolioTradesAsync(int id) {
+            Portfolio portfolio;
+            IEnumerable<Trade> trades;
+            try {
+                portfolio = await _portfolioRepository.GetAsync(id);
+                trades = await _tradeRepository.GetAllAsync(portfolio);
+            } catch {
+                return NotFound();
+            }
+
+            return Ok(trades);
+        }
+
+        [HttpPost("{id}/trades")]
+        public async Task<IActionResult> PostTradeAsync([FromBody] Trade trade, [FromRoute] int id) {
+            Trade created;
+            try {
+                var portfolio = await _portfolioRepository.GetAsync(id);
+                created = await _tradeRepository.AddAsync(trade, portfolio);
+            } catch (ArgumentException e) {
+                return BadRequest(e.Message);
+            } catch (DbUpdateException) {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+
+            return CreatedAtAction(nameof(TradesController.GetByIdAsync), new { id = created.Id }, created);
         }
     }
 }

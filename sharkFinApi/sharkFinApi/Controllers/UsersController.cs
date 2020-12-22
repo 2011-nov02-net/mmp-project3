@@ -22,13 +22,13 @@ namespace sharkFinApi.Controllers {
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetUsersAsync() {
+        public async Task<IActionResult> GetAsync() {
             var users = await _userRepository.GetAllAsync();
             return Ok(users);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateUserAsync(User user) {
+        public async Task<IActionResult> PostAsync(User user) {
             User created;
             try {
                 created = await _userRepository.AddAsync(user);
@@ -38,23 +38,23 @@ namespace sharkFinApi.Controllers {
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
 
-            return CreatedAtAction(nameof(GetUserByIdAsync), new { id = created.Id }, created);
+            return CreatedAtAction(nameof(GetByIdAsync), new { id = created.Id }, created);
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetUserByIdAsync(int id) {
+        public async Task<IActionResult> GetByIdAsync(int id) {
             User user;
             try {
                 user = await _userRepository.GetAsync(id);
             } catch {
-                return BadRequest();
+                return NotFound();
             }
 
             return Ok(user);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUserAsync(User user) {
+        public async Task<IActionResult> PutAsync(User user) {
             try {
                 await _userRepository.UpdateAsync(user);
             } catch {
@@ -65,7 +65,7 @@ namespace sharkFinApi.Controllers {
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUserAsync(int id) {
+        public async Task<IActionResult> DeleteAsync(int id) {
             try {
                 await _userRepository.DeleteAsync(id);
             } catch {
@@ -78,13 +78,30 @@ namespace sharkFinApi.Controllers {
         [HttpGet("{id}/portfolios")]
         public async Task<IActionResult> GetUserPortfoliosAsync(int id) {
             User user;
+            IEnumerable<Portfolio> portfolios;
             try {
                 user = await _userRepository.GetAsync(id);
+                portfolios = await _portfolioRepository.GetAllAsync(user);
             } catch {
-                return BadRequest();
+                return NotFound();
             }
-            var portfolios = await _portfolioRepository.GetAllAsync(user);
+
             return Ok(portfolios);
+        }
+
+        [HttpPost("{id}/portfolios")]
+        public async Task<IActionResult> PostPortfolioAsync([FromBody] Portfolio portfolio, [FromRoute]int id) {
+            Portfolio created;
+            try {
+                var user = await _userRepository.GetAsync(id);
+                created = await _portfolioRepository.AddAsync(portfolio, user);
+            } catch (ArgumentException e) {
+                return BadRequest(e.Message);
+            } catch (DbUpdateException) {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+
+            return CreatedAtAction(nameof(GetByIdAsync), new { id = created.Id }, created);
         }
     }
 }
