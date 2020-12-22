@@ -4,16 +4,15 @@
     <div class="offset sm-4">{{user.email}}</div>
     <br>
     <div class="center-align">Portfolios</div>
-    <div *ngIf="user.portfolios">
+    <div *ngIf="portfolios">
         <ul class="portfolios">
-            <li> check</li>
-            <!-- <li *ngFor="let portfolio of user.portfolios">
+            <li *ngFor="let portfolio of portfolios">
         
-                <a routerLink="/user/{{user.id}}/portfolio/{{user.portfolios.id}}">
-                    <span>{{portfolio.id}}</span> 
+                <a routerLink="/portfolio/{{portfolio.id}}">
+                    <span>{{portfolio.id}}</span> {{portfolio.name}}
                 </a>
                
-            </li> -->
+            </li>
         </ul> 
      </div>
 

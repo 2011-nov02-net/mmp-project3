@@ -3,6 +3,7 @@ import { User } from '../Models/user';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { UserService } from '../user.service';
+import { Portfolio } from '../Models/portfolio';
 
 
 @Component({
@@ -12,6 +13,7 @@ import { UserService } from '../user.service';
 })
 export class UserComponent implements OnInit {
   @Input() user!: User;
+  @Input() portfolios! : Portfolio[];
   
   constructor( private route: ActivatedRoute,
     private userService: UserService,
@@ -19,6 +21,7 @@ export class UserComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = history.state.user;
+    this. portfolios = history.state.portfolios;
     // this.getUser();
   }
 
