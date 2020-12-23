@@ -10,74 +10,26 @@ trigger:
   paths:
     include:
       - azure-pipelines.yml
-    exclude:
-      - sharkFin/*
-      -azure-pipelines-1.yml
-
-      variables:
-      sdkVersion: 5.x
-      buildConfiguration: 'Release'
-      solutionPath: .
-      startupProjectPath: sharkFinApi
 
 stages:
-
-
-- stage: build   
+- stage: build
+  jobs:
+  - job: build
+    
     pool:
       vmImage: 'ubuntu-latest'
-
-
-  jobs:
-
-
-  - job: build
-
-    - steps:
-    - task: UseDotNet@2
-      displayName: 'dotnet sfk $(sdkVersion)'
-      inputs:
-      packageType: 'sdk'
-        version: '$(sdkVersion)'
-
-    - script: dotnet restore
-      displayName: dotnet restore
-      workingDirectory: sharkFinApi
-
-    - script: dotnet build
-        --configuration $(buildConfiguration)
-        --no-restore
-      displayName: dotnet build
-      workingDirectory: $(solutionPath)
-
-    - script: dotnet publish
-        --configuration $(buildConfiguration)
-        --output $(Build.ArtifactStagingDirectory)/app
-      displayName: dotnet publish
-      workingDirectory: $(startupProjectPath)
-
-    - publish: $(Build.ArtifactStagingDirectory)/app
-      artifact: app
-      displayName: artifact publish app
-
     
-  - stage: analyze
-    dependsOn: []
-    pool:
-      vmImage: ubuntu-latest 
-    
-    jobs:
-
-  - job: analyze
+    variables:
+      sdkVersion: 5.x
+      buildConfiguration: 'Release'
 
     steps:
-
     - task: UseDotNet@2
-      displayName: dotnet sdk 2.1.x
+      displayName: 'Use .NET 2'
       inputs:
-        packageType: 'sdk'
-        version: '2.1.x'
-
+        version: 2.0.x
+        performMultiLevelLookup: true
+    
     - task: SonarCloudPrepare@1
       displayName: 'SonarCloud Prepare'
       inputs:
@@ -90,7 +42,6 @@ stages:
           sonar.exclusions=**/lib/**
           sonar.cs.opencover.reportsPaths = $(Agent.TempDirectory)/**/coverage.opencover.xml
           sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)/*.trx
-
     - task: UseDotNet@2
       displayName: dotnet sdk $(sdkVersion)
       inputs:
@@ -98,10 +49,12 @@ stages:
         version: '5.x'
         performMultiLevelLookup: true
 
-   - script: dotnet build
-        --configuration $(buildConfiguration)
-      displayName: dotnet build
-      workingDirectory: $(solutionPath)
+    - task: DotNetCoreCLI@2
+      displayName: 'dotnet build'
+      inputs:
+        command: 'build'
+        projects: '**/*.csproj'
+        workingDirectory: 'sharkFinApi'
     
     - task: DotNetCoreCLI@2
       displayName: dotnet test
@@ -125,37 +78,20 @@ stages:
         publishWebProjects: true
         arguments: '-o $(build.artifactstagingdirectory)'    
 
-- stage: deploy
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
-  dependsOn:
-  - build
-  - analyze
-  pool:
-    vmImage: ubuntu-latest
 
-  jobs:
+    - publish: $(build.artifactstagingdirectory)
+      artifact: app
 
-  - deployment: deploy_dev
+      
+    - download: current   
+      artifact: app
+      displayName: download app  
 
-    environment: dev
-
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-
-          - download: current
-            artifact: app
-            displayName: artifact download app
-
-          - task: AzureRmWebAppDeployment@4
-            displayName: azure app service deploy
-            inputs:
-              ConnectionType: 'AzureRM'
-              azureSubscription: 'Azure subscription 1 (a7c7be2b-dec9-4b29-b6aa-d73e6d6ad223)'
-              appType: 'webApp'
-              WebAppName: 'sharkFinApi'
-              packageForLinux: '$(Pipeline.Workspace)/app'
-  
-
+    - task: AzureRmWebAppDeployment@4
+      inputs:
+        ConnectionType: 'AzureRM'
+        azureSubscription: 'Azure subscription 1(a7c7be2b-dec9-4b29-b6aa-d73e6d6ad223)'
+        appType: 'webApp'
+        WebAppName: 'sharkFinApi'
+        packageForLinux: '$(Pipeline.Workspace)/app'
    
