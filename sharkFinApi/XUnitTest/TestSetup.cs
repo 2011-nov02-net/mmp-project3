@@ -202,47 +202,6 @@ namespace XUnitTest
                 },
             };
 
-            /*PortfolioEntry[] entries =
-            {
-                new PortfolioEntry
-                {
-                    PortfolioId = 1,
-                    StockSymbol = "XXX",
-                    StockMarket = "S&P",
-                    Quantity = 10
-                },
-                new PortfolioEntry
-                {
-                    PortfolioId = 2,
-                    StockSymbol = "TSLA",
-                    StockMarket = "NASDAQ",
-                    Quantity = 10
-                },
-                new PortfolioEntry
-                {
-                    PortfolioId = 3,
-                    StockSymbol = "ABS",
-                    StockMarket = "PH",
-                    Quantity = 10
-                },
-                new PortfolioEntry
-                {
-                    PortfolioId = 4,
-                    StockSymbol = "GMA",
-                    StockMarket = "PH",
-                    Quantity = 10
-                },
-                new PortfolioEntry
-                {
-                    PortfolioId = 5,
-                    StockSymbol = "PBB",
-                    StockMarket = "PH",
-                    Quantity = 10
-                },
-            };*/
-
-
-
             var context = new mmpproject2Context(options);
             context.Database.EnsureCreated();
             foreach (var user in users)
