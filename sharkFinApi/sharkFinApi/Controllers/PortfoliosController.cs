@@ -31,6 +31,7 @@ namespace sharkFinApi.Controllers {
         }
 
         [HttpGet("{id}")]
+        [ActionName(nameof(GetByIdAsync))]
         public async Task<IActionResult> GetByIdAsync(int id) {
             Portfolio portfolio;
             try {
@@ -43,8 +44,9 @@ namespace sharkFinApi.Controllers {
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAsync(Portfolio portfolio) {
+        public async Task<IActionResult> PutAsync(int id, Portfolio portfolio) {
             try {
+                portfolio.Id = id;
                 await _portfolioRepository.UpdateAsync(portfolio);
             } catch {
                 return BadRequest();
@@ -90,7 +92,7 @@ namespace sharkFinApi.Controllers {
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
 
-            return CreatedAtAction(nameof(AssetsController.GetByIdAsync), new { id = created.Id }, created);
+            return CreatedAtAction(nameof(AssetsController.GetByIdAsync), nameof(AssetsController), new { id = created.Id }, created);
         }
 
         [HttpGet("{id}/trades")]
@@ -119,7 +121,7 @@ namespace sharkFinApi.Controllers {
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
 
-            return CreatedAtAction(nameof(TradesController.GetByIdAsync), new { id = created.Id }, created);
+            return CreatedAtAction(nameof(TradesController.GetByIdAsync), nameof(TradesController), new { id = created.Id }, created);
         }
     }
 }

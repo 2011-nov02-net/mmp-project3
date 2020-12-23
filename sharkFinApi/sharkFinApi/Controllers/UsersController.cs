@@ -10,8 +10,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace sharkFinApi.Controllers {
 
-    
-
     [Route("api/users")]
     [ApiController]
     public class UsersController : ControllerBase {
@@ -45,6 +43,7 @@ namespace sharkFinApi.Controllers {
         }
 
         [HttpGet("{id}")]
+        [ActionName(nameof(GetByIdAsync))]
         public async Task<IActionResult> GetByIdAsync(int id) {
             User user;
             try {
@@ -57,8 +56,9 @@ namespace sharkFinApi.Controllers {
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAsync(User user) {
+        public async Task<IActionResult> PutAsync(int id, User user) {
             try {
+                user.Id = id;
                 await _userRepository.UpdateAsync(user);
             } catch {
                 return BadRequest();
@@ -104,7 +104,7 @@ namespace sharkFinApi.Controllers {
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
 
-            return CreatedAtAction(nameof(GetByIdAsync), new { id = created.Id }, created);
+            return CreatedAtAction(nameof(PortfoliosController.GetByIdAsync), nameof(PortfoliosController), new { id = created.Id }, created);
         }
     }
 }
