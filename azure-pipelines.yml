@@ -84,7 +84,7 @@ stages:
         arguments: '-o $(build.artifactstagingdirectory)'    
 
 
-    - publish: $(build.artifactstagingdirectory)/app
+    - publish: $(build.artifactstagingdirectory)
       artifact: app
 
       
