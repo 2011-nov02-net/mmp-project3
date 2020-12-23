@@ -27,6 +27,7 @@ namespace sharkFinApi.Controllers {
         }
 
         [HttpGet("{id}")]
+        [ActionName(nameof(GetByIdAsync))]
         public async Task<IActionResult> GetByIdAsync(int id) {
             Trade trade;
             try {
@@ -39,8 +40,9 @@ namespace sharkFinApi.Controllers {
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAsync(Trade trade) {
+        public async Task<IActionResult> PutAsync(int id, Trade trade) {
             try {
+                trade.Id = id;
                 await _tradeRepository.UpdateAsync(trade);
             } catch {
                 return BadRequest();

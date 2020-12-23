@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace XUnitTest
 {
-    public class StockControllerTest
+    public class AssetsControllerTest
     {
 
     }

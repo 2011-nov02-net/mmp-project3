@@ -55,7 +55,10 @@ namespace DataAccess.Repositories {
 
             await context.SaveChangesAsync();
 
-            return Mapper.MapAsset(newAsset);
+            var created = await context.Assets
+                .Include(a => a.Stock)
+                .FirstAsync(a => a.Id == newAsset.Id);
+            return Mapper.MapAsset(created);
         }
 
         public async Task UpdateAsync(Domain.Models.Asset asset) {
@@ -63,6 +66,7 @@ namespace DataAccess.Repositories {
             var current = await context.Assets.FirstAsync(a => a.Id == asset.Id);
             var updated = Mapper.MapAsset(asset);
 
+            updated.PortfolioId = current.PortfolioId;
             context.Entry(current).CurrentValues.SetValues(updated);
 
             await context.SaveChangesAsync();

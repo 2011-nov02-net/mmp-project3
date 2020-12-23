@@ -30,8 +30,10 @@ export class HomeComponent implements OnInit {
     this.stockService.getStockPriceApi(term).subscribe(data => {this.searchRes.price = data.c});    
   }
 
-  addToPortfolio(symbol: string, quant: number) {
-    console.log("Will buy " + quant + " shares of " + symbol)
+  addToPortfolio(symbol: string, quant: string) {
+    // let numQuant = parseInt(quant);
+    // console.log("Will buy " + numQuant + " shares of " + symbol)
+    // this.searchRes.
   }
 
 }

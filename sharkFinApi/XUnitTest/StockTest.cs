@@ -13,13 +13,7 @@ namespace XUnitTest
         Stock testStock;
         public StockTest()
         {
-            testStock = new Stock
-            {
-                Symbol = "AAPL",
-                Market = "Technology",
-                Logo = "Apple",
-                Name = "Apple Inc."
-            };
+            testStock = new Stock("APPL","NASDAQ","Apple Inc.",null);
         }
 
         [Fact]

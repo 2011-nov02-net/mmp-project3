@@ -5,24 +5,23 @@ using System.Text;
 namespace Domain.Models {
     public class User {
 
-        private readonly ICollection<Portfolio> _portfolios;
-        public IReadOnlyCollection<Portfolio> Portfolios => new HashSet<Portfolio>(_portfolios);
+        //private readonly ICollection<Portfolio> _portfolios;
+        //public IReadOnlyCollection<Portfolio> Portfolios => new HashSet<Portfolio>(_portfolios);
+        public ICollection<Portfolio> Portfolios { get; set; }
 
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
         public string UserName { get; set; }
-        public User()
-        {
 
-        }
         public User(string firstName, string lastName, string email, string username, ICollection<Portfolio> portfolios) {
             FirstName = firstName;
             LastName = lastName;
             Email = email;
             UserName = username;
-            _portfolios = portfolios ?? new HashSet<Portfolio>();
+            //_portfolios = portfolios ?? new HashSet<Portfolio>();
+            Portfolios = portfolios ?? new HashSet<Portfolio>();
         }
 
         // TODO:

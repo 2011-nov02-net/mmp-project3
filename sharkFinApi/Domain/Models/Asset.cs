@@ -9,9 +9,9 @@ namespace Domain.Models {
         public Stock Stock { get; set; }
         public int Quantity { get; set; }
 
-        public Asset(Stock stock, int qty) {
+        public Asset(Stock stock, int quantity) {
             Stock = stock;
-            Quantity = qty;
+            Quantity = quantity;
         }
     }
 }

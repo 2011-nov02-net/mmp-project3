@@ -28,6 +28,7 @@ namespace DataAccess {
         /// <returns>The user DataAccess object</returns>
         public static Models.User MapUser(Domain.Models.User user) {
             return new Models.User {
+                Id = user.Id,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Email = user.Email,
@@ -57,6 +58,7 @@ namespace DataAccess {
         /// <returns>The portfolio DataAccess object</returns>
         public static Models.Portfolio MapPortfolio(Domain.Models.Portfolio portfolio) {
             return new Models.Portfolio {
+                Id = portfolio.Id,
                 Name = portfolio.Name,
                 Funds = portfolio.Funds
             };
@@ -82,7 +84,8 @@ namespace DataAccess {
         /// <returns>The portfolio entry DataAccess object</returns>
         public static Models.Asset MapAsset(Domain.Models.Asset asset) {
             return new Models.Asset {
-                Stock = MapStock(asset.Stock),
+                Id = asset.Id,
+                StockId = asset.Stock.Id,
                 Quantity = asset.Quantity
             };
         }
@@ -109,7 +112,8 @@ namespace DataAccess {
         /// <returns>The trade DataAccess object</returns>
         public static Models.Trade MapTrade(Domain.Models.Trade trade) {
             return new Models.Trade {
-                Stock = MapStock(trade.Stock),
+                Id = trade.Id,
+                StockId = trade.Stock.Id,
                 Quantity = trade.Quantity,
                 Price = trade.Price,
                 TimeTraded = trade.Time
@@ -138,6 +142,7 @@ namespace DataAccess {
         /// <returns>The stock DataAccess object</returns>
         public static Models.Stock MapStock(Domain.Models.Stock stock) {
             return new Models.Stock {
+                Id = stock.Id,
                 Symbol = stock.Symbol,
                 Market = stock.Market,
                 Name = stock.Name,
