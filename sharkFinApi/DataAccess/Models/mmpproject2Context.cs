@@ -34,7 +34,7 @@ namespace DataAccess.Models {
                 entity.HasOne(d => d.Portfolio)
                     .WithMany(p => p.Assets)
                     .HasForeignKey(d => d.PortfolioId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK__Assets__Portfoli__45BE5BA9");
 
                 entity.HasOne(d => d.Stock)
@@ -57,7 +57,7 @@ namespace DataAccess.Models {
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Portfolios)
                     .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK__Portfolio__UserI__40F9A68C");
             });
 
@@ -90,7 +90,7 @@ namespace DataAccess.Models {
                 entity.HasOne(d => d.Portfolio)
                     .WithMany(p => p.Trades)
                     .HasForeignKey(d => d.PortfolioId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK__Trades__Portfoli__498EEC8D");
 
                 entity.HasOne(d => d.Stock)

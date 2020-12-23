@@ -37,7 +37,7 @@ namespace sharkFinApi.Controllers {
             try {
                 portfolio = await _portfolioRepository.GetAsync(id);
             } catch {
-                return BadRequest();
+                return NotFound();
             }
 
             return Ok(portfolio);
@@ -92,7 +92,7 @@ namespace sharkFinApi.Controllers {
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
 
-            return CreatedAtAction(nameof(AssetsController.GetByIdAsync), nameof(AssetsController), new { id = created.Id }, created);
+            return CreatedAtAction(nameof(AssetsController.GetByIdAsync), "Assets", new { id = created.Id }, created);
         }
 
         [HttpGet("{id}/trades")]
@@ -118,10 +118,11 @@ namespace sharkFinApi.Controllers {
             } catch (ArgumentException e) {
                 return BadRequest(e.Message);
             } catch (DbUpdateException) {
+                throw;
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
 
-            return CreatedAtAction(nameof(TradesController.GetByIdAsync), nameof(TradesController), new { id = created.Id }, created);
+            return CreatedAtAction(nameof(TradesController.GetByIdAsync), "Trades", new { id = created.Id }, created);
         }
     }
 }

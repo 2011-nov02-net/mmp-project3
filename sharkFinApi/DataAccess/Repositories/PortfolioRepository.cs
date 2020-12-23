@@ -77,6 +77,7 @@ namespace DataAccess.Repositories {
             var current = await context.Portfolios.FindAsync(portfolio.Id);
             var updated = Mapper.MapPortfolio(portfolio);
 
+            updated.UserId = current.UserId;
             context.Entry(current).CurrentValues.SetValues(updated);
 
             await context.SaveChangesAsync();

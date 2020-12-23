@@ -104,7 +104,7 @@ namespace sharkFinApi.Controllers {
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
 
-            return CreatedAtAction(nameof(PortfoliosController.GetByIdAsync), nameof(PortfoliosController), new { id = created.Id }, created);
+            return CreatedAtAction(nameof(PortfoliosController.GetByIdAsync), "Portfolios", new { id = created.Id }, created);
         }
     }
 }
