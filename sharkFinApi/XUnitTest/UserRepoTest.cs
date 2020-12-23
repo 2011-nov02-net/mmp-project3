@@ -10,20 +10,21 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 using Domain.Models;
-
+using Microsoft.EntityFrameworkCore.Sqlite;
+using Microsoft.EntityFrameworkCore.InMemory;
 
 namespace XUnitTest
 {
     public partial class UnitTest
     {
-        Domain.Models.User testUser;
+        
         [Fact]
         public async Task AddCustomer_Database_TestAsync()
         {
             using var connection = new SqliteConnection("Data Source=:memory:");
             connection.Open();
             var options = new DbContextOptionsBuilder<mmpproject2Context>().UseSqlite(connection).Options;
-            testUser = new Domain.Models.User("Grace","Libardos","gl@gmail.com","gl001", null);
+            var testUser = new Domain.Models.User("Grace","Libardos","gl@gmail.com","gl001", null);
 
 
             using (var context = new mmpproject2Context(options))
@@ -32,6 +33,7 @@ namespace XUnitTest
                 var repo = new UserRepository(options);
 
                 await repo.AddAsync(testUser);
+                await context.SaveChangesAsync();
             }
 
             using var context2 = new mmpproject2Context(options);
@@ -65,6 +67,7 @@ namespace XUnitTest
         [InlineData(2)]
         [InlineData(3)]
         [InlineData(4)]
+        [InlineData(5)]
         public async Task GetUserbyID_Database_test(int id)
         {
             using var connection = Database_init();
@@ -89,6 +92,7 @@ namespace XUnitTest
         [InlineData("rody@gmail.com")]
         [InlineData("graceLibardos@gmail.com")]
         [InlineData("joseRizal@gmail.com")]
+        [InlineData("mG@gmail.com")]
         public async Task GetUserbyEmail_Database_test(string email)
         {
             using var connection = Database_init();
