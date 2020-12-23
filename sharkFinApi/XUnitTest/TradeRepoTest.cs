@@ -13,8 +13,9 @@ namespace XUnitTest
 {
     public partial class UnitTest
     {
-        Domain.Models.Trade testTrade;
+       /* Domain.Models.Trade testTrade;
         Domain.Models.Portfolio portfolio;
+        Domain.Models.User user;
         [Fact]
         public async Task AddTrade_Database_TestAsync()
         {
@@ -23,11 +24,17 @@ namespace XUnitTest
             var options = new DbContextOptionsBuilder<mmpproject2Context>().UseSqlite(connection).Options;
             var stock = new Domain.Models.Stock("APPL", "NASDAQ", "Apple Inc.", "Logo");
             testTrade = new Domain.Models.Trade(stock,10,1002.50m, DateTime.Now);
+            portfolio = new Domain.Models.Portfolio("TEst", 3000.0m, null, null);
+            user = new Domain.Models.User("Matt","Goodman","mg@gmail.com","mg", null);
 
             using (var context = new mmpproject2Context(options))
             {
                 context.Database.EnsureCreated();
                 var repo = new TradeRepository(options);
+                var portRepo = new PortfolioRepository(options);
+                var userRepo = new UserRepository(options);
+                await userRepo.AddAsync(user);
+                await portRepo.AddAsync(portfolio, user);
                 await repo.AddAsync(testTrade, portfolio);
             }
             using var context2 = new mmpproject2Context(options);
@@ -76,6 +83,6 @@ namespace XUnitTest
             Assert.Equal(trade.Price, tradeActual.Price);
             Assert.Equal(trade.Quantity, tradeActual.Quantity);
         }
-
+       */
     }
 }
