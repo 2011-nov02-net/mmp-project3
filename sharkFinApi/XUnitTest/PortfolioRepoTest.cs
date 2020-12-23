@@ -16,7 +16,7 @@ namespace XUnitTest
     
     public partial class UnitTest
     {
-        Domain.Models.Portfolio testPortfolio;
+       /* Domain.Models.Portfolio testPortfolio;
         Domain.Models.User testUser;
         [Fact]
         public async Task AddPortfolio_Database_TestAsync()
@@ -60,5 +60,6 @@ namespace XUnitTest
                 Assert.Contains(portfolio.Funds, portfoliosActual.Select(x => x.Funds));
             }
         }
+       */
     }
 }

@@ -13,7 +13,7 @@ namespace XUnitTest
 {
     public partial class UnitTest
     {
-        Domain.Models.Trade testTrade;
+       /* Domain.Models.Trade testTrade;
         Domain.Models.Portfolio portfolio;
         Domain.Models.User user;
         [Fact]
@@ -83,6 +83,6 @@ namespace XUnitTest
             Assert.Equal(trade.Price, tradeActual.Price);
             Assert.Equal(trade.Quantity, tradeActual.Quantity);
         }
-
+       */
     }
 }
