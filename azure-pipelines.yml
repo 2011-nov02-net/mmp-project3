@@ -11,8 +11,10 @@ trigger:
     include:
       - sharkFinApi/*
       - azure-pipelines.yml
-    exlude:
+    exclude:
       - sharkFin/*
+      - azure-pipelines-1.yml
+
 
 stages:
 - stage: build
@@ -97,4 +99,86 @@ stages:
         appType: 'webApp'
         WebAppName: 'sharkFinApi'
         packageForLinux: '$(Pipeline.Workspace)/app'
+        DeploymentType: 'zipDeploy'
    
+#    trigger:
+#  branches:
+#    include:
+#      - master
+
+
+# variables:
+#   solution: '**/*.sln'
+#   buildConfiguration: 'Release'
+#   apiFolder: './sharkFinApi/sharkFinApi'
+
+# steps:
+# - task: UseDotNet@2
+#   displayName: 'get 2.0 SDK for sonar'
+#   inputs:
+#     packageType: 'sdk'
+#     version: '2.0.x'
+
+# #sonar settings
+# - task: SonarCloudPrepare@1
+#   displayName: 'Sonar Prepare'
+#   inputs:
+#     SonarCloud: 'sonarCloud'
+#     organization: '2011-nov02-net'
+#     scannerMode: 'MSBuild'
+#     projectKey: '2011-nov02-net_mmp-project2'
+# - task: SonarCloudPrepare@1
+#   inputs:
+#     SonarCloud: 'SonarCloud'
+#     organization: '2011-nov02-net'
+#     scannerMode: 'MSBuild'
+#     projectKey: '2011-nov02-net_mmp-project2'
+#     projectName: '2011-nov02-net_mmp-project2'
+#     extraProperties: |
+#       sonar.exclusions=**/lib/**'
+#       sonar.cs.xunit.reportsPaths=${Agent.TempDirectory}/**/XUnit.TestResults.xml
+#       sonar.cs.opencover.reportsPaths=/home/vsts/work/_temp/coverage/coverage.opencover.xml
+  
+# - task: UseDotNet@2
+#   displayName: 'get sdk for build'
+#   inputs:
+#     packageType: 'sdk'
+#     version: '5.0.x'
+  
+
+# - task: DotNetCoreCLI@2
+#   displayName: 'dotnet Test Build- $(buildConfiguration)'
+#   inputs:
+#     command: 'test'
+#     projects: '$(System.DefaultWorkingDirectory)/sharkFinApi'
+#     arguments: '--configuration $(BuildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=$(Agent.TempDirectory)/coverage/ --collect "Code coverage"'
+#     testRunTitle: 'Test Run'
+    
+
+# - task: SonarCloudAnalyze@1
+#   displayName: 'Sonar Cloud - Run'
+
+# - task: SonarCloudPublish@1
+#   displayName: 'Sonar Cloud - Timeout'
+#   inputs:
+#     pollingTimeoutSec: '300'
+
+
+# - script: dotnet publish  $(apiFolder) --configuration $(buildConfiguration) --output $(System.DefaultWorkingDirectory)/publish
+#   displayName: 'dotnet build $(buildConfiguration)'
+
+
+# #publish artifact
+# - publish:  $(System.DefaultWorkingDirectory)/publish
+#   displayName: 'publish artifact'
+#   artifact: BuildAppArtifact
+
+# - task: AzureRmWebAppDeployment@4
+#   displayName: "azure app service deploy backend"
+#   condition: and( succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+#   inputs:
+#     ConnectionType: 'AzureRM'
+#     azureSubscription: 'Azure subscription 1(e92a324b-9577-4df8-b544-5189c2ff2bbb)'
+#     appType: 'webApp'
+#     WebAppName: 'sharkFinApi'
+#     packageForLinux: $(System.DefaultWorkingDirectory)/publish
