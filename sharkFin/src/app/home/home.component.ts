@@ -5,6 +5,7 @@ import { StockService} from '../stock.service';
 import {
   debounceTime, distinctUntilChanged, switchMap
 } from 'rxjs/operators';
+import { StockSearch } from '../stockSearch';
 
 
 @Component({
@@ -13,20 +14,20 @@ import {
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  searchRes!: {};
-  searchPrice!: {};
+  searchRes: StockSearch = {name:'', ticker: '', logo: '', price: 0, exchange: '', industry: ''};
+ 
   constructor(private stockService: StockService) { }
 
   ngOnInit(): void {
 
   }
 
-  search(term: string) {
-
+  search($event: any, term: string) {
+    $event.preventDefault();
     term = term.toUpperCase();
-    this.stockService.getStockInfoApi(term).subscribe(data => {this.searchRes = data},
+    this.stockService.getStockInfoApi(term).subscribe(data => {this.searchRes.name = data.name, this.searchRes.ticker = data.ticker, this.searchRes.exchange = data.finnhubIndustry, this.searchRes.logo = data.logo},
       err => console.error(err));
-    this.stockService.getStockPriceApi(term).subscribe(data => {this.searchPrice = data});    
+    this.stockService.getStockPriceApi(term).subscribe(data => {this.searchRes.price = data.c});    
   }
 
   addToPortfolio(symbol: string, quant: number) {

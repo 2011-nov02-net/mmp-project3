@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import {User} from './Models/user';
 import { environment } from 'src/environments/environment';
+import { OktaAuthService } from '@okta/okta-angular';
 
 @Injectable({
   providedIn: 'root'
@@ -16,13 +17,14 @@ export class UserService {
   };
 
   constructor(private http: HttpClient,
-    private messageService: MessageService) { }
+    private messageService: MessageService, private oktaAuth: OktaAuthService) { }
 
     getUser(id: number): Observable<User>{
-      return this.http.get<User>(this.baseUrl + id).pipe(
-        tap(_ => this.log(`fetched User id=${id}`)), 
-        catchError(this.handleError<User>(`getUser id=${id}`))
-      );
+      return this.http.get<User>(`${this.baseUrl}/${id}`);
+      // .pipe(
+      //   tap(_ => this.log(`fetched User id=${id}`)), 
+      //   catchError(this.handleError<User>(`getUser id=${id}`))
+      // );
     }
 
     getUserByEmail(email: string): Observable<User>{
