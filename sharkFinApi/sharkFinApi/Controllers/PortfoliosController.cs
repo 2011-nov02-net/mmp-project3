@@ -118,7 +118,6 @@ namespace sharkFinApi.Controllers {
             } catch (ArgumentException e) {
                 return BadRequest(e.Message);
             } catch (DbUpdateException) {
-                throw;
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
 
