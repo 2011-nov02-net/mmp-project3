@@ -44,7 +44,7 @@ namespace DataAccess {
             return new Domain.Models.Portfolio(
                 portfolio.Name,
                 portfolio.Funds,
-                portfolio.PortfolioEntries.Select(MapAsset).ToHashSet(),
+                portfolio.Assets.Select(MapAsset).ToHashSet(),
                 portfolio.Trades.Select(MapTrade).ToHashSet()) {
                 Id = portfolio.Id
             };
@@ -67,10 +67,12 @@ namespace DataAccess {
         /// </summary>
         /// <param name="asset">The DataAccess portfolio entry object</param>
         /// <returns>The asset business model</returns>
-        public static Domain.Models.Asset MapAsset(Models.PortfolioEntry asset) {
+        public static Domain.Models.Asset MapAsset(Models.Asset asset) {
             return new Domain.Models.Asset(
                 MapStock(asset.Stock),
-                asset.Quantity);
+                asset.Quantity) { 
+                Id = asset.Id
+            };
         }
 
         /// <summary>
@@ -78,8 +80,8 @@ namespace DataAccess {
         /// </summary>
         /// <param name="asset">The business domain asset object</param>
         /// <returns>The portfolio entry DataAccess object</returns>
-        public static Models.PortfolioEntry MapAsset(Domain.Models.Asset asset) {
-            return new Models.PortfolioEntry {
+        public static Models.Asset MapAsset(Domain.Models.Asset asset) {
+            return new Models.Asset {
                 Stock = MapStock(asset.Stock),
                 Quantity = asset.Quantity
             };
@@ -124,7 +126,9 @@ namespace DataAccess {
                 stock.Symbol,
                 stock.Market,
                 stock.Name,
-                stock.Logo);
+                stock.Logo) {
+                Id = stock.Id
+            };
         }
 
         /// <summary>

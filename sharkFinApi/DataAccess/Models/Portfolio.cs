@@ -3,13 +3,12 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace DataAccess.Models
-{
+namespace DataAccess.Models {
     public partial class Portfolio
     {
         public Portfolio()
         {
-            PortfolioEntries = new HashSet<PortfolioEntry>();
+            Assets = new HashSet<Asset>();
             Trades = new HashSet<Trade>();
         }
 
@@ -19,7 +18,7 @@ namespace DataAccess.Models
         public decimal Funds { get; set; }
 
         public virtual User User { get; set; }
-        public virtual ICollection<PortfolioEntry> PortfolioEntries { get; set; }
+        public virtual ICollection<Asset> Assets { get; set; }
         public virtual ICollection<Trade> Trades { get; set; }
     }
 }

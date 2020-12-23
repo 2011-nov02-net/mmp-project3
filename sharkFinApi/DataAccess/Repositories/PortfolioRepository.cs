@@ -19,7 +19,7 @@ namespace DataAccess.Repositories {
         public async Task<IEnumerable<Domain.Models.Portfolio>> GetAllAsync() {
             using var context = new mmpproject2Context(_contextOptions);
             var portfolios = await context.Portfolios
-                .Include(p => p.PortfolioEntries)
+                .Include(p => p.Assets)
                     .ThenInclude(a => a.Stock)
                 .Include(p => p.Trades)
                     .ThenInclude(t => t.Stock)
@@ -32,7 +32,7 @@ namespace DataAccess.Repositories {
             using var context = new mmpproject2Context(_contextOptions);
             var portfolios = await context.Portfolios
                 .Where(p => p.UserId == user.Id)
-                .Include(p => p.PortfolioEntries)
+                .Include(p => p.Assets)
                     .ThenInclude(a => a.Stock)
                 .Include(p => p.Trades)
                     .ThenInclude(t => t.Stock)
@@ -44,7 +44,7 @@ namespace DataAccess.Repositories {
         public async Task<Domain.Models.Portfolio> GetAsync(int id) {
             using var context = new mmpproject2Context(_contextOptions);
             var portfolio = await context.Portfolios
-                .Include(p => p.PortfolioEntries)
+                .Include(p => p.Assets)
                     .ThenInclude(a => a.Stock)
                 .Include(p => p.Trades)
                     .ThenInclude(t => t.Stock)
@@ -53,19 +53,23 @@ namespace DataAccess.Repositories {
             return Mapper.MapPortfolio(portfolio);
         }
 
-        public async Task<Domain.Models.Portfolio> AddAsync(Domain.Models.Portfolio portfolio) {
+        public async Task<Domain.Models.Portfolio> AddAsync(Domain.Models.Portfolio portfolio, Domain.Models.User user) {
             if (portfolio.Id != 0) {
                 throw new ArgumentException("Portfolio already exists.");
             }
 
             using var context = new mmpproject2Context(_contextOptions);
-            var dbPortfolio = Mapper.MapPortfolio(portfolio);
+            var dbUser = await context.Users
+                .Include(u => u.Portfolios)
+                .FirstAsync(u => u.Id == user.Id);
+            var newPortfolio = Mapper.MapPortfolio(portfolio);
 
-            await context.Portfolios.AddAsync(dbPortfolio);
+            dbUser.Portfolios.Add(newPortfolio);
+            context.Portfolios.Add(newPortfolio);
 
             await context.SaveChangesAsync();
 
-            return Mapper.MapPortfolio(dbPortfolio);
+            return Mapper.MapPortfolio(newPortfolio);
         }
 
         public async Task UpdateAsync(Domain.Models.Portfolio portfolio) {

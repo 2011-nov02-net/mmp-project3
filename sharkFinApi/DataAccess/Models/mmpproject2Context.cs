@@ -4,18 +4,20 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
-namespace DataAccess.Models
-{
+namespace DataAccess.Models {
     public partial class mmpproject2Context : DbContext
     {
+        public mmpproject2Context()
+        {
+        }
 
         public mmpproject2Context(DbContextOptions<mmpproject2Context> options)
             : base(options)
         {
         }
 
+        public virtual DbSet<Asset> Assets { get; set; }
         public virtual DbSet<Portfolio> Portfolios { get; set; }
-        public virtual DbSet<PortfolioEntry> PortfolioEntries { get; set; }
         public virtual DbSet<Stock> Stocks { get; set; }
         public virtual DbSet<Trade> Trades { get; set; }
         public virtual DbSet<User> Users { get; set; }
@@ -23,6 +25,24 @@ namespace DataAccess.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
+
+            modelBuilder.Entity<Asset>(entity =>
+            {
+                entity.HasIndex(e => new { e.PortfolioId, e.StockId }, "AK_AssetPortfolioIdStockId")
+                    .IsUnique();
+
+                entity.HasOne(d => d.Portfolio)
+                    .WithMany(p => p.Assets)
+                    .HasForeignKey(d => d.PortfolioId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Assets__Portfoli__45BE5BA9");
+
+                entity.HasOne(d => d.Stock)
+                    .WithMany(p => p.Assets)
+                    .HasForeignKey(d => d.StockId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Assets__StockId__46B27FE2");
+            });
 
             modelBuilder.Entity<Portfolio>(entity =>
             {
@@ -38,45 +58,25 @@ namespace DataAccess.Models
                     .WithMany(p => p.Portfolios)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Portfolio__UserI__6EF57B66");
-            });
-
-            modelBuilder.Entity<PortfolioEntry>(entity =>
-            {
-                entity.HasKey(e => new { e.PortfolioId, e.StockSymbol, e.StockMarket })
-                    .HasName("PK__Portfoli__29B9ADE3DD119CFA");
-
-                entity.ToTable("PortfolioEntry");
-
-                entity.Property(e => e.StockSymbol).HasMaxLength(99);
-
-                entity.Property(e => e.StockMarket).HasMaxLength(99);
-
-                entity.HasOne(d => d.Portfolio)
-                    .WithMany(p => p.PortfolioEntries)
-                    .HasForeignKey(d => d.PortfolioId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Portfolio__Portf__72C60C4A");
-
-                entity.HasOne(d => d.Stock)
-                    .WithMany(p => p.PortfolioEntries)
-                    .HasForeignKey(d => new { d.StockSymbol, d.StockMarket })
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__PortfolioEntry__73BA3083");
+                    .HasConstraintName("FK__Portfolio__UserI__40F9A68C");
             });
 
             modelBuilder.Entity<Stock>(entity =>
             {
-                entity.HasKey(e => new { e.Symbol, e.Market })
-                    .HasName("PK__Stocks__132F00CFB656555F");
-
-                entity.Property(e => e.Symbol).HasMaxLength(99);
-
-                entity.Property(e => e.Market).HasMaxLength(99);
+                entity.HasIndex(e => new { e.Symbol, e.Market }, "AK_StockSymbolMarket")
+                    .IsUnique();
 
                 entity.Property(e => e.Logo).HasMaxLength(99);
 
+                entity.Property(e => e.Market)
+                    .IsRequired()
+                    .HasMaxLength(99);
+
                 entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(99);
+
+                entity.Property(e => e.Symbol)
                     .IsRequired()
                     .HasMaxLength(99);
             });
@@ -85,32 +85,24 @@ namespace DataAccess.Models
             {
                 entity.Property(e => e.Price).HasColumnType("money");
 
-                entity.Property(e => e.StockMarket)
-                    .IsRequired()
-                    .HasMaxLength(99);
-
-                entity.Property(e => e.StockSymbol)
-                    .IsRequired()
-                    .HasMaxLength(99);
-
                 entity.Property(e => e.TimeTraded).HasColumnType("datetime");
 
                 entity.HasOne(d => d.Portfolio)
                     .WithMany(p => p.Trades)
                     .HasForeignKey(d => d.PortfolioId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Trades__Portfoli__76969D2E");
+                    .HasConstraintName("FK__Trades__Portfoli__498EEC8D");
 
                 entity.HasOne(d => d.Stock)
                     .WithMany(p => p.Trades)
-                    .HasForeignKey(d => new { d.StockSymbol, d.StockMarket })
+                    .HasForeignKey(d => d.StockId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Trades__778AC167");
+                    .HasConstraintName("FK__Trades__StockId__4A8310C6");
             });
 
             modelBuilder.Entity<User>(entity =>
             {
-                entity.HasIndex(e => e.Email, "UQ__Users__A9D10534A1B3ABC1")
+                entity.HasIndex(e => e.Email, "UQ__Users__A9D105343BA3AE6E")
                     .IsUnique();
 
                 entity.Property(e => e.Email)

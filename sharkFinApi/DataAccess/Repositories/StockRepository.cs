@@ -38,6 +38,13 @@ namespace DataAccess.Repositories
             return stocks.Select(Mapper.MapStock);
         }
 
+        public async Task<Domain.Models.Stock> GetAsync(int id) {
+            using var context = new mmpproject2Context(_contextOptions);
+            var stock = await context.Stocks.FirstAsync(s => s.Id == id);
+
+            return Mapper.MapStock(stock);
+        }
+
         public async Task<Domain.Models.Stock> GetAsync(string symbol, string market) {
             using var context = new mmpproject2Context(_contextOptions);
             var stock = await context.Stocks.FirstAsync(s => s.Symbol == symbol && s.Market == market);

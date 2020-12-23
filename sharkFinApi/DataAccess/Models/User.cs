@@ -3,8 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace DataAccess.Models
-{
+namespace DataAccess.Models {
     public partial class User
     {
         public User()

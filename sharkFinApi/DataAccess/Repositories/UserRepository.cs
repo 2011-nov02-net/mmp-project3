@@ -62,13 +62,13 @@ namespace DataAccess.Repositories {
             }
 
             using var context = new mmpproject2Context(_contextOptions);
-            var dbUser = Mapper.MapUser(user);
+            var newUser = Mapper.MapUser(user);
 
-            await context.Users.AddAsync(dbUser);
+            await context.Users.AddAsync(newUser);
 
             await context.SaveChangesAsync();
 
-            return Mapper.MapUser(dbUser);
+            return Mapper.MapUser(newUser);
         }
 
         public async Task UpdateAsync(Domain.Models.User user) {
