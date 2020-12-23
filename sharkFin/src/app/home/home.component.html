@@ -3,10 +3,10 @@
     <div class="row">
         <form class="input-field">
             <input #stockSearch class="col s10" type="text" name="stockSearch" id="stockSearch" placeholder="Search">
-            <button class="btn col s2" (click)="search(stockSearch.value);event.preventDefault()">Search</button>
+            <button class="btn col s2" (click)="search($event, stockSearch.value)">Search</button>
         </form>
     </div>
-    <div *ngIf="searchRes" class="row">
+    <div *ngIf="searchRes.name" class="row">
         <div id="infoDiv col s8 offset-s2">
             <img src="{{searchRes.logo}}" />
             <h4>{{searchRes.name}} - {{searchPrice.c}}</h4>
@@ -15,7 +15,7 @@
 
             <form class="input-field">
                 <input #stockQuant class="col s1" type="number" name="stockQuant" id="stockQuant" placeholder="Quantity">
-                <button class="btn" (click)="addToPortfolio(searchRes.ticker, stockQuant.value);event.preventDefault()">Add to Portfolio</button> 
+                <button class="btn" (click)="addToPortfolio(searchRes.ticker, stockQuant.value);preventDefault()">Add to Portfolio</button> 
             </form>
         </div>
     </div>
