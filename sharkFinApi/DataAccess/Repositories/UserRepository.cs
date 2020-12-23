@@ -13,18 +13,10 @@ namespace DataAccess.Repositories {
 
         private readonly DbContextOptions<mmpproject2Context> _contextOptions;
 
-        public mmpproject2Context Context { get; }
-        public NullLogger<UserRepository> NullLogger { get; }
 
-        public UserRepository(mmpproject2Context context, DbContextOptions<mmpproject2Context> contextOptions) {
+        public UserRepository(DbContextOptions<mmpproject2Context> contextOptions) {
             _contextOptions = contextOptions;
             
-        }
-
-        public UserRepository(mmpproject2Context context, NullLogger<UserRepository> nullLogger)
-        {
-            Context = context;
-            NullLogger = nullLogger;
         }
 
         public async Task<IEnumerable<Domain.Models.User>> GetAllAsync() {

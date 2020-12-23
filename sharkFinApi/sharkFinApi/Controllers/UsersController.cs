@@ -9,6 +9,9 @@ using Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace sharkFinApi.Controllers {
+
+    
+
     [Route("api/users")]
     [ApiController]
     public class UsersController : ControllerBase {

@@ -11,11 +11,6 @@ namespace Domain.Models {
         public string Name { get; set; }
         public string Logo { get; set; }
 
-        public Stock()
-        {
-
-        }
-
         public Stock(string symbol, string market, string name, string logo) {
             Symbol = symbol;
             Market = market;

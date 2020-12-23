@@ -23,18 +23,13 @@ namespace XUnitTest
             using var connection = new SqliteConnection("Data Source=:memory:");
             connection.Open();
             var options = new DbContextOptionsBuilder<mmpproject2Context>().UseSqlite(connection).Options;
-            testUser = new Domain.Models.User
-            {
-                FirstName = "Grace",
-                LastName = "Libardos",
-                Email = "gl@gmail.com",
-                UserName = "gl001"
-            };
+            testUser = new Domain.Models.User("Grace","Libardos","gl@gmail.com","gl001", null);
+
 
             using (var context = new mmpproject2Context(options))
             {
                 context.Database.EnsureCreated();
-                var repo = new UserRepository(context, new NullLogger<UserRepository>());
+                var repo = new UserRepository(options);
 
                 await repo.AddAsync(testUser);
             }
@@ -52,7 +47,7 @@ namespace XUnitTest
             using var connection = Database_init();
             var options = new DbContextOptionsBuilder<mmpproject2Context>().UseSqlite(connection).Options;
             using var context = new mmpproject2Context(options);
-            var repo = new UserRepository(context, new NullLogger<UserRepository>());
+            var repo = new UserRepository(options);
 
             var users = await repo.GetAllAsync();
             var usersActual = context.Users.ToList();
@@ -75,7 +70,7 @@ namespace XUnitTest
             using var connection = Database_init();
             var options = new DbContextOptionsBuilder<mmpproject2Context>().UseSqlite(connection).Options;
             using var context = new mmpproject2Context(options);
-            var repo = new UserRepository(context, new NullLogger<UserRepository>());
+            var repo = new UserRepository(options);
 
             var user = await repo.GetAsync(id);
 
@@ -99,7 +94,7 @@ namespace XUnitTest
             using var connection = Database_init();
             var options = new DbContextOptionsBuilder<mmpproject2Context>().UseSqlite(connection).Options;
             using var context = new mmpproject2Context(options);
-            var repo = new UserRepository(context, new NullLogger<UserRepository>());
+            var repo = new UserRepository(options);
 
             var user = await repo.GetAsync(email);
 
