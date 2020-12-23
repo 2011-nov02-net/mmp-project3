@@ -1,9 +1,9 @@
 <nav class="nav-extended blue lighten-1" id="mainNav">
     <div *ngIf="!isAuthenticated" class="right-align userDiv">
-        <button (click)="login()">Login</button> | <a href="">Sign Up</a>
+        <a href='#' (click)="login()">Login</a> | <a href="">Sign Up</a>
     </div>
     <div *ngIf="isAuthenticated" class="right-align userDiv">        
-        | <button (click)="logout()">Log Out</button> | <a routerLink="/user/1" >Details</a>
+        | <a href=# (click)="logout()">Log Out</a> | <a routerLink="/user/1" >Details</a>
     </div>
   
     <div class="nav-wrapper center-align section">
