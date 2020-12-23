@@ -1,0 +1,67 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+  branches:
+   include:
+     - master
+  paths:
+    include:
+      - sharkFin/*
+      - azure-pipelines-1.yml
+    exclude:
+      - sharkFinApi/*
+      - azure-pipelines.yml
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  appDir: sharkFin
+
+steps:
+- task: NodeTool@0
+  displayName: node install
+  inputs:
+    versionSpec: '14.x'
+
+- script: npm ci
+  displayName: npm install
+  workingDirectory: $(appDir)
+
+- script: npx ng build --prod
+  displayName: ng build
+  workingDirectory: $(appDir)
+
+# - task: SonarCloudPrepare@1
+#   displayName: sonarcloud prepare
+#   inputs:
+#     SonarCloud: 
+#     organization: '2011-nov02-net'
+#     scannerMode: 'CLI'
+#     configMode: 'manual'
+#     cliProjectKey: 
+#     cliProjectName: 'sharkFin Web App'
+#     cliProjectVersion: '1.0.0'
+#     cliSources: '$(appDir)/src,$(appDir)/e2e'
+#     extraProperties: 'sonar.coverage.exclusions=**/*.spec.ts,$(appDir)/e2e/**/*'
+
+# - task: SonarCloudAnalyze@1
+#   displayName: sonarcloud run
+
+# - task: SonarCloudPublish@1
+#   displayName: sonarcloud publish
+#   inputs:
+#     pollingTimeoutSec: '300'
+
+- task: AzureRmWebAppDeployment@4
+  displayName: azure app service deploy
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Azure subscription 1(1)(a7c7be2b-dec9-4b29-b6aa-d73e6d6ad223)'
+    appType: 'webApp'
+    WebAppName: 'sharkFin'
+    packageForLinux: '$(appDir)/dist/$(appDir)'
