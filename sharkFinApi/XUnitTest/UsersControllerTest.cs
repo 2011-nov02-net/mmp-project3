@@ -15,10 +15,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace XUnitTest
 {
-    public class UserControllerTest
+    public class UsersControllerTest
     {
         static readonly Mock<IUserRepository> _mockRepo = new Mock<IUserRepository>();
-        static readonly UsersController usersController = new UsersController(_mockRepo.Object);
+        static readonly UsersController usersController = new UsersController(_mockRepo.Object, null);
         string fake = "fakeId";
         string fake2 = "fakeId2";
     }

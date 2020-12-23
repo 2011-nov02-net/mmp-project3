@@ -23,10 +23,6 @@ namespace sharkFinApi.Controllers {
             _userRepository = userRepository;
             _portfolioRepository = portfolioRepository;
         }
-        public UsersController(IUserRepository userRepository)
-        {
-            _userRepository = userRepository;
-        }
 
         [HttpGet]
         public async Task<IActionResult> GetAsync() {
