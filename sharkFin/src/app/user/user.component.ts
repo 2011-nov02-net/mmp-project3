@@ -13,8 +13,8 @@ import {PortfolioService} from '../portfolio.service';
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit {
-  @Input() user!: User;
-  @Input() portfolios! : Portfolio[];
+  @Input() user: User = {firstName: '', lastName: '', id: 0, email: ''};
+
   
   constructor( private route: ActivatedRoute,
     private userService: UserService,
