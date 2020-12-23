@@ -5,6 +5,7 @@ import { StockService} from '../stock.service';
 import {
   debounceTime, distinctUntilChanged, switchMap
 } from 'rxjs/operators';
+import { stockSearch } from '../stockSearchData';
 
 
 @Component({
@@ -13,7 +14,8 @@ import {
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  searchRes!: {};
+  searchRes!: stockSearch;
+
   searchPrice!: {};
   constructor(private stockService: StockService) { }
 
@@ -21,16 +23,17 @@ export class HomeComponent implements OnInit {
 
   }
 
-  search(term: string) {
-
+  search( term: string) {
     term = term.toUpperCase();
-    this.stockService.getStockInfoApi(term).subscribe(data => {this.searchRes = data},
+    this.stockService.getStockInfoApi(term).subscribe(data => {this.searchRes = data}, 
       err => console.error(err));
     this.stockService.getStockPriceApi(term).subscribe(data => {this.searchPrice = data});    
   }
 
-  addToPortfolio(symbol: string, quant: number) {
-    console.log("Will buy " + quant + " shares of " + symbol)
+  addToPortfolio(symbol: string, quant: string) {
+    let numQuant = parseInt(quant);
+    console.log("Will buy " + numQuant + " shares of " + symbol)
+    this.searchRes.
   }
 
 }
