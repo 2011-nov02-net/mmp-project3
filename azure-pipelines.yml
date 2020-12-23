@@ -148,14 +148,15 @@ stages:
             artifact: app
             displayName: artifact download app
 
+          
+
           - task: AzureRmWebAppDeployment@4
-            displayName: azure app service deploy
             inputs:
-              ConnectionType: 'AzureRM'
-              azureSubscription: 'Azure subscription 1 (a7c7be2b-dec9-4b29-b6aa-d73e6d6ad223)'
+             ConnectionType: 'AzureRM'
+              azureSubscription: 'Azure subscription 1(1)(a7c7be2b-dec9-4b29-b6aa-d73e6d6ad223)'
               appType: 'webApp'
               WebAppName: 'sharkFinApi'
-              packageForLinux: '$(Pipeline.Workspace)/app'
+              packageForLinux: '$(Pipeline.Workspace)/app''
   
 
    
