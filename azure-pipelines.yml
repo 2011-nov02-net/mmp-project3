@@ -15,6 +15,7 @@ trigger:
       - sharkFin/*
       - azure-pipelines-1.yml
 
+
 stages:
 - stage: build
   jobs:

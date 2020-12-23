@@ -19,7 +19,9 @@ export class PortfolioService {
   constructor(private http: HttpClient,
     private messageService: MessageService) { }
 
-  
+  createPortfolio(name: string, id: number){
+    this.http.post(this.baseUrl, {name: name, userId: id})
+  }
 
     // addToPortfolio(symbol: string, quant: number) : void {
     //   this.http.post(this.baseUrl +)
