@@ -42,7 +42,7 @@ stages:
 
     - script: dotnet restore
       displayName: dotnet restore
-      workingDirectory: $(solutionPath)
+      workingDirectory: sharkFinApi
 
     - script: dotnet build
         --configuration $(buildConfiguration)
