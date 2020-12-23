@@ -96,7 +96,7 @@ stages:
       displayName: dotnet sdk $(sdkVersion)
       inputs:
         packageType: 'sdk'
-        version: '5.x'
+        version: $(sdkVersion)
         
 
    - script: dotnet build
@@ -104,7 +104,7 @@ stages:
       displayName: dotnet build
       workingDirectory: $(solutionPath)
       
-      
+
     - task: DotNetCoreCLI@2
       displayName: dotnet test
       inputs:
