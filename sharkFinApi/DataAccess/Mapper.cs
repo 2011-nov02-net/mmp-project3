@@ -85,7 +85,7 @@ namespace DataAccess {
         public static Models.Asset MapAsset(Domain.Models.Asset asset) {
             return new Models.Asset {
                 Id = asset.Id,
-                Stock = MapStock(asset.Stock),
+                StockId = asset.Stock.Id,
                 Quantity = asset.Quantity
             };
         }
@@ -113,7 +113,7 @@ namespace DataAccess {
         public static Models.Trade MapTrade(Domain.Models.Trade trade) {
             return new Models.Trade {
                 Id = trade.Id,
-                Stock = MapStock(trade.Stock),
+                StockId = trade.Stock.Id,
                 Quantity = trade.Quantity,
                 Price = trade.Price,
                 TimeTraded = trade.Time
