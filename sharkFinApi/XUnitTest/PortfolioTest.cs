@@ -13,11 +13,8 @@ namespace XUnitTest
         Portfolio testPortfolio;
         public PortfolioTest()
         {
-            testPortfolio = new Portfolio
-            {
-                Name = "Apple",
-                Funds = 565.25m,
-            };
+            testPortfolio = new Portfolio("Matt", 3000.0m, null, null);
+
         }
 
         [Fact]
@@ -26,7 +23,6 @@ namespace XUnitTest
 
             //Act
             testPortfolio.Name = "Tesla";
-
 
             //Assert
             Assert.Equal("Tesla", testPortfolio.Name);
@@ -43,6 +39,19 @@ namespace XUnitTest
             //Assert
             Assert.Equal(123.23m, testPortfolio.Funds);
         }
+
+        [Fact]
+        public void UserTest3()
+        {
+            //Arrange
+
+            //Act
+            testPortfolio.Id = 1;
+
+            //Assert
+            Assert.Equal(1, testPortfolio.Id);
+        }
+ 
 
         public void Dispose()
         {

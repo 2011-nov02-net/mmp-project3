@@ -11,16 +11,13 @@ namespace Domain.Models {
         public decimal Price { get; set; }
         public DateTime Time { get; set; }
 
-        public Trade(Stock stock, int qty, decimal price, DateTime time) {
+        public Trade(Stock stock, int quantity, decimal price, DateTime time) {
             Stock = stock;
-            Quantity = qty;
+            Quantity = quantity;
             Price = price;
             Time = time;
         }
-        public Trade()
-        {
 
-        }
 
     }
 }
