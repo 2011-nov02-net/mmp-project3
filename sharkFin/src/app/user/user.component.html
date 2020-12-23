@@ -1,6 +1,8 @@
 <div class="container">
-    <h3 class="center-align">{{user.firstName}} {{user.lastName}}</h3>
-    <div class="offset sm-4">{{user.email}}</div>
+    <div *ngIf="user.firstName">
+        <h3 class="center-align">{{user.firstName}} {{user.lastName}}</h3>
+        <div class="offset sm-4">{{user.email}}</div>
+    </div>
     <br>
     <h5 class="center-align">Portfolios</h5>
     <br>
