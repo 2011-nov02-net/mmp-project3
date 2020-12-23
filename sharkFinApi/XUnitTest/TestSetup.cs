@@ -23,6 +23,7 @@ namespace XUnitTest
             {
                 new User
                 {
+                    Id = 1,
                     FirstName = "Rosel",
                     LastName = "Pardillo",
                     Email = "rosel@gmail.com",
@@ -32,6 +33,7 @@ namespace XUnitTest
                 },
                 new User
                 {
+                    Id = 2,
                     FirstName = "Rodrigo",
                     LastName = "Duterte",
                     Email = "rody@gmail.com",
@@ -41,6 +43,7 @@ namespace XUnitTest
                 },
                 new User
                 {
+                    Id = 3,
                     FirstName = "Grace",
                     LastName = "Libardos",
                     Email = "graceLibardos@gmail.com",
@@ -50,6 +53,7 @@ namespace XUnitTest
                 },
                 new User
                 {
+                    Id = 4,
                     FirstName = "Jose",
                     LastName = "Rizal",
                     Email = "joseRizal@gmail.com",
@@ -59,6 +63,7 @@ namespace XUnitTest
                 },
                 new User
                 {
+                    Id = 5,
                     FirstName = "Mary",
                     LastName = "Grace",
                     Email = "mG@gmail.com",
@@ -72,7 +77,7 @@ namespace XUnitTest
             {
                 new Stock
                 {
-                    
+                    Id = 1,
                     Symbol = "XXX",
                     Market = "S&P",
                     Name = "XtraXtra",
@@ -83,7 +88,7 @@ namespace XUnitTest
                 },
                 new Stock
                 {
-                    
+                    Id = 2,
                     Symbol = "TSLA",
                     Market = "NASDAQ",
                     Name = "TESLA",
@@ -93,7 +98,7 @@ namespace XUnitTest
                 },
                 new Stock
                 {
-                    
+                    Id = 3,
                     Symbol = "ABS",
                     Market = "PH",
                     Name = "ABS-CBN",
@@ -103,7 +108,7 @@ namespace XUnitTest
                 },
                 new Stock
                 {
-                    
+                    Id = 4,
                     Symbol = "GMA",
                     Market = "PH",
                     Name = "MEDIA",
@@ -113,7 +118,7 @@ namespace XUnitTest
                 },
                 new Stock
                 {
-                    
+                    Id = 5,
                     Symbol = "PBB",
                     Market = "PH",
                     Name = "BigBrother",
@@ -129,7 +134,7 @@ namespace XUnitTest
             {
                 new Portfolio
                 {
-                    
+                    Id = 1,
                     Name = "Matt",
                     UserId = 1,
                     Funds = 3000.0m,
@@ -141,7 +146,7 @@ namespace XUnitTest
                 },
                 new Portfolio
                 {
-                    
+                    Id = 2,
                     Name = "GOOD",
                     UserId = 2,
                     Funds = 3000.0m,
@@ -152,7 +157,7 @@ namespace XUnitTest
                 },
                 new Portfolio
                 {
-                    
+                    Id = 3,
                     Name = "Marnien",
                     UserId = 3,
                     Funds = 3000.0m,
@@ -162,7 +167,7 @@ namespace XUnitTest
                 },
                 new Portfolio
                 {
-                    
+                    Id = 4,
                     Name = "Paul",
                     UserId = 4,
                     Funds = 3000.0m,
@@ -172,7 +177,7 @@ namespace XUnitTest
                 },
                 new Portfolio
                 {
-                    
+                    Id = 5,
                     Name = "Best",
                     UserId = 5,
                     Funds = 3000.0m,
@@ -187,6 +192,7 @@ namespace XUnitTest
             {
                 new Trade
                 {
+                    Id = 1,
                     PortfolioId = 1,
                     StockId = 1,
                     Portfolio = null,
@@ -197,6 +203,7 @@ namespace XUnitTest
                 },
                 new Trade
                 {
+                    Id = 2,
                     PortfolioId = 2,
                     StockId = 2,
                     Portfolio = null,
@@ -207,6 +214,7 @@ namespace XUnitTest
                 },
                 new Trade
                 {   
+                    Id = 3,
                     PortfolioId = 3,
                     StockId = 3,
                     Portfolio = null,
@@ -217,6 +225,7 @@ namespace XUnitTest
                 },
                 new Trade
                 {
+                    Id = 4,
                     PortfolioId = 4,
                     StockId = 4,
                     Portfolio = null,
@@ -227,6 +236,7 @@ namespace XUnitTest
                 },
                 new Trade
                 {
+                    Id = 5,
                     PortfolioId = 5,
                     StockId = 5,
                     Portfolio = null,
