@@ -1,19 +1,23 @@
-<p>user works!</p>
 <div class="container">
-    <div class="center-align">{{user.name}}</div>
+    <h3 class="center-align">{{user.name}}</h3>
     <div class="offset sm-4">{{user.email}}</div>
     <br>
-    <div class="center-align">Portfolios</div>
+    <h5 class="center-align">Portfolios</h5>
+    <br>
+    <div class="row">
+        <input #newPortfolioInput type="text" class="col s4" placeholder="New portfolio name">
+        <button class="btn col s2" (click)="newPortfolio(newPortfolioInput.value)">Create New Portfolio</button>
+    </div>
     <div *ngIf="portfolios">
         <ul class="portfolios">
             <li *ngFor="let portfolio of portfolios">
-        
+
                 <a routerLink="/portfolio/{{portfolio.id}}">
                     <span>{{portfolio.id}}</span> {{portfolio.name}}
                 </a>
-               
+
             </li>
-        </ul> 
-     </div>
+        </ul>
+    </div>
 
 </div>

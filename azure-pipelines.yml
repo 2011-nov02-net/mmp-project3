@@ -9,7 +9,10 @@ trigger:
      - master
   paths:
     include:
+      - sharkFinApi/*
       - azure-pipelines.yml
+    exlude:
+      - sharkFin/*
 
 stages:
 - stage: build

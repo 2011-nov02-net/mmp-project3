@@ -15,7 +15,7 @@ export class AppComponent implements OnInit {
   title = 'sharkFin';
   isAuthenticated: boolean = false;
   user: User = {id: 0, name: 'Test', email: 'Test@test.com', portfolios: []};
-  portfolios: Portfolio[] = [{id: 0, name: '1', funds: 500  }, {id: 1, name: '2', funds: 500 },{id: 2, name: '3', funds: 500 },{id: 3, name: '4', funds: 500 }]
+  portfolios: Portfolio[] = [{id: 0, name: 'Portfolio1', funds: 500  }, {id: 1, name: 'Portfolio2', funds: 500 },{id: 2, name: 'Portfolio3', funds: 500 },{id: 3, name: 'Portfolio4', funds: 500 }]
 
   constructor(public oktaAuth: OktaAuthService, public router: Router, public userService: UserService) {
     // Subscribe to authentication state changes
@@ -27,9 +27,10 @@ export class AppComponent implements OnInit {
 
   async ngOnInit() {
      // Get the authentication state for immediate use
+     this.user = {id: 0, name: 'Test', email: 'Test@test.com', portfolios: []};
      this.isAuthenticated =  await this.oktaAuth.isAuthenticated();
      const userClaim = await this.oktaAuth.getUser();
-     this.userService.getUserByEmail(userClaim.email!).subscribe(user => this.user = user);
+     //this.userService.getUserByEmail(userClaim.email!).subscribe(user => this.user = user);
   };  
     
 
