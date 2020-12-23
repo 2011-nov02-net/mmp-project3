@@ -22,15 +22,14 @@ export class UserComponent implements OnInit {
     private portfolioService: PortfolioService) { }
 
   ngOnInit(): void {
-    this. portfolios = history.state.portfolios;
      this.getUser();
   }
 
   getUser(): void {
     const id = +this.route.snapshot.paramMap.get('id')!;
     this.userService.getUser(id).
-    subscribe(user => this.user = user);
-    console.log(this.user)
+    subscribe(user => this.user = user, () => console.log(this.user));
+  
   }
 
   newPortfolio(name: string){
