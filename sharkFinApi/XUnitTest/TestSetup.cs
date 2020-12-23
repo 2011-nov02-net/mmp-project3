@@ -110,49 +110,57 @@ namespace XUnitTest
                 {
                     Id = 1,
                     PortfolioId = 1,
-                    StockSymbol = "TSLA",
-                    StockMarket = "NASDAQ",
+                    StockId = 1,
+                    Stock = null,
+                    Portfolio = null,
                     Quantity = 10,
-                    Price = 500.12m
+                    Price = 500.12m,
+                    TimeTraded = DateTime.Now
                 },
                 new Trade
                 {
                     Id = 3,
                     PortfolioId = 3,
-                    StockSymbol = "ABS",
-                    StockMarket = "PH",
+                    StockId = 3,
+                    Stock = null,
+                    Portfolio = null,
                     Quantity = 10,
-                    Price = 11.12m
+                    Price = 11.12m,
+                    TimeTraded = DateTime.Now
                 },
                 new Trade
                 {
                     Id = 4,
                     PortfolioId = 4,
-                    StockSymbol = "GMA",
-                    StockMarket = "PH",
+                    StockId = 4,
+                    Stock = null,
+                    Portfolio = null,
                     Quantity = 10,
-                    Price = 7.12m
+                    Price = 7.12m,
+                    TimeTraded = DateTime.Now
                 },
                 new Trade
                 {
                     Id = 5,
                     PortfolioId = 5,
-                    StockSymbol = "PBB",
-                    StockMarket = "PH",
+                    StockId = 5,
+                    Stock = null,
+                    Portfolio = null,
                     Quantity = 10,
-                    Price = 20.12m
+                    Price = 20.12m,
+                    TimeTraded = DateTime.Now
                 },
                 new Trade
                 {
                     Id = 6,
                     PortfolioId = 6,
-                    StockSymbol = "JNJ",
-                    StockMarket = "NYSE",
+                    StockId = 6,
+                    Stock = null,
+                    Portfolio = null,
                     Quantity = 10,
-                    Price = 40.12m
+                    Price = 40.12m,
+                    TimeTraded = DateTime.Now
                 },
-
-
             };
 
             Portfolio[] portfolios =
@@ -194,7 +202,7 @@ namespace XUnitTest
                 },
             };
 
-            PortfolioEntry[] entries =
+            /*PortfolioEntry[] entries =
             {
                 new PortfolioEntry
                 {
@@ -231,7 +239,7 @@ namespace XUnitTest
                     StockMarket = "PH",
                     Quantity = 10
                 },
-            };
+            };*/
 
 
 
@@ -253,10 +261,10 @@ namespace XUnitTest
             {
                 context.Portfolios.Add(portfolio);
             }
-            foreach (var entry in entries)
+           /* foreach (var entry in entries)
             {
                 context.PortfolioEntries.Add(entry);
-            }
+            }*/
 
             context.SaveChanges();
 

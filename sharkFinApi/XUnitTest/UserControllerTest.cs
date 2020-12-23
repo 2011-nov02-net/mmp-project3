@@ -22,7 +22,7 @@ namespace XUnitTest
         string fake = "fakeId";
         string fake2 = "fakeId2";
     }
-    [Fact]
+    //[Fact]
     //public async Task UserController_GetAllUsers()
    // {
      

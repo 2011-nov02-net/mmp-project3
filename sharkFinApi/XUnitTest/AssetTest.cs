@@ -8,14 +8,13 @@ using Xunit;
 
 namespace XUnitTest
 {
-    public class TradeTest : IDisposable 
+    public class AssetTest : IDisposable
     {
-        Trade testTrade;
-        public TradeTest()
+        Asset testAsset;
+        public AssetTest()
         {
-            var stock = new Stock("APPL", "NASDAQ", "Apple", null);
-            testTrade = new Trade(stock, 5, 565.25m, DateTime.Now);
-
+            var stock = new Stock("TSLA", "NASDAQ", "Tesla", null);
+             testAsset = new Asset(stock, 10);
         }
 
         [Fact]
@@ -23,11 +22,11 @@ namespace XUnitTest
         {
 
             //Act
-            testTrade.Quantity = 3;
+            testAsset.Quantity = 10;
 
 
             //Assert
-            Assert.Equal(3, testTrade.Quantity);
+            Assert.Equal(10, testAsset.Quantity);
         }
 
         [Fact]
@@ -36,28 +35,26 @@ namespace XUnitTest
             //Arrange
 
             //Act
-            testTrade.Price = 123.23m;
+            testAsset.Id = 1;
 
             //Assert
-            Assert.Equal(123.23m, testTrade.Price);
+            Assert.Equal(1, testAsset.Id);
         }
-
         [Fact]
         public void UserTest3()
         {
             //Arrange
 
             //Act
-            var stock = new Stock("PBB", "PH", "BigBrother", null);
-            testTrade.Stock = stock;
+            var stock = new Stock("XXX", "NASDAQ", "XMAS", null);
+            testAsset.Stock = stock;
 
             //Assert
-            Assert.Equal(stock, testTrade.Stock);
+            Assert.Equal(stock, testAsset.Stock);
         }
-
         public void Dispose()
         {
-            testTrade = null;
+            testAsset = null;
         }
     }
 }
