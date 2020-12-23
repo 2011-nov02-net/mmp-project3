@@ -27,7 +27,8 @@ namespace XUnitTest
                     LastName = "Pardillo",
                     Email = "rosel@gmail.com",
                     UserName = "roselP",
-                    Id = 1 
+                    Portfolios = null
+
                 },
                 new User
                 {
@@ -35,7 +36,8 @@ namespace XUnitTest
                     LastName = "Duterte",
                     Email = "rody@gmail.com",
                     UserName = "rodyDuterte",
-                    Id = 2
+                    Portfolios = null
+
                 },
                 new User
                 {
@@ -43,7 +45,8 @@ namespace XUnitTest
                     LastName = "Libardos",
                     Email = "graceLibardos@gmail.com",
                     UserName = "graceLibards",
-                    Id = 3
+                    Portfolios = null
+
                 },
                 new User
                 {
@@ -51,7 +54,8 @@ namespace XUnitTest
                     LastName = "Rizal",
                     Email = "joseRizal@gmail.com",
                     UserName = "joseRiz",
-                    Id = 4
+                    Portfolios = null
+
                 },
                 new User
                 {
@@ -59,7 +63,8 @@ namespace XUnitTest
                     LastName = "Grace",
                     Email = "mG@gmail.com",
                     UserName = "maryGrace",
-                    Id = 5
+                    Portfolios = null
+                    
                 },
             };
 
@@ -67,140 +72,171 @@ namespace XUnitTest
             {
                 new Stock
                 {
+                    
                     Symbol = "XXX",
                     Market = "S&P",
-                    Name = "XtraXtra"
+                    Name = "XtraXtra",
+                    Logo = null,
+                    Assets = null,
+                    Trades = null
+
                 },
                 new Stock
                 {
+                    
                     Symbol = "TSLA",
                     Market = "NASDAQ",
-                    Name = "TESLA"
+                    Name = "TESLA",
+                    Logo = null,
+                    Assets = null,
+                    Trades = null
                 },
                 new Stock
                 {
+                    
                     Symbol = "ABS",
                     Market = "PH",
-                    Name = "ABS-CBN"
+                    Name = "ABS-CBN",
+                    Logo = null,
+                    Assets = null,
+                    Trades = null
                 },
                 new Stock
                 {
+                    
                     Symbol = "GMA",
                     Market = "PH",
-                    Name = "MEDIA"
+                    Name = "MEDIA",
+                    Logo = null,
+                    Assets = null,
+                    Trades = null
                 },
                 new Stock
                 {
+                    
                     Symbol = "PBB",
                     Market = "PH",
-                    Name = "BigBrother"
-                },
-                new Stock
-                {
-                    Symbol = "JNJ",
-                    Market = "NYSE",
-                    Name = "Johnson & Johnson"
-                }
+                    Name = "BigBrother",
+                    Logo = null,
+                    Assets = null,
+                    Trades = null
 
-            };
+                },
 
-            Trade[] trades =
-            {
-                new Trade
-                {
-                    Id = 1,
-                    PortfolioId = 1,
-                    StockId = 1,
-                    Stock = null,
-                    Portfolio = null,
-                    Quantity = 10,
-                    Price = 500.12m,
-                    TimeTraded = DateTime.Now
-                },
-                new Trade
-                {
-                    Id = 3,
-                    PortfolioId = 3,
-                    StockId = 3,
-                    Stock = null,
-                    Portfolio = null,
-                    Quantity = 10,
-                    Price = 11.12m,
-                    TimeTraded = DateTime.Now
-                },
-                new Trade
-                {
-                    Id = 4,
-                    PortfolioId = 4,
-                    StockId = 4,
-                    Stock = null,
-                    Portfolio = null,
-                    Quantity = 10,
-                    Price = 7.12m,
-                    TimeTraded = DateTime.Now
-                },
-                new Trade
-                {
-                    Id = 5,
-                    PortfolioId = 5,
-                    StockId = 5,
-                    Stock = null,
-                    Portfolio = null,
-                    Quantity = 10,
-                    Price = 20.12m,
-                    TimeTraded = DateTime.Now
-                },
-                new Trade
-                {
-                    Id = 6,
-                    PortfolioId = 6,
-                    StockId = 6,
-                    Stock = null,
-                    Portfolio = null,
-                    Quantity = 10,
-                    Price = 40.12m,
-                    TimeTraded = DateTime.Now
-                },
             };
 
             Portfolio[] portfolios =
             {
                 new Portfolio
                 {
-                    Id = 1,
+                    
                     Name = "Matt",
                     UserId = 1,
-                    Funds = 3000
+                    Funds = 3000.0m,
+                    Assets = null,
+                    Trades = null,
+                    User = null
+
+
                 },
                 new Portfolio
                 {
-                    Id = 2,
+                    
                     Name = "GOOD",
                     UserId = 2,
-                    Funds = 3000
+                    Funds = 3000.0m,
+                    Assets = null,
+                    Trades = null,
+                    User = null
+
                 },
                 new Portfolio
                 {
-                    Id = 3,
+                    
                     Name = "Marnien",
                     UserId = 3,
-                    Funds = 3000
+                    Funds = 3000.0m,
+                    Assets = null,
+                    Trades = null,
+                    User = null
                 },
                 new Portfolio
                 {
-                    Id = 4,
+                    
                     Name = "Paul",
                     UserId = 4,
-                    Funds = 3000
+                    Funds = 3000.0m,
+                    Assets = null,
+                    Trades = null,
+                    User = null
                 },
                 new Portfolio
                 {
-                    Id = 5,
+                    
                     Name = "Best",
                     UserId = 5,
-                    Funds = 3000
+                    Funds = 3000.0m,
+                    Assets = null,
+                    Trades = null,
+                    User = null
                 },
             };
+
+
+            Trade[] trades =
+            {
+                new Trade
+                {
+                    PortfolioId = 1,
+                    StockId = 1,
+                    Portfolio = null,
+                    Stock = null,
+                    Quantity = 10,
+                    Price = 500.12m,
+                    TimeTraded = DateTime.Now
+                },
+                new Trade
+                {
+                    PortfolioId = 2,
+                    StockId = 2,
+                    Portfolio = null,
+                    Stock = null,
+                    Quantity = 10,
+                    Price = 11.12m,
+                    TimeTraded = DateTime.Now
+                },
+                new Trade
+                {   
+                    PortfolioId = 3,
+                    StockId = 3,
+                    Portfolio = null,
+                    Stock = null,
+                    Quantity = 10,
+                    Price = 7.12m,
+                    TimeTraded = DateTime.Now
+                },
+                new Trade
+                {
+                    PortfolioId = 4,
+                    StockId = 4,
+                    Portfolio = null,
+                    Stock = null,
+                    Quantity = 10,
+                    Price = 20.12m,
+                    TimeTraded = DateTime.Now
+                },
+                new Trade
+                {
+                    PortfolioId = 5,
+                    StockId = 5,
+                    Portfolio = null,
+                    Stock = null,
+                    Quantity = 10,
+                    Price = 40.12m,
+                    TimeTraded = DateTime.Now
+                },
+            };
+
 
             var context = new mmpproject2Context(options);
             context.Database.EnsureCreated();
@@ -212,18 +248,14 @@ namespace XUnitTest
             {
                 context.Stocks.Add(stock);
             }
-            foreach (var trade in trades)
-            {
-                context.Trades.Add(trade);
-            }
             foreach (var portfolio in portfolios)
             {
                 context.Portfolios.Add(portfolio);
             }
-           /* foreach (var entry in entries)
+            foreach (var trade in trades)
             {
-                context.PortfolioEntries.Add(entry);
-            }*/
+                context.Trades.Add(trade);
+            }
 
             context.SaveChanges();
 
