@@ -41,6 +41,20 @@ namespace sharkFinApi.Controllers {
             return CreatedAtAction(nameof(GetByIdAsync), new { id = created.Id }, created);
         }
 
+        [HttpGet("email/{{email}}")]
+        public async Task<IActionResult> GetByEmailAsync(string email)
+        {
+            User user;
+            try
+            {
+                user = await _userRepository.GetAsync(email);
+            } catch
+            {
+                return NotFound();
+            }
+            return Ok(user);
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync(int id) {
             User user;
