@@ -16,7 +16,6 @@ namespace DataAccess.Repositories {
 
         public UserRepository(DbContextOptions<mmpproject2Context> contextOptions) {
             _contextOptions = contextOptions;
-            
         }
 
         public async Task<IEnumerable<Domain.Models.User>> GetAllAsync() {
