@@ -99,8 +99,8 @@ stages:
         version: $(sdkVersion)
         
 
-   - script: dotnet build
-        -- configuration $(buildConfiguration)
+    - script: dotnet build
+        --configuration $(buildConfiguration)
       displayName: dotnet build
       workingDirectory: $(solutionPath)
       
@@ -118,14 +118,8 @@ stages:
     
     - task: SonarCloudPublish@1
       inputs:
-        pollingTimeoutSec: '300'
-    
-    - task: DotNetCoreCLI@2
-      displayName: 'dotnet publish'
-      inputs:
-        command: 'publish'
-        publishWebProjects: true
-        arguments: '-o $(build.artifactstagingdirectory)'    
+        pollingTimeoutSec: '300'    
+ 
 
 - stage: deploy
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
