@@ -1,12 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Domain.Models;
 using Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace sharkFinApi.Controllers {
 
@@ -16,15 +15,18 @@ namespace sharkFinApi.Controllers {
 
         private readonly IUserRepository _userRepository;
         private readonly IPortfolioRepository _portfolioRepository;
+        private readonly ILogger<UsersController> _logger;
 
-        public UsersController(IUserRepository userRepository, IPortfolioRepository portfolioRepository) {
+        public UsersController(IUserRepository userRepository, IPortfolioRepository portfolioRepository, ILogger<UsersController> logger) {
             _userRepository = userRepository;
             _portfolioRepository = portfolioRepository;
+            _logger = logger;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAsync() {
             var users = await _userRepository.GetAllAsync();
+            _logger.LogInformation("Fetched list of all users.");
             return Ok(users);
         }
 
@@ -34,11 +36,14 @@ namespace sharkFinApi.Controllers {
             try {
                 created = await _userRepository.AddAsync(user);
             } catch (ArgumentException e) {
+                _logger.LogInformation(e, "Attempted to add a user with an already existing Id.");
                 return BadRequest(e.Message);
-            } catch (DbUpdateException) {
-                return StatusCode(StatusCodes.Status500InternalServerError);
+            } catch (DbUpdateException e) {
+                _logger.LogInformation(e, "Attempted to add a user that violated database constraints.");
+                return BadRequest(e.Message);
             }
 
+            _logger.LogInformation("Successfully added user.", created);
             return CreatedAtAction(nameof(GetByIdAsync), new { id = created.Id }, created);
         }
 
@@ -47,9 +52,12 @@ namespace sharkFinApi.Controllers {
             User user;
             try {
                 user = await _userRepository.GetAsync(email);
-            } catch {
-                return NotFound();
+            } catch (InvalidOperationException e) {
+                _logger.LogInformation(e, $"Found no user entry with email: {email}.");
+                return NotFound(e.Message);
             }
+
+            _logger.LogInformation("Fetched user.", user);
             return Ok(user);
         }
 
@@ -59,10 +67,12 @@ namespace sharkFinApi.Controllers {
             User user;
             try {
                 user = await _userRepository.GetAsync(id);
-            } catch {
-                return NotFound();
+            } catch (InvalidOperationException e) {
+                _logger.LogInformation(e, $"Found no user entry with id: {id}.");
+                return NotFound(e.Message);
             }
 
+            _logger.LogInformation("Fetched user.", user);
             return Ok(user);
         }
 
@@ -71,8 +81,12 @@ namespace sharkFinApi.Controllers {
             try {
                 user.Id = id;
                 await _userRepository.UpdateAsync(user);
-            } catch {
-                return BadRequest();
+            } catch (InvalidOperationException e) {
+                _logger.LogInformation(e, $"Found no user entry with id: {id}.");
+                return NotFound(e.Message);
+            } catch (DbUpdateException e) {
+                _logger.LogInformation(e, "Attempted to update a user, violating database constraints.");
+                return BadRequest(e.Message);
             }
 
             return NoContent();
@@ -82,8 +96,9 @@ namespace sharkFinApi.Controllers {
         public async Task<IActionResult> DeleteAsync(int id) {
             try {
                 await _userRepository.DeleteAsync(id);
-            } catch {
-                return BadRequest();
+            } catch (InvalidOperationException e) {
+                _logger.LogInformation(e, $"Found no user entry with id: {id}.");
+                return NotFound(e.Message);
             }
 
             return NoContent();
@@ -96,8 +111,9 @@ namespace sharkFinApi.Controllers {
             try {
                 user = await _userRepository.GetAsync(id);
                 portfolios = await _portfolioRepository.GetAllAsync(user);
-            } catch {
-                return NotFound();
+            } catch (InvalidOperationException e) {
+                _logger.LogInformation(e, $"Found no user entry with id: {id}.");
+                return NotFound(e.Message);
             }
 
             return Ok(portfolios);
@@ -110,11 +126,14 @@ namespace sharkFinApi.Controllers {
                 var user = await _userRepository.GetAsync(id);
                 created = await _portfolioRepository.AddAsync(portfolio, user);
             } catch (ArgumentException e) {
+                _logger.LogInformation(e, "Attempted to add a portfolio with an already existing Id.");
                 return BadRequest(e.Message);
-            } catch (DbUpdateException) {
-                return StatusCode(StatusCodes.Status500InternalServerError);
+            } catch (DbUpdateException e) {
+                _logger.LogInformation(e, "Attempted to add a portfolio that violated database constraints.");
+                return BadRequest(e.Message);
             }
 
+            _logger.LogInformation("Successfully created portfolio.", created);
             return CreatedAtAction(nameof(PortfoliosController.GetByIdAsync), "Portfolios", new { id = created.Id }, created);
         }
     }

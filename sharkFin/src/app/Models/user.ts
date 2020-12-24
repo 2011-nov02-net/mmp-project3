@@ -2,7 +2,8 @@ import { Portfolio } from "./portfolio";
 
 export interface User {
     id: number;
-    name: string;
+    firstName: string,
+    lastName: string,
     email: string;
     portfolios?: Portfolio[]
   }

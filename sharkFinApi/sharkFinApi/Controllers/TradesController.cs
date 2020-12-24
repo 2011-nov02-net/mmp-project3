@@ -1,11 +1,9 @@
 ﻿using Domain.Interfaces;
 using Domain.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace sharkFinApi.Controllers {
@@ -15,14 +13,17 @@ namespace sharkFinApi.Controllers {
     public class TradesController : ControllerBase {
 
         private readonly ITradeRepository _tradeRepository;
+        private readonly ILogger<TradesController> _logger;
 
-        public TradesController(ITradeRepository tradeRepository) {
+        public TradesController(ITradeRepository tradeRepository, ILogger<TradesController> logger) {
             _tradeRepository = tradeRepository;
+            _logger = logger;
         }
 
         [HttpGet()]
         public async Task<IActionResult> GetAsync() {
             var trades = await _tradeRepository.GetAllAsync();
+            _logger.LogInformation("Fetched list of all trades.");
             return Ok(trades);
         }
 
@@ -32,10 +33,12 @@ namespace sharkFinApi.Controllers {
             Trade trade;
             try {
                 trade = await _tradeRepository.GetAsync(id);
-            } catch {
-                return NotFound();
+            } catch (InvalidOperationException e) {
+                _logger.LogInformation(e, $"Found no trade entry with id: {id}.");
+                return NotFound(e.Message);
             }
 
+            _logger.LogInformation("Fetched trade.", trade);
             return Ok(trade);
         }
 
@@ -44,8 +47,12 @@ namespace sharkFinApi.Controllers {
             try {
                 trade.Id = id;
                 await _tradeRepository.UpdateAsync(trade);
-            } catch {
-                return BadRequest();
+            } catch (InvalidOperationException e) {
+                _logger.LogInformation(e, $"Found no trade entry with id: {id}.");
+                return NotFound(e.Message);
+            } catch (DbUpdateException e) {
+                _logger.LogInformation(e, "Attempted to update a trade, violating database constraints.");
+                return BadRequest(e.Message);
             }
 
             return NoContent();
@@ -55,8 +62,9 @@ namespace sharkFinApi.Controllers {
         public async Task<IActionResult> DeleteAsync(int id) {
             try {
                 await _tradeRepository.DeleteAsync(id);
-            } catch {
-                return BadRequest();
+            } catch (InvalidOperationException e) {
+                _logger.LogInformation(e, $"Found no trade entry with id: {id}.");
+                return NotFound(e.Message);
             }
 
             return NoContent();

@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -32,8 +31,7 @@ namespace sharkFinApi
             }
 
             services.AddDbContext<mmpproject2Context>(options => options
-                .UseSqlServer(connectionString)
-                .LogTo(Console.WriteLine, LogLevel.Information));
+                .UseSqlServer(connectionString));
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IStockRepository, StockRepository>();
@@ -74,10 +72,10 @@ namespace sharkFinApi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "sharkFinApi v1"));
+                
             }
-
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "sharkFinApi v1"));
             app.UseHttpsRedirection();
 
             app.UseRouting();
