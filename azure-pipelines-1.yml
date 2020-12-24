@@ -31,7 +31,7 @@ steps:
   displayName: npm install
   workingDirectory: $(appDir)
 
-- script: npx ng build --prod
+- script: npx ng build
   displayName: ng build
   workingDirectory: $(appDir)
 
