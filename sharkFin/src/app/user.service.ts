@@ -28,7 +28,7 @@ export class UserService {
     }
 
     getUserByEmail(email: string): Observable<User>{
-      return this.http.get<User>(this.baseUrl + email).pipe(
+      return this.http.get<User>(this.baseUrl + '/email/' +email).pipe(
         tap(_ => this.log(`fetched User email=${email}`)), 
         catchError(this.handleError<User>(`getUser email=${email}`))
       );

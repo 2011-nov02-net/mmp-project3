@@ -11,7 +11,7 @@ namespace Domain.Interfaces {
         Task<IEnumerable<Stock>> GetAllBySymbolAsync(string symbol);
         Task<IEnumerable<Stock>> GetAllByMarketAsync(string market);
         Task<Stock> GetAsync(int id);
-        Task<Stock> GetAsync(string symbol, string market);
+        Task<Stock> GetAsync(string symbol);
         Task<Stock> AddAsync(Stock stock);
         Task UpdateAsync(Stock stock);
         Task DeleteAsync(int id);

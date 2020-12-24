@@ -5,5 +5,6 @@ export interface User {
     firstName: string,
     lastName: string,
     email: string;
-    portfolios?: Portfolio[]
+    portfolios?: Portfolio[],
+    currentPort: number
   }

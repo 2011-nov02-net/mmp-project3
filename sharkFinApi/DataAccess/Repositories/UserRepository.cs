@@ -46,9 +46,9 @@ namespace DataAccess.Repositories {
 
         public async Task<Domain.Models.User> GetAsync(string email) {
             using var context = new mmpproject2Context(_contextOptions);
-            var user = await context.Users
+            var user = await context.Users.Where(u => u.Email.Contains(email))
                 .Include(u => u.Portfolios)
-                .FirstAsync(u => u.Email == email);
+                .FirstAsync();
 
             return Mapper.MapUser(user);
         }

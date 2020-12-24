@@ -4,6 +4,7 @@ import { MessageService } from './message.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import {User} from './Models/user';
+import {Portfolio} from './Models/portfolio';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -11,7 +12,7 @@ import { environment } from 'src/environments/environment';
 })
 export class PortfolioService {
 
-  private baseUrl = `${environment.baseUrl}/api/portfolio`;
+  private baseUrl = `${environment.baseUrl}/api/portfolios`;
   httpOptions = {
     headers: new HttpHeaders({'Content-Type': 'application/json'})
   };
@@ -22,10 +23,13 @@ export class PortfolioService {
   createPortfolio(name: string, id: number){
     this.http.post(this.baseUrl, {name: name, userId: id})
   }
+  getPortfolio(id: number): Observable<Portfolio>{
+    return this.http.get<Portfolio>(`${this.baseUrl}/${id}`);
+  }
 
-    // addToPortfolio(symbol: string, quant: number) : void {
-    //   this.http.post(this.baseUrl +)
-    // }
+    //  addToPortfolio(symbol: string, quant: number) : void {
+    //    this.http.post(this.baseUrl +)
+    //  }
 
 
 

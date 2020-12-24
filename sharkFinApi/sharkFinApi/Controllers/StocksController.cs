@@ -59,6 +59,25 @@ namespace sharkFinApi.Controllers {
             return Ok(stock);
         }
 
+
+        [HttpGet("/symbol/{symbol}")]
+        [ActionName(nameof(GetBySymbolAsync))]
+        public async Task<IActionResult> GetBySymbolAsync(string symbol)
+        {
+            Stock stock;
+            try
+            {
+                stock = await _stockRepository.GetAsync(symbol);
+            }
+            catch
+            {
+                return NotFound();
+            }
+
+            return Ok(stock);
+        }
+
+
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAsync(int id, Stock stock) {
             try {

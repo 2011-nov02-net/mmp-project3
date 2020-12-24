@@ -13,7 +13,7 @@ import {PortfolioService} from '../portfolio.service';
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit {
-  @Input() user: User = {firstName: '', lastName: '', id: 0, email: ''};
+  @Input() user: User = {firstName: '', lastName: '', id: 0, email: '', currentPort: 0};
 
   
   constructor( private route: ActivatedRoute,
@@ -34,6 +34,11 @@ export class UserComponent implements OnInit {
 
   newPortfolio(name: string){
     this.portfolioService.createPortfolio(name, this.user.id);
+  }
+
+  setDefault(id: number){
+    this.user.currentPort = id;
+    console.log(this.user)
   }
 
 }
