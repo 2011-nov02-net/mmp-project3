@@ -51,7 +51,6 @@ namespace XUnitTest
             //Assert
             Assert.Equal(1, testPortfolio.Id);
         }
- 
 
         public void Dispose()
         {

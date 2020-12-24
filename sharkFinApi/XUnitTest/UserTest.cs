@@ -62,7 +62,17 @@ namespace XUnitTest
             //Assert
             Assert.Equal("mattg", testUser.UserName);
         }
+        [Fact]
+        public void UserTest5()
+        {
+            //Arrange
 
+            //Act
+            testUser.Id = 1;
+
+            //Assert
+            Assert.Equal(1, testUser.Id);
+        }
         public void Dispose()
         {
             testUser = null;

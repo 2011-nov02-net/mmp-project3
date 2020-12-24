@@ -61,6 +61,17 @@ namespace XUnitTest
             //Assert
             Assert.Equal("Cortez", testStock.Name);
         }
+        [Fact]
+        public void UserTest5()
+        {
+            //Arrange
+
+            //Act
+            testStock.Id = 1;
+
+            //Assert
+            Assert.Equal(1, testStock.Id);
+        }
 
         public void Dispose()
         {
