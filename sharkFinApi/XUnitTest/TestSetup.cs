@@ -73,6 +73,56 @@ namespace XUnitTest
                 },
             };
 
+            Asset[] assets =
+            {
+                new Asset
+                {
+                    Id = 1,
+                    PortfolioId = 1,
+                    StockId = 1,
+                    Stock = null,
+                    Portfolio = null,
+                    Quantity = 10
+                },
+                new Asset
+                {
+                    Id = 2,
+                    PortfolioId = 2,
+                    StockId = 2,
+                    Stock = null,
+                    Portfolio = null,
+                    Quantity = 10
+                },
+                new Asset
+                {
+                    Id = 3,
+                    PortfolioId = 3,
+                    StockId = 3,
+                    Stock = null,
+                    Portfolio = null,
+                    Quantity = 10
+                },
+                new Asset
+                {
+                    Id = 4,
+                    PortfolioId = 4,
+                    StockId = 4,
+                    Stock = null,
+                    Portfolio = null,
+                    Quantity = 10
+                },
+                new Asset
+                {
+                    Id = 5,
+                    PortfolioId = 5,
+                    StockId = 5,
+                    Stock = null,
+                    Portfolio = null,
+                    Quantity = 10
+                },
+
+            };
+
             Stock[] stocks =
             {
                 new Stock
@@ -265,6 +315,10 @@ namespace XUnitTest
             foreach (var trade in trades)
             {
                 context.Trades.Add(trade);
+            }
+            foreach (var asset in assets)
+            {
+                context.Assets.Add(asset);
             }
 
             context.SaveChanges();

@@ -27,7 +27,7 @@ namespace sharkFinApi
         {
             var connectionString = Configuration.GetConnectionString("default");
             if (connectionString is null) {
-                throw new InvalidOperationException("No connection string 'defualt' found.");
+                throw new InvalidOperationException("No connection string 'default' found.");
             }
 
             services.AddDbContext<mmpproject2Context>(options => options

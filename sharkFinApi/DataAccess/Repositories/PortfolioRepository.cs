@@ -61,7 +61,7 @@ namespace DataAccess.Repositories {
             using var context = new mmpproject2Context(_contextOptions);
             var dbUser = await context.Users
                 .Include(u => u.Portfolios)
-                .FirstAsync(u => u.Id == user.Id);
+                .FirstOrDefaultAsync(u => u.Id == user.Id);
             var newPortfolio = Mapper.MapPortfolio(portfolio);
 
             dbUser.Portfolios.Add(newPortfolio);
