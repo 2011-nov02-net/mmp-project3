@@ -1,4 +1,4 @@
-<!-- <div *ngIf="sorted">
+<div *ngIf="sorted">
         
     <table>
         <thead>
@@ -13,11 +13,11 @@
     <tr *ngFor="let user of users">
         <td>{{user.id}}</td>
         <td>{{user.firstName}} {{user.lastName}}</td>
-        <td>{{user.portfolios[0].funds | currency}}</td>
+        <td *ngIf="user.portfolios">{{user.portfolios[0].funds | currency}}</td>
 
 
     </tr>
 </tbody>
 </table>
 
-</div> -->
+</div>

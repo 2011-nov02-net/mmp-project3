@@ -29,7 +29,7 @@ export class LeaderboardComponent implements OnInit {
     let newUsers: User[] = [];
     for(let i =0; i < this.users.length; i ++){
       if(this.users[i].portfolios!.length > 0){
-        this.portTally(this.users[i].portfolios![0])
+       
         newUsers.push(this.users[i])
       }
     }
@@ -43,18 +43,18 @@ export class LeaderboardComponent implements OnInit {
     this.sorted = true;
 
   }
-  portTally(portfolio: Portfolio)  {
-    let totalVal: number = portfolio.funds;
-      if(portfolio.assets){
-        for(let i = 0; i < portfolio.assets.length; i++){
-          this.stockService.getStockPriceApi(portfolio.assets[i].stock.symbol).subscribe((p => {
-            portfolio.assets![i].price = p.c;
-            totalVal += (portfolio.assets![i].price! * portfolio.assets![i].quantity)
+  // portTally(portfolio: Portfolio)  {
+  //   let totalVal: number = portfolio.funds;
+  //     if(portfolio.assets){
+  //       for(let i = 0; i < portfolio.assets.length; i++){
+  //         this.stockService.getStockPriceApi(portfolio.assets[i].stock.symbol).subscribe((p => {
+  //           portfolio.assets![i].price = p.c;
+  //           totalVal += (portfolio.assets![i].price! * portfolio.assets![i].quantity)
             
-          }));        
-        }
-      }
+  //         }));        
+  //       }
+  //     }
       
-    }
+  //   }
 
 }
