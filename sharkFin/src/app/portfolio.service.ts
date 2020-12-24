@@ -27,10 +27,6 @@ export class PortfolioService {
     return this.http.get<Portfolio>(`${this.baseUrl}/${id}`);
   }
 
-    //  addToPortfolio(symbol: string, quant: number) : void {
-    //    this.http.post(this.baseUrl +)
-    //  }
-
 
 
   

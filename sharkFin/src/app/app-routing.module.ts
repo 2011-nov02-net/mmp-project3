@@ -4,6 +4,7 @@ import { OktaCallbackComponent, OktaAuthGuard} from '@okta/okta-angular';
 import {HomeComponent} from './home/home.component';
 import {UserComponent} from './user/user.component';
 import { PortfolioComponent } from './portfolio/portfolio.component';
+import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 
 const routes: Routes = [
 
@@ -22,6 +23,10 @@ const routes: Routes = [
   {
     path: '',
     component: HomeComponent
+  },
+  {
+    path: 'leaderboard',
+    component: LeaderboardComponent
   }
  
 ];

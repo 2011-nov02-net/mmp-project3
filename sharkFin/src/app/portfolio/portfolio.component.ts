@@ -7,6 +7,9 @@ import { Portfolio } from '../Models/portfolio';
 import {PortfolioService} from '../portfolio.service';
 import {OktaAuthService} from '@okta/okta-angular';
 import { StockService } from '../stock.service';
+import { AssetService } from '../asset.service';
+import {Asset} from '../Models/asset';
+import {Stock} from '../Models/stock';
 
 
 @Component({
@@ -27,7 +30,8 @@ export class PortfolioComponent implements OnInit {
     private location: Location,
     public portfolioService: PortfolioService,
     public oktaAuth: OktaAuthService,
-    public stockService: StockService) { }
+    public stockService: StockService,
+    public assetService: AssetService) { }
 
   async ngOnInit() {
 
@@ -69,5 +73,14 @@ ngAfterViewInit() {
     this.totalVal += num;    
   }
 
+  sell(portId: number, assetId: number, price: number, quantity: number, stock: Stock){
+    let asset : Asset = {id: assetId, quantity: quantity, price: price, stock: stock}
+    this.assetService.removeFromPortfolio(portId, asset, quantity)
+    location.reload();  
+  }
+    
+
+  }
+
   
-}
+

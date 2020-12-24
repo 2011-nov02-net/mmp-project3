@@ -23,6 +23,7 @@ export class HomeComponent implements OnInit {
   searchRes: StockSearch = {name:'', ticker: '', logo: '', price: 0, exchange: '', industry: ''};
   @Input() user!: User;
   isAuthenticated: boolean = false;
+  message: string = '';
  
   constructor(private stockService: StockService, public oktaAuth: OktaAuthService, public userService: UserService, public portfolioService: PortfolioService, public assetService: AssetService) { 
     this.oktaAuth.$authenticationState.subscribe(
@@ -54,11 +55,25 @@ export class HomeComponent implements OnInit {
 
   addToPortfolio($event: any, symbol: string, quant: string) {
     $event.preventDefault();
-    let stock : Stock = {symbol: symbol, market: this.searchRes.exchange, name: this.searchRes.name, logo: this.searchRes.logo, id:0}
     let portfolioId = this.user.portfolios![0].id;
+    let funds: Number;
+    let stock : Stock = {symbol: symbol, market: this.searchRes.exchange, name: this.searchRes.name, logo: this.searchRes.logo, id:0}
     let asset: Asset = {stock: stock, quantity: parseInt(quant)}
-    //console.log(asset);
-    this.assetService.addToPortfolio(asset, portfolioId, this.searchRes.price);
+    this.portfolioService.getPortfolio(portfolioId).subscribe((p) => {
+      funds = p.funds;
+      if((this.searchRes.price * parseInt(quant)) <= funds){
+          this.assetService.addToPortfolio(asset, portfolioId, this.searchRes.price);
+          this.message = `Sucesfully purchased ${quant} shares of ${this.searchRes.name}`;
+          this.searchRes ={name:'', ticker: '', logo: '', price: 0, exchange: '', industry: ''};   
+      } else {
+        this.message = "Insufficient Funds"
+      }
+  
+    })
+
+   
+
+    
 
   }
 }

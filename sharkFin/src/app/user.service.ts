@@ -34,6 +34,10 @@ export class UserService {
       );
     }
 
+    getUsers(): Observable<User[]> {
+      return this.http.get<User[]>(this.baseUrl);
+    }
+
     private handleError<T>(operation = 'operation', result?: T) {
       return (error: any): Observable<T> => {
   
