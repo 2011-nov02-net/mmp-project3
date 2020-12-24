@@ -38,7 +38,7 @@ steps:
 - task: SonarCloudPrepare@1
   displayName: sonarcloud prepare
   inputs:
-    SonarCloud: 
+    SonarCloud: SonarCloud
     organization: '2011-nov02-net'
     scannerMode: 'CLI'
     configMode: 'manual'
