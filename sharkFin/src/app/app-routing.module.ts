@@ -6,12 +6,9 @@ import {UserComponent} from './user/user.component';
 import { LoginComponent } from './login/login.component';
 import { PortfolioComponent } from './portfolio/portfolio.component';
 const routes: Routes = [
+
   {
-    path: '',
-  component: HomeComponent
-  },
-  {
-    path: 'login/callback',
+    path: '/login/callback',
     component: OktaCallbackComponent
   },{
     path: 'user/:id',
@@ -25,11 +22,12 @@ const routes: Routes = [
   {
     path: 'login',
     component: HomeComponent
-  },
+  },  
   {
-    path: '*',
-    component: HomeComponent
-  }
+    path: '',
+  component: HomeComponent
+  },
+ 
 ];
 
 @NgModule({
