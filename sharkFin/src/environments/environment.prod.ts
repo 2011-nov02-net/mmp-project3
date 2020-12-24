@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  baseUrl: 'https://sharkfinapi.azurewebsites.net',
+  baseUrl: 'https://sharkfin-api.azurewebsites.net',
 };

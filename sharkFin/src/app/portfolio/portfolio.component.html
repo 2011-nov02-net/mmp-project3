@@ -1,3 +1,32 @@
-<h3 class="center-align">Portfolio NAME HERE</h3>
+<h3 class="center-align">Portfolio: {{portfolio.name}}</h3>
+<h6 class="center-align">Owned by:{{user.firstName}} {{user.lastName}}</h6>
+<div>Funds: {{portfolio.funds}}</div>
+<div *ngIf="portfolio.trades.length > 0">
+       
+    <table>
+        <thead>
+    <tr>
+        <th>Stock</th>
+        <th>Quantity</th>
+        <th>Current Value</th>
+        <th>Total Value</th>
+    </tr>
+</thead>
+<tbody>
+    <tr *ngFor="let asset of portfolio.assets">
+        <td>{{asset.stock.symbol}}</td>
+        <td>{{asset.quantity}}</td>
+        <td>{{asset.price}}</td>
+        <td>{{asset.price * asset.quantity}} </td>
+
+    </tr>
+    <tr>
+        <td>Total Value:</td>
+        <td></td>
+        <td></td>
+        <td><b>{{totalVal}}</b></td>
+    </tr>
+</tbody>
+</table></div>
 
 

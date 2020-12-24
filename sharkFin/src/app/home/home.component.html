@@ -13,9 +13,9 @@
             <h6>{{searchRes.exchange}}</h6>
             <h6>{{searchRes.ticker}} - {{searchRes.industry}}</h6>
 
-            <!-- <form class="input-field">
+           <form *ngIf="isAuthenticated" class="input-field">
                 <input #stockQuant class="col s1" type="number" name="stockQuant" id="stockQuant" placeholder="Quantity">
-                <button class="btn" (click)="addToPortfolio(searchRes.ticker, stockQuant.value);event.preventDefault()">Add to Portfolio</button> 
-            </form> -->
+                <button class="btn" (click)="addToPortfolio($event, searchRes.ticker, stockQuant.value)">Add to Portfolio</button> 
+            </form>
         </div>
     </div>

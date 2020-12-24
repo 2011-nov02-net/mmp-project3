@@ -31,8 +31,12 @@ export class AppComponent implements OnInit {
      if (this.isAuthenticated) {
        const userClaims = await this.oktaAuth.getUser();
        console.log(userClaims);
+       if(userClaims.email){
+        this.userService.getUserByEmail(userClaims.email).subscribe(user => this.user = user);
+       }
+     
      }
-     //this.userService.getUserByEmail(userClaim.email).subscribe(user => this.user = user);
+     
   };  
     
 

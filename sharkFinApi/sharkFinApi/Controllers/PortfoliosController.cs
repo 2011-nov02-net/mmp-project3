@@ -17,11 +17,13 @@ namespace sharkFinApi.Controllers {
         private readonly IPortfolioRepository _portfolioRepository;
         private readonly IAssetRepository _assetRepository;
         private readonly ITradeRepository _tradeRepository;
+        private readonly IStockRepository _stockRepository;
 
-        public PortfoliosController(IPortfolioRepository portfolioRepository, IAssetRepository assetRepository, ITradeRepository tradeRepository) {
+        public PortfoliosController(IPortfolioRepository portfolioRepository, IAssetRepository assetRepository, ITradeRepository tradeRepository, IStockRepository stockRepository) {
             _portfolioRepository = portfolioRepository;
             _assetRepository = assetRepository;
             _tradeRepository = tradeRepository;
+            _stockRepository = stockRepository;
         }
 
         [HttpGet()]
@@ -65,6 +67,23 @@ namespace sharkFinApi.Controllers {
 
             return NoContent();
         }
+        [HttpPut("{id}/funds")]
+        public async Task<IActionResult> PutFundsAsync(int id, Portfolio portfolio)
+        {
+            
+            try
+            {
+                Portfolio existing = await _portfolioRepository.GetAsync(id);
+                existing.Funds -= portfolio.Funds;               
+                await _portfolioRepository.UpdateAsync(existing);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+
+            return NoContent();
+        }
 
         [HttpGet("{id}/assets")]
         public async Task<IActionResult> GetPortfolioAssetsAsync(int id) {
@@ -83,7 +102,10 @@ namespace sharkFinApi.Controllers {
         [HttpPost("{id}/assets")]
         public async Task<IActionResult> PostAssetAsync([FromBody] Asset asset, [FromRoute] int id) {
             Asset created;
+
             try {
+                var stock = await _stockRepository.GetAsync(asset.Stock.Symbol);
+                asset.Stock.Id = stock.Id;
                 var portfolio = await _portfolioRepository.GetAsync(id);
                 created = await _assetRepository.AddAsync(asset, portfolio);
             } catch (ArgumentException e) {
@@ -113,6 +135,9 @@ namespace sharkFinApi.Controllers {
         public async Task<IActionResult> PostTradeAsync([FromBody] Trade trade, [FromRoute] int id) {
             Trade created;
             try {
+                var stock = await _stockRepository.GetAsync(trade.Stock.Symbol);
+                trade.Stock.Id = stock.Id;
+                trade.Time = DateTime.Now;
                 var portfolio = await _portfolioRepository.GetAsync(id);
                 created = await _tradeRepository.AddAsync(trade, portfolio);
             } catch (ArgumentException e) {

@@ -1,25 +1,39 @@
 <div class="container">
-    <div *ngIf="user.firstName">
+    <div *ngIf="user.firstName !=''">
         <h3 class="center-align">{{user.firstName}} {{user.lastName}}</h3>
         <div class="offset sm-4">{{user.email}}</div>
     </div>
     <br>
     <h5 class="center-align">Portfolios</h5>
     <br>
-    <div class="row">
+    <!-- <div class="row">
         <input #newPortfolioInput type="text" class="col s4" placeholder="New portfolio name">
         <button class="btn col s2" (click)="newPortfolio(newPortfolioInput.value)">Create New Portfolio</button>
-    </div>
+    </div> -->
     <div *ngIf="user.portfolios">
-        <ul class="portfolios">
-            <li *ngFor="let portfolio of user.portfolios">
+        
+            <table>
+                <thead>
+            <tr>
+                <th>Id </th>
+                <th>Name</th>
+                <th>Funds</th>
+                <th>Default</th>
+                <th>Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let portfolio of user.portfolios">
+                <td>{{portfolio.id}}</td>
+                <td>{{portfolio.name}}</td>
+                <td>{{portfolio.funds}}</td>
+                <td><button class='btn-small'  (click)="setDefault(portfolio.id)">Set</button></td>
+                <td>  <a routerLink="/portfolio/{{portfolio.id}}">Details</a></td>
 
-                <a routerLink="/portfolio/{{portfolio.id}}">
-                    <span>{{portfolio.id}}</span> {{portfolio.name}}
-                </a>
-
-            </li>
-        </ul>
+            </tr>
+        </tbody>
+        </table>
+        
     </div>
 
 </div>
