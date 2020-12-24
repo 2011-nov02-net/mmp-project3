@@ -21,32 +21,13 @@ import { LoginComponent } from './login/login.component';
 import { PortfolioComponent } from './portfolio/portfolio.component';
 const config = {
   issuer: 'https://dev-6569763.okta.com/oauth2/default',
-  redirectUri: window.location.origin + '/login/callback',
+  redirectUri: '/login/callback',
   clientId: '0oa2qbcuveyBO8Rfv5d6',
   scopes: ['openid', 'email'],
   pkce: true,
   postLogoutRedirectUri: window.location.origin,
 }
-const routes: Routes = [
 
-  {
-    path: 'login/callback',
-    component: OktaCallbackComponent
-  },{
-    path: 'user/:id',
-    canActivate: [OktaAuthGuard],
-    component: UserComponent
-  },{
-    path: 'portfolio/:id',
-    canActivate: [OktaAuthGuard],
-    component: PortfolioComponent
-  }, 
-  {
-    path: '',
-  component: HomeComponent
-  },
- 
-];
 
 
 @NgModule({
@@ -67,7 +48,6 @@ const routes: Routes = [
     AppRoutingModule,
     OktaAuthModule,
     AppRoutingModule,
-    RouterModule.forRoot(routes)
   ],
   providers: [
     { provide: OKTA_CONFIG, useValue: config }
