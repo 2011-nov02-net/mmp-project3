@@ -15,18 +15,14 @@ const routes: Routes = [
     path: 'portfolio/:id',
     canActivate: [OktaAuthGuard],
     component: PortfolioComponent
-  }, 
-  {
-    path: '',
-  component: HomeComponent
-  },
-  {
-    path: '*',
-    component: HomeComponent
   }, {
     path: 'login/callback',
     component: OktaCallbackComponent
   },
+  {
+    path: '',
+    component: HomeComponent
+  }
  
 ];
 
