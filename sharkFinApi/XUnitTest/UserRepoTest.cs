@@ -17,14 +17,14 @@ namespace XUnitTest
 {
     public partial class UnitTest
     {
-        
+        Domain.Models.User testUser;
         [Fact]
         public async Task AddCustomer_Database_TestAsync()
         {
             using var connection = new SqliteConnection("Data Source=:memory:");
             connection.Open();
             var options = new DbContextOptionsBuilder<mmpproject2Context>().UseSqlite(connection).Options;
-            var testUser = new Domain.Models.User("Grace","Libardos","gl@gmail.com","gl001", null);
+            testUser = new Domain.Models.User("Grace","Libardos","gl@gmail.com","gl001", null);
 
 
             using (var context = new mmpproject2Context(options))
@@ -33,7 +33,7 @@ namespace XUnitTest
                 var repo = new UserRepository(options);
 
                 await repo.AddAsync(testUser);
-                await context.SaveChangesAsync();
+                
             }
 
             using var context2 = new mmpproject2Context(options);
