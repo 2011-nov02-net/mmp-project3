@@ -160,7 +160,7 @@ namespace XUnitTest
                 {
                     Id = 4,
                     Symbol = "GMA",
-                    Market = "PH",
+                    Market = "AH",
                     Name = "MEDIA",
                     Logo = null,
                     Assets = null,
@@ -170,7 +170,7 @@ namespace XUnitTest
                 {
                     Id = 5,
                     Symbol = "PBB",
-                    Market = "PH",
+                    Market = "BH",
                     Name = "BigBrother",
                     Logo = null,
                     Assets = null,
