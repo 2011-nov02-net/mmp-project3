@@ -22,10 +22,10 @@ import { PortfolioComponent } from './portfolio/portfolio.component';
 const config = {
   issuer: 'https://dev-6569763.okta.com/oauth2/default',
   redirectUri: '/login/callback',
-  clientId: '0oa2qbcuveyBO8Rfv5d6',
+  clientId: '0oa312zn8PEAQonOd5d6', 
   scopes: ['openid', 'email'],
   pkce: true,
-  postLogoutRedirectUri: window.location.origin,
+
 }
 
 

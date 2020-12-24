@@ -7,10 +7,7 @@ import { PortfolioComponent } from './portfolio/portfolio.component';
 
 const routes: Routes = [
 
-  {
-    path: 'login/callback',
-    component: OktaCallbackComponent
-  },{
+ {
     path: 'user/:id',
     canActivate: [OktaAuthGuard],
     component: UserComponent
@@ -22,6 +19,13 @@ const routes: Routes = [
   {
     path: '',
   component: HomeComponent
+  },
+  {
+    path: '*',
+    component: HomeComponent
+  }, {
+    path: 'login/callback',
+    component: OktaCallbackComponent
   },
  
 ];
