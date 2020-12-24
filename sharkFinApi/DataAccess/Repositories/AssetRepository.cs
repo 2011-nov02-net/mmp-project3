@@ -44,6 +44,9 @@ namespace DataAccess.Repositories {
         }
 
         public async Task<Domain.Models.Asset> AddAsync(Domain.Models.Asset asset, Domain.Models.Portfolio portfolio) {
+            if (asset.Id != 0) {
+                throw new ArgumentException("Asset already exists.");
+            }
             using var context = new mmpproject2Context(_contextOptions);
             var dbPortfolio = await context.Portfolios
                 .Include(p => p.Assets)

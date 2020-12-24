@@ -1,11 +1,10 @@
 ﻿using Domain.Interfaces;
 using Domain.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace sharkFinApi.Controllers {
@@ -18,17 +17,21 @@ namespace sharkFinApi.Controllers {
         private readonly IAssetRepository _assetRepository;
         private readonly ITradeRepository _tradeRepository;
         private readonly IStockRepository _stockRepository;
+        private readonly ILogger<PortfoliosController> _logger;
 
-        public PortfoliosController(IPortfolioRepository portfolioRepository, IAssetRepository assetRepository, ITradeRepository tradeRepository, IStockRepository stockRepository) {
+        public PortfoliosController(IPortfolioRepository portfolioRepository, IAssetRepository assetRepository, ITradeRepository tradeRepository,IStockRepository stockRepository, ILogger<PortfoliosController> logger) {
             _portfolioRepository = portfolioRepository;
             _assetRepository = assetRepository;
             _tradeRepository = tradeRepository;
             _stockRepository = stockRepository;
+            _logger = logger;
+
         }
 
         [HttpGet()]
         public async Task<IActionResult> GetAsync() {
             var portfolios = await _portfolioRepository.GetAllAsync();
+            _logger.LogInformation("Fetched list of all portfolios.");
             return Ok(portfolios);
         }
 
@@ -38,10 +41,12 @@ namespace sharkFinApi.Controllers {
             Portfolio portfolio;
             try {
                 portfolio = await _portfolioRepository.GetAsync(id);
-            } catch {
-                return NotFound();
+            } catch (InvalidOperationException e) {
+                _logger.LogInformation(e, $"Found no portfolio entry with id: {id}.");
+                return NotFound(e.Message);
             }
 
+            _logger.LogInformation("Fetched portfolio.", portfolio);
             return Ok(portfolio);
         }
 
@@ -50,8 +55,12 @@ namespace sharkFinApi.Controllers {
             try {
                 portfolio.Id = id;
                 await _portfolioRepository.UpdateAsync(portfolio);
-            } catch {
-                return BadRequest();
+            } catch (InvalidOperationException e) {
+                _logger.LogInformation(e, $"Found no portfolio entry with id: {id}.");
+                return NotFound(e.Message);
+            } catch (DbUpdateException e) {
+                _logger.LogInformation(e, "Attempted to update a portfolio, violating database constraints.");
+                return BadRequest(e.Message);
             }
 
             return NoContent();
@@ -61,8 +70,9 @@ namespace sharkFinApi.Controllers {
         public async Task<IActionResult> DeleteAsync(int id) {
             try {
                 await _portfolioRepository.DeleteAsync(id);
-            } catch {
-                return BadRequest();
+            } catch (InvalidOperationException e) {
+                _logger.LogInformation(e, $"Found no portfolio entry with id: {id}.");
+                return NotFound(e.Message);
             }
 
             return NoContent();
@@ -92,8 +102,9 @@ namespace sharkFinApi.Controllers {
             try {
                 portfolio = await _portfolioRepository.GetAsync(id);
                 assets = await _assetRepository.GetAllAsync(portfolio);
-            } catch {
-                return NotFound();
+            } catch (InvalidOperationException e) {
+                _logger.LogInformation(e, $"Found no portfolio entry with id: {id}.");
+                return NotFound(e.Message);
             }
 
             return Ok(assets);
@@ -109,11 +120,14 @@ namespace sharkFinApi.Controllers {
                 var portfolio = await _portfolioRepository.GetAsync(id);
                 created = await _assetRepository.AddAsync(asset, portfolio);
             } catch (ArgumentException e) {
+                _logger.LogInformation(e, "Attempted to add an asset with an already existing Id.");
                 return BadRequest(e.Message);
-            } catch (DbUpdateException) {
-                return StatusCode(StatusCodes.Status500InternalServerError);
+            } catch (DbUpdateException e) {
+                _logger.LogInformation(e, "Attempted to add an asset that violated database constraints.");
+                return BadRequest(e.Message);
             }
 
+            _logger.LogInformation("Successfully created asset.", created);
             return CreatedAtAction(nameof(AssetsController.GetByIdAsync), "Assets", new { id = created.Id }, created);
         }
 
@@ -124,8 +138,9 @@ namespace sharkFinApi.Controllers {
             try {
                 portfolio = await _portfolioRepository.GetAsync(id);
                 trades = await _tradeRepository.GetAllAsync(portfolio);
-            } catch {
-                return NotFound();
+            } catch (InvalidOperationException e) {
+                _logger.LogInformation(e, $"Found no user entry with id: {id}.");
+                return NotFound(e.Message);
             }
 
             return Ok(trades);
@@ -141,9 +156,11 @@ namespace sharkFinApi.Controllers {
                 var portfolio = await _portfolioRepository.GetAsync(id);
                 created = await _tradeRepository.AddAsync(trade, portfolio);
             } catch (ArgumentException e) {
+                _logger.LogInformation(e, "Attempted to add a trade with an already existing Id.");
                 return BadRequest(e.Message);
-            } catch (DbUpdateException) {
-                return StatusCode(StatusCodes.Status500InternalServerError);
+            } catch (DbUpdateException e) {
+                _logger.LogInformation(e, "Attempted to add a trade that violated database constraints.");
+                return BadRequest(e.Message);
             }
 
             return CreatedAtAction(nameof(TradesController.GetByIdAsync), "Trades", new { id = created.Id }, created);

@@ -53,6 +53,10 @@ namespace DataAccess.Repositories
         }
 
         public async Task<Domain.Models.Stock> AddAsync(Domain.Models.Stock stock) {
+            if (stock.Id != 0) {
+                throw new ArgumentException("Stock already exists.");
+            }
+
             using var context = new mmpproject2Context(_contextOptions);
             var newStock = Mapper.MapStock(stock);
 

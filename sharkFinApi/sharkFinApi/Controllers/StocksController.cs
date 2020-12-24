@@ -1,11 +1,9 @@
 ﻿using Domain.Interfaces;
 using Domain.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace sharkFinApi.Controllers {
@@ -15,13 +13,17 @@ namespace sharkFinApi.Controllers {
     public class StocksController : ControllerBase {
 
         private readonly IStockRepository _stockRepository;
-        public StocksController(IStockRepository stockRepository) {
+        private readonly ILogger<StocksController> _logger;
+
+        public StocksController(IStockRepository stockRepository, ILogger<StocksController> logger) {
             _stockRepository = stockRepository;
+            _logger = logger;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAsync() {
             var stocks = await _stockRepository.GetAllAsync();
+            _logger.LogInformation("Fetched list of all stocks.");
             return Ok(stocks);
         }
 
@@ -31,11 +33,14 @@ namespace sharkFinApi.Controllers {
             try {
                 created = await _stockRepository.AddAsync(stock);
             } catch (ArgumentException e) {
+                _logger.LogInformation(e, "Attempted to add a stock with an already existing Id.");
                 return BadRequest(e.Message);
-            } catch (DbUpdateException) {
-                return StatusCode(StatusCodes.Status500InternalServerError);
+            } catch (DbUpdateException e) {
+                _logger.LogInformation(e, "Attempted to add a stock that violated database constraints.");
+                return BadRequest(e.Message);
             }
 
+            _logger.LogInformation("Successfully added stock.", created);
             return CreatedAtAction(nameof(GetByIdAsync), new { id = created.Id }, created);
         }
 
@@ -45,10 +50,12 @@ namespace sharkFinApi.Controllers {
             Stock stock;
             try {
                 stock = await _stockRepository.GetAsync(id);
-            } catch {
-                return NotFound();
+            } catch (InvalidOperationException e) {
+                _logger.LogInformation(e, $"Found no stock entry with id: {id}.");
+                return NotFound(e.Message);
             }
 
+            _logger.LogInformation("Fetched stock.", stock);
             return Ok(stock);
         }
 
@@ -76,8 +83,12 @@ namespace sharkFinApi.Controllers {
             try {
                 stock.Id = id;
                 await _stockRepository.UpdateAsync(stock);
-            } catch {
-                return BadRequest();
+            } catch (InvalidOperationException e) {
+                _logger.LogInformation(e, $"Found no stock entry with id: {id}.");
+                return NotFound(e.Message);
+            } catch (DbUpdateException e) {
+                _logger.LogInformation(e, "Attempted to update a stock, violating database constraints.");
+                return BadRequest(e.Message);
             }
 
             return NoContent();
@@ -87,8 +98,9 @@ namespace sharkFinApi.Controllers {
         public async Task<IActionResult> DeleteAsync(int id) {
             try {
                 await _stockRepository.DeleteAsync(id);
-            } catch {
-                return BadRequest();
+            } catch (InvalidOperationException e) {
+                _logger.LogInformation(e, $"Found no stock entry with id: {id}.");
+                return NotFound(e.Message);
             }
 
             return NoContent();

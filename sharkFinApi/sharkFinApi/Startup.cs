@@ -1,25 +1,14 @@
 using DataAccess.Models;
 using DataAccess.Repositories;
 using Domain.Interfaces;
-using HealthChecks.System;
-using HealthChecks.UI.Client;
-using HealthChecks.UI.Configuration;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace sharkFinApi
@@ -38,12 +27,11 @@ namespace sharkFinApi
         {
             var connectionString = Configuration.GetConnectionString("default");
             if (connectionString is null) {
-                throw new InvalidOperationException("No connection string 'defualt' found.");
+                throw new InvalidOperationException("No connection string 'default' found.");
             }
 
             services.AddDbContext<mmpproject2Context>(options => options
-                .UseSqlServer(connectionString)
-                .LogTo(Console.WriteLine, LogLevel.Information));
+                .UseSqlServer(connectionString));
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IStockRepository, StockRepository>();
