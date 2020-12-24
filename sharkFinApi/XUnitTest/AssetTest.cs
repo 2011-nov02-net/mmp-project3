@@ -52,6 +52,7 @@ namespace XUnitTest
             //Assert
             Assert.Equal(stock, testAsset.Stock);
         }
+
         public void Dispose()
         {
             testAsset = null;
