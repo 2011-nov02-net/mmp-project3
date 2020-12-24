@@ -21,7 +21,7 @@ import { LoginComponent } from './login/login.component';
 import { PortfolioComponent } from './portfolio/portfolio.component';
 const config = {
   issuer: 'https://dev-6569763.okta.com/oauth2/default',
-  redirectUri: '/login/callback',
+  redirectUri: `${window.location.origin}/login/callback`,
   clientId: '0oa312zn8PEAQonOd5d6', 
   scopes: ['openid', 'email'],
   pkce: true,
