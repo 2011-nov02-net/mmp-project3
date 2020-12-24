@@ -35,6 +35,18 @@ export class AssetService {
       
     }
 
+    removeFromPortfolio(id: number, asset: Asset, price: number){
+      this.http.delete(`${environment.baseUrl}/api/Assets/${asset.id}`).subscribe();
+
+      this.http.post(`${environment.baseUrl}/api/portfolios/${id}/trades`, {id: 0, stock: {id: asset.id, symbol: '', market: asset.stock.market, name: asset.stock.name, logo: asset.stock.logo }, quantity: -asset.quantity, price: -price}).subscribe(); 
+      let cost = -asset.quantity*price;
+      this.http.put(`${environment.baseUrl}/api/portfolios/${id}/funds`, {funds: cost}).subscribe();
+      console.log(asset);
+    
+      
+    
+    }
+
    
 
 

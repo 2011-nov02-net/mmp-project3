@@ -19,6 +19,7 @@ import { HomeComponent } from './home/home.component';
 import { UserComponent } from './user/user.component';
 import { LoginComponent } from './login/login.component';
 import { PortfolioComponent } from './portfolio/portfolio.component';
+import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 const config = {
   issuer: 'https://dev-6569763.okta.com/oauth2/default',
   redirectUri: `${window.location.origin}/login/callback`,
@@ -40,6 +41,7 @@ const config = {
     UserComponent,
     LoginComponent,
     PortfolioComponent,
+    LeaderboardComponent,
 
   ],
   imports: [

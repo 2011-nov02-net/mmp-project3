@@ -1,6 +1,6 @@
 <h3 class="center-align">Portfolio: {{portfolio.name}}</h3>
 <h6 class="center-align">Owned by:{{user.firstName}} {{user.lastName}}</h6>
-<div>Funds: {{portfolio.funds}}</div>
+<div>Current Funds: {{portfolio.funds | currency}}</div>
 <div *ngIf="portfolio.trades">
        
     <table>
@@ -16,15 +16,17 @@
     <tr *ngFor="let asset of portfolio.assets">
         <td>{{asset.stock.symbol}}</td>
         <td>{{asset.quantity}}</td>
-        <td>{{asset.price}}</td>
-        <td *ngIf="asset.price">{{asset.price * asset.quantity}} </td>
+        <td>{{asset.price | currency}}</td>
+        <td *ngIf="asset.price">{{asset.price * asset.quantity | currency }} </td>
+        <td *ngIf="asset.id && asset.price"><a (click)="sell(portfolio.id, asset.id, asset.price, asset.quantity, asset.stock)">Sell</a></td>
 
     </tr>
     <tr>
-        <td>Total Value:</td>
+        <td><b>Total Value:</b></td>
         <td></td>
         <td></td>
-        <td><b>{{totalVal}}</b></td>
+        <td><b>{{totalVal | currency}}</b></td>
+
     </tr>
 </tbody>
 </table></div>

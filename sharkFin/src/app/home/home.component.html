@@ -3,13 +3,14 @@
     <div class="row">
         <form class="input-field">
             <input #stockSearch class="col s10" type="text" name="stockSearch" id="stockSearch" placeholder="Search">
-            <button class="btn col s2" (click)="search($event, stockSearch.value)">Search</button>
+            <button class="btn col s2" (click)="search($event, stockSearch.value); stockSearch.value=''">Search</button>
         </form>
     </div>
+    <div class="text-danger">{{message}}</div>
     <div *ngIf="searchRes.price != 0" class="row">
         <div id="infoDiv col s8 offset-s2">
             <img src="{{searchRes.logo}}" />
-            <h4>{{searchRes.name}} - {{searchRes.price}}</h4>
+            <h4>{{searchRes.name}} - {{searchRes.price | currency}}</h4>
             <h6>{{searchRes.exchange}}</h6>
             <h6>{{searchRes.ticker}} - {{searchRes.industry}}</h6>
 
