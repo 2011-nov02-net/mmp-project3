@@ -1,13 +1,7 @@
 ﻿using DataAccess.Models;
 using DataAccess.Repositories;
-using Domain.Interfaces;
-using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using Moq;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
