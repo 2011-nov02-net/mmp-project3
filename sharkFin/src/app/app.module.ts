@@ -27,6 +27,26 @@ const config = {
   pkce: true,
   postLogoutRedirectUri: window.location.origin,
 }
+const routes: Routes = [
+
+  {
+    path: 'login/callback',
+    component: OktaCallbackComponent
+  },{
+    path: 'user/:id',
+    canActivate: [OktaAuthGuard],
+    component: UserComponent
+  },{
+    path: 'portfolio/:id',
+    canActivate: [OktaAuthGuard],
+    component: PortfolioComponent
+  }, 
+  {
+    path: '',
+  component: HomeComponent
+  },
+ 
+];
 
 
 @NgModule({
@@ -46,7 +66,8 @@ const config = {
     BrowserModule,
     AppRoutingModule,
     OktaAuthModule,
-    AppRoutingModule
+    AppRoutingModule,
+    RouterModule.forRoot(routes)
   ],
   providers: [
     { provide: OKTA_CONFIG, useValue: config }
