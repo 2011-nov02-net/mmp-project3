@@ -1,13 +1,8 @@
 ﻿using DataAccess.Models;
-using DocumentFormat.OpenXml.Drawing.Diagrams;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging.Abstractions;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace XUnitTest
 {
@@ -18,9 +13,9 @@ namespace XUnitTest
             var connection = new SqliteConnection("Data Source=:memory:");
             connection.Open();
             var options = new DbContextOptionsBuilder<mmpproject2Context>().UseSqlite(connection).Options;
-
             User[] users =
             {
+                
                 new User
                 {
                     Id = 1,
