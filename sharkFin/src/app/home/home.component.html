@@ -3,7 +3,7 @@
     <div class="row">
         <form class="input-field">
             <input #stockSearch class="col s10" type="text" name="stockSearch" id="stockSearch" placeholder="Search">
-            <button class="btn col s2" (click)="search($event, stockSearch.value); stockSearch.value=''">Search</button>
+            <button class="btn green darken-1 col s2" (click)="search($event, stockSearch.value); stockSearch.value=''">Search</button>
         </form>
     </div>
     <div class="text-danger">{{message}}</div>
@@ -16,7 +16,7 @@
 
            <form *ngIf="isAuthenticated" class="input-field">
                 <input #stockQuant class="col s1" type="number" name="stockQuant" id="stockQuant" placeholder="Quantity">
-                <button class="btn" (click)="addToPortfolio($event, searchRes.ticker, stockQuant.value)">Add to Portfolio</button> 
+                <button class="btn green darken-1" (click)="addToPortfolio($event, searchRes.ticker, stockQuant.value)">Add to Portfolio</button> 
             </form>
         </div>
     </div>
